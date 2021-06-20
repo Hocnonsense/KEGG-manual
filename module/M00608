@@ -1,6 +1,6 @@
 ENTRY       M00608            Pathway   Module
 NAME        2-Oxocarboxylic acid chain extension, 2-oxoglutarate => 2-oxoadipate => 2-oxopimelate => 2-oxosuberate
-DEFINITION  K10977 K16792+K16793 K10978
+DEFINITION  K10977 (K16792+K16793) K10978
 ORTHOLOGY   K10977  methanogen homocitrate synthase [EC:2.3.3.14 2.3.3.-] [RN:R00271 R08331 R08332]
             K16792+K16793  methanogen homoaconitase large subunit [EC:4.2.1.114] [RN:R03444 R04371 R09720 R10392 R10393 R10391 R10395 R10396 R10394]
             K10978  methanogen homoisocitrate dehydrogenase [EC:1.1.1.87 1.1.1.-] [RN:R01934 R08214 R08215]
@@ -17,13 +17,13 @@ REACTION    R00271  C00026 + C00024 -> C01251
             R04371  C04002 -> C05662
             R09720  C01251 -> C05662
             R01934  C05662 -> C00322
-            
+
             R08331  C00322 + C00024 -> C16583
             R10392  C16583 -> C20581
             R10393  C20581 -> C16597
             R10391  C16583 -> C16597
             R08214  C16597 -> C16588
-            
+
             R08332  C16588 + C00024 -> C16598
             R10395  C16598 -> C20582
             R10396  C20582 -> C16600
