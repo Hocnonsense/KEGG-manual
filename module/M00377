@@ -1,6 +1,6 @@
 ENTRY       M00377            Pathway   Module
 NAME        Reductive acetyl-CoA pathway (Wood-Ljungdahl pathway)
-DEFINITION  K00198 K05299-K15022 K01938 K01491 K00297-K25007-K25008 K15023 K14138+K00197+K00194
+DEFINITION  K00198 (K05299-K15022) K01938 K01491 (K00297-K25007-K25008) K15023 (K14138+K00197+K00194)
 ORTHOLOGY   K00198  carbon-monoxide dehydrogenase [EC:1.2.7.4] [RN:R07157]
             K05299,K15022  formate dehydrogenase [EC:1.17.1.10] [RN:R00134]
             K01938  formate--tetrahydrofolate ligase [EC:6.3.4.3] [RN:R00943]

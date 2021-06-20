@@ -1,12 +1,12 @@
 ENTRY       M00376            Pathway   Module
 NAME        3-Hydroxypropionate bi-cycle
-DEFINITION  (K02160+K01961+K01962+K01963) K14468 K14469 K15052 K05606 (K01847,K01848+K01849) (K14471+K14472) (K00239+K00240+K00241) K01679
+DEFINITION  (K02160+K01961+K01962+K01963) K14468 K14469 K15052 K05606 (K01847,(K01848+K01849)) (K14471+K14472) (K00239+K00240+K00241) K01679
             K08691 K14449 K14470 K09709
 ORTHOLOGY   K01961,K01962,K01963  acetyl-CoA carboxylase carboxyl transferase [EC:6.4.1.2] [RN:R00742]
             K02160  acetyl-CoA carboxylase biotin carboxyl carrier protein [RN:R00742]
-            K14468  malonyl-CoA reductase / 3-hydroxypropionate dehydrogenase (NADP+) [EC:1.2.1.75 1.1.1.298] [RN:R00740 R09289] 
-            K14469  acrylyl-CoA reductase (NADPH) / 3-hydroxypropionyl-CoA dehydratase / 3-hydroxypropionyl-CoA synthetase [EC:1.3.1.84 4.2.1.116 6.2.1.36] [RN:R09286 R03045 R00919] 
-            K15052  propionyl-CoA carboxylase [EC:6.4.1.3] [RN:R01859] 
+            K14468  malonyl-CoA reductase / 3-hydroxypropionate dehydrogenase (NADP+) [EC:1.2.1.75 1.1.1.298] [RN:R00740 R09289]
+            K14469  acrylyl-CoA reductase (NADPH) / 3-hydroxypropionyl-CoA dehydratase / 3-hydroxypropionyl-CoA synthetase [EC:1.3.1.84 4.2.1.116 6.2.1.36] [RN:R09286 R03045 R00919]
+            K15052  propionyl-CoA carboxylase [EC:6.4.1.3] [RN:R01859]
             K05606  methylmalonyl-CoA epimerase [EC:5.1.99.1] [RN:R02765]
             K01847,K01848,K01849  methylmalonyl-CoA mutase [EC:5.4.99.2] [RN:R00833]
             K14471,K14472  succinyl-CoA:(S)-malate CoA transferase [EC:2.8.3.-] [RN:R00406]
