@@ -1,6 +1,6 @@
 ENTRY       M00580            Pathway   Module
 NAME        Pentose phosphate pathway, archaea, fructose 6P => ribose 5P
-DEFINITION  (K08094 (K08093,K13812),K13831) K01807
+DEFINITION  ((K08094 (K08093,K13812)),K13831) K01807
 ORTHOLOGY   K08094,K13831  6-phospho-3-hexuloisomerase [EC:5.3.1.27] [RN:R09780]
             K08093,K13812,K13831  3-hexulose-6-phosphate synthase [EC:4.1.2.43] [RN:R05338]
             K01807  ribose 5-phosphate isomerase A [EC:5.3.1.6] [RN:R01056]
