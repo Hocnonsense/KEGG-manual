@@ -1,6 +1,6 @@
 ENTRY       M00176            Pathway   Module
 NAME        Assimilatory sulfate reduction, sulfate => H2S
-DEFINITION  (K13811,K00958+K00860,K00955+K00957,K00956+K00957+K00860) K00390 (K00380+K00381,K00392)
+DEFINITION  (K13811,(K00958+K00860),(K00955+K00957),(K00956+K00957+K00860)) K00390 ((K00380+K00381),K00392)
 ORTHOLOGY   K13811,K00958,K00955+K00957,K00956  sulfate adenylyltransferase [EC:2.7.7.4] [RN:R00529]
             K13811,K00860,K00955  adenylylsulfate kinase [EC:2.7.1.25] [RN:R00509]
             K00390  phosphoadenosine phosphosulfate reductase [EC:1.8.4.8] [RN:R02021]
