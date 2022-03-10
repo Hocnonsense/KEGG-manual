@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE pathway SYSTEM "https://www.kegg.jp/kegg/xml/KGML_v0.7.2_.dtd">
-<!-- Creation date: May 18, 2021 14:37:57 +0900 (GMT+9) -->
+<!-- Creation date: Jun 28, 2021 17:30:04 +0900 (GMT+9) -->
 <pathway name="path:ko00720" org="ko" number="00720"
          title="Carbon fixation pathways in prokaryotes"
          image="https://www.kegg.jp/kegg/pathway/ko/ko00720.png"
@@ -248,16 +248,16 @@
     <entry id="107" name="ko:K05299 ko:K15022" type="ortholog" reaction="rn:R00134"
         link="https://www.kegg.jp/dbget-bin/www_bget?K05299+K15022">
         <graphics name="K05299..." fgcolor="#000000" bgcolor="#BFBFFF"
-             type="rectangle" x="352" y="489" width="46" height="17"/>
+             type="rectangle" x="327" y="497" width="46" height="17"/>
     </entry>
     <entry id="108" name="ko:K01938" type="ortholog" reaction="rn:R00943"
         link="https://www.kegg.jp/dbget-bin/www_bget?K01938">
         <graphics name="K01938" fgcolor="#000000" bgcolor="#BFBFFF"
              type="rectangle" x="502" y="608" width="46" height="17"/>
     </entry>
-    <entry id="109" name="ko:K01491" type="ortholog" reaction="rn:R01655"
-        link="https://www.kegg.jp/dbget-bin/www_bget?K01491">
-        <graphics name="K01491" fgcolor="#000000" bgcolor="#BFBFFF"
+    <entry id="109" name="ko:K01491 ko:K01500" type="ortholog" reaction="rn:R01655"
+        link="https://www.kegg.jp/dbget-bin/www_bget?K01491+K01500">
+        <graphics name="K01491..." fgcolor="#000000" bgcolor="#BFBFFF"
              type="rectangle" x="451" y="567" width="46" height="17"/>
     </entry>
     <entry id="110" name="ko:K01491" type="ortholog" reaction="rn:R01220"
@@ -559,6 +559,11 @@
         link="https://www.kegg.jp/dbget-bin/www_bget?K18602">
         <graphics name="K18602" fgcolor="#000000" bgcolor="#BFBFFF"
              type="rectangle" x="677" y="409" width="46" height="17"/>
+    </entry>
+    <entry id="182" name="ko:K22015 ko:K25123 ko:K25124" type="ortholog" reaction="rn:R12754"
+        link="https://www.kegg.jp/dbget-bin/www_bget?K22015+K25123+K25124">
+        <graphics name="K22015..." fgcolor="#000000" bgcolor="#BFBFFF"
+             type="rectangle" x="377" y="497" width="46" height="17"/>
     </entry>
     <relation entry1="58" entry2="75" type="ECrel">
         <subtype name="compound" value="139"/>
@@ -992,13 +997,19 @@
     <relation entry1="181" entry2="84" type="ECrel">
         <subtype name="compound" value="140"/>
     </relation>
+    <relation entry1="168" entry2="182" type="ECrel">
+        <subtype name="compound" value="117"/>
+    </relation>
+    <relation entry1="108" entry2="182" type="ECrel">
+        <subtype name="compound" value="153"/>
+    </relation>
     <reaction id="57" name="rn:R00238" type="irreversible">
         <substrate id="49" name="cpd:C00332"/>
         <product id="139" name="cpd:C00024"/>
     </reaction>
     <reaction id="58" name="rn:R01196" type="irreversible">
-        <substrate id="139" name="cpd:C00024"/>
         <substrate id="170" name="cpd:C00011"/>
+        <substrate id="139" name="cpd:C00024"/>
         <product id="148" name="cpd:C00022"/>
     </reaction>
     <reaction id="59" name="rn:R00199" type="irreversible">
@@ -1006,8 +1017,8 @@
         <product id="121" name="cpd:C00074"/>
     </reaction>
     <reaction id="60" name="rn:R00345" type="irreversible">
-        <substrate id="134" name="cpd:C00011"/>
         <substrate id="121" name="cpd:C00074"/>
+        <substrate id="134" name="cpd:C00011"/>
         <product id="147" name="cpd:C00036"/>
     </reaction>
     <reaction id="61" name="rn:R00342" type="irreversible">
@@ -1051,8 +1062,8 @@
         <product id="49" name="cpd:C00332"/>
     </reaction>
     <reaction id="71" name="rn:R01197" type="irreversible">
-        <substrate id="138" name="cpd:C00091"/>
         <substrate id="136" name="cpd:C00011"/>
+        <substrate id="138" name="cpd:C00091"/>
         <product id="125" name="cpd:C00026"/>
     </reaction>
     <reaction id="72" name="rn:R00267" type="irreversible">
@@ -1078,8 +1089,8 @@
         <product id="139" name="cpd:C00024"/>
     </reaction>
     <reaction id="83" name="rn:R00742" type="irreversible">
-        <substrate id="139" name="cpd:C00024"/>
         <substrate id="132" name="cpd:C00288"/>
+        <substrate id="139" name="cpd:C00024"/>
         <product id="143" name="cpd:C00083"/>
     </reaction>
     <reaction id="84" name="rn:R00740" type="irreversible">
@@ -1103,8 +1114,8 @@
         <product id="142" name="cpd:C00100"/>
     </reaction>
     <reaction id="89" name="rn:R01859" type="irreversible">
-        <substrate id="133" name="cpd:C00288"/>
         <substrate id="142" name="cpd:C00100"/>
+        <substrate id="133" name="cpd:C00288"/>
         <product id="155" name="cpd:C00683"/>
     </reaction>
     <reaction id="90" name="rn:R02765" type="irreversible">
@@ -1145,8 +1156,8 @@
         <product id="153" name="cpd:C00058"/>
     </reaction>
     <reaction id="108" name="rn:R00943" type="irreversible">
-        <substrate id="120" name="cpd:C00101"/>
         <substrate id="153" name="cpd:C00058"/>
+        <substrate id="120" name="cpd:C00101"/>
         <product id="152" name="cpd:C00234"/>
     </reaction>
     <reaction id="109" name="rn:R01655" type="irreversible">
@@ -1179,8 +1190,8 @@
         <product id="92" name="cpd:C04348"/>
     </reaction>
     <reaction id="156" name="rn:R10866" type="irreversible">
-        <substrate id="139" name="cpd:C00024"/>
         <substrate id="170" name="cpd:C00011"/>
+        <substrate id="139" name="cpd:C00024"/>
         <product id="148" name="cpd:C00022"/>
     </reaction>
     <reaction id="160" name="rn:R01322" type="irreversible">
@@ -1201,8 +1212,8 @@
         <product id="120" name="cpd:C00101"/>
     </reaction>
     <reaction id="167" name="rn:R10243" type="irreversible">
-        <substrate id="106" name="cpd:C00440"/>
         <substrate id="165" name="cpd:C00237"/>
+        <substrate id="106" name="cpd:C00440"/>
         <product id="139" name="cpd:C00024"/>
         <product id="120" name="cpd:C00101"/>
     </reaction>
@@ -1237,5 +1248,9 @@
     <reaction id="181" name="rn:R09289" type="irreversible">
         <substrate id="140" name="cpd:C00222"/>
         <product id="154" name="cpd:C01013"/>
+    </reaction>
+    <reaction id="182" name="rn:R12754" type="irreversible">
+        <substrate id="117" name="cpd:C00011"/>
+        <product id="153" name="cpd:C00058"/>
     </reaction>
 </pathway>
