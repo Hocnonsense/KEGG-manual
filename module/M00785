@@ -10,7 +10,7 @@ ORTHOLOGY   K19741  dcsA; Nomega-hydroxy-L-arginine synthase [EC1.14.-.-] [RN:R1
             K19724  dcsC; O-ureido-serine racemase [EC:5.1.1.19] [RN:R10488]
             K19727  dcsG; O-ureido-D-serine cyclo-ligase [EC:6.3.3.5] [RN:R10470]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of other antibiotics
-PATHWAY     map00997  Biosynthesis of various secondary metabolites - part 3
+PATHWAY     map00998  Biosynthesis of various antibiotics
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R11033  C00062 -> C05933

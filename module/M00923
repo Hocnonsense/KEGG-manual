@@ -7,6 +7,7 @@ ORTHOLOGY   K15894  UDP-N-acetylglucosamine 4,6-dehydratase [EC:4.2.1.115] [RN:R
             K24259  putative aminotransferase [RN:R12584]
 CLASS       Pathway modules; Glycan metabolism; Lipopolysaccharide metabolism
 PATHWAY     map00541  O-Antigen nucleotide sugar biosynthesis
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R09697  C00043 -> C19823
             R12553  C19823 -> C20769
@@ -19,6 +20,7 @@ COMPOUND    C00043  UDP-N-acetyl-alpha-D-glucosamine
             C20768  UDP-2-acetamido-2,6-dideoxy-beta-L-talose
             C20774  UDP-N-acetyl-beta-L-fucosamine
             C22270  UDP-2,6-dideoxy-2-acetamidino-beta-L-galactose
+RMODULE     RM036  Epimerization and reduction in deoxysugar biosynthesis
 REFERENCE   PMID:15629947
   AUTHORS   Feng L, Senchenkova SN, Tao J, Shashkov AS, Liu B, Shevelev SD, Reeves PR, Xu J, Knirel YA, Wang L
   TITLE     Structural and genetic characterization of enterohemorrhagic Escherichia coli O145 O antigen and development of an O145 serogroup-specific PCR assay.

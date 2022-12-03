@@ -15,7 +15,7 @@ ORTHOLOGY   K01885  glutamyl-tRNA synthetase [EC:6.1.1.17] [RN:R05578]
             K08973  protoporphyrinogen IX oxidase [EC:1.3.99.-] [RN:R12605]
             K01772  ferrochelatase [EC:4.99.1.1] [RN:R00310]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
-PATHWAY     map00860  Porphyrin and chlorophyll metabolism
+PATHWAY     map00860  Porphyrin metabolism
             map01240  Biosynthesis of cofactors
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites

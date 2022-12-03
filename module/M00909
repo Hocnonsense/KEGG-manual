@@ -8,6 +8,7 @@ ORTHOLOGY   K00845,K25026  glk; glucokinase [EC:2.7.1.2] [RN:R01786]
             K04042  glmU; bifunctional UDP-N-acetylglucosamine pyrophosphorylase / Glucosamine-1-phosphate N-acetyltransferase [EC:2.7.7.23 2.3.1.157] [RN:R05332 R00416]
 CLASS       Pathway modules; Carbohydrate metabolism; Other carbohydrate metabolism
 PATHWAY     map00520  Amino sugar and nucleotide sugar metabolism
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R01786  C00267 -> C00668
             R02740  C00668 -> C05345

@@ -6,7 +6,7 @@ ORTHOLOGY   K03897  iucD; lysine N6-hydroxylase [EC:1.14.13.59] [RN:R00448]
             K03894  iucA; N2-citryl-N6-acetyl-N6-hydroxylysine synthase [EC:6.3.2.38] [RN:R10090]
             K03895  iucC; aerobactin synthase [EC:6.3.2.39] [RN:R10091]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of other bacterial compounds
-PATHWAY     map00997  Biosynthesis of various secondary metabolites - part 3
+PATHWAY     map00997  Biosynthesis of various other secondary metabolites
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R00448  C00047 -> C01028

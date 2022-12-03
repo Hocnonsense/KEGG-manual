@@ -1,5 +1,5 @@
 ENTRY       M00048            Pathway   Module
-NAME        Inosine monophosphate biosynthesis, PRPP + glutamine => IMP
+NAME        De novo purine biosynthesis, PRPP + glutamine => IMP
 DEFINITION  K00764 (K01945,K11787,K11788,K13713) (K00601,K11175,K08289,K11787,K01492) (K01952,(K23269+K23264+K23265),(K23270+K23265)) (K01933,K11787,K11788 (K01587,K11808,K01589 K01588)) (K01923,K01587,K13713) K01756 (K00602,(K01492,K06863 K11176))
 ORTHOLOGY   K00764  amidophosphoribosyltransferase [EC:2.4.2.14] [RN:R01072]
             K01945,K11787,K11788  phosphoribosylamine--glycine ligase [EC:6.3.4.13] [RN:R04144]
@@ -44,4 +44,9 @@ COMPOUND    C00119  5-Phospho-alpha-D-ribose 1-diphosphate
             C04677  1-(5'-Phosphoribosyl)-5-amino-4-imidazolecarboxamide
             C04734  1-(5'-Phosphoribosyl)-5-formamido-4-imidazolecarboxamide
             C00130  IMP
+REFERENCE   PMID:34210662
+  AUTHORS   Chandel NS
+  TITLE     Nucleotide Metabolism.
+  JOURNAL   Cold Spring Harb Perspect Biol 13:a040592 (2021)
+            DOI:10.1101/cshperspect.a040592
 ///

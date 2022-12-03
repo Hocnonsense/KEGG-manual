@@ -7,7 +7,7 @@ ORTHOLOGY   K13787  cotB1; geranylgeranyl diphosphate synthase [EC:2.5.1.1 2.5.1
             K22998  cotB4; cyclooctatin synthase [EC:1.14.99.62] [RN:R12178]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of other bacterial compounds
 PATHWAY     map00900  Terpenoid backbone biosynthesis
-            map00999  Biosynthesis of various secondary metabolites - part 1
+            map00997  Biosynthesis of various other secondary metabolites
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R01658  C00235 + C00129 -> C00341

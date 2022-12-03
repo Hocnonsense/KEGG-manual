@@ -11,7 +11,7 @@ ORTHOLOGY   K02492  hemA; glutamyl-tRNA reductase [EC:1.2.1.70] [RN:R04109]
             K01772  hemH; coproporphyrin ferrochelatase [EC:4.99.1.9] [RN:R11329]
             K00435  hemQ; hydrogen peroxide-dependent heme synthase [EC:1.3.98.5] [RN:R11522]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
-PATHWAY     map00860  Porphyrin and chlorophyll metabolism
+PATHWAY     map00860  Porphyrin metabolism
             map01240  Biosynthesis of cofactors
             map01100  Metabolic pathways
 REACTION    R04109  C02987 -> C03741

@@ -103,16 +103,16 @@
 					"name":"M00565  Trehalose biosynthesis, D-glucose 1P => trehalose [PATH:map00500 map01100 map01110]"
 				},
 				{
-					"name":"M00549  Nucleotide sugar biosynthesis, glucose => UDP-glucose [PATH:map00520 map01100]"
+					"name":"M00549  Nucleotide sugar biosynthesis, glucose => UDP-glucose [PATH:map00520 map01250 map01100]"
 				},
 				{
-					"name":"M00554  Nucleotide sugar biosynthesis, galactose => UDP-galactose [PATH:map00520 map00052 map01100]"
+					"name":"M00554  Nucleotide sugar biosynthesis, galactose => UDP-galactose [PATH:map00520 map00052 map01250 map01100]"
 				},
 				{
-					"name":"M00892  UDP-N-acetyl-D-glucosamine biosynthesis, eukaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01100]"
+					"name":"M00892  UDP-N-acetyl-D-glucosamine biosynthesis, eukaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
 				},
 				{
-					"name":"M00909  UDP-N-acetyl-D-glucosamine biosynthesis, prokaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01100]"
+					"name":"M00909  UDP-N-acetyl-D-glucosamine biosynthesis, prokaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
 				},
 				{
 					"name":"M00761  Undecaprenylphosphate alpha-L-Ara4N biosynthesis, UDP-GlcA => undecaprenyl phosphate alpha-L-Ara4N [PATH:map00520 map01100]"
@@ -363,7 +363,7 @@
 					"name":"M00158  F-type ATPase, eukaryotes [PATH:map00190]"
 				},
 				{
-					"name":"M00159  V-type ATPase, prokaryotes [PATH:map00190]"
+					"name":"M00159  V\/A-type ATPase, prokaryotes [PATH:map00190]"
 				},
 				{
 					"name":"M00160  V-type ATPase, eukaryotes [PATH:map00190]"
@@ -432,7 +432,7 @@
 					"name":"M00862  beta-Oxidation, peroxisome, tri\/dihydroxycholestanoyl-CoA => choloyl\/chenodeoxycholoyl-CoA [PATH:map00120 map01100]"
 				},
 				{
-					"name":"M00107  Steroid hormone biosynthesis, cholesterol => prognenolone => progesterone [PATH:map00140 map01100]"
+					"name":"M00107  Steroid hormone biosynthesis, cholesterol => pregnenolone => progesterone [PATH:map00140 map01100]"
 				},
 				{
 					"name":"M00108  C21-Steroid hormone biosynthesis, progesterone => corticosterone\/aldosterone [PATH:map00140 map01100]"
@@ -449,7 +449,7 @@
 				"name":"Lipid metabolism",
 				"children":[
 				{
-					"name":"M00088  Ketone body biosynthesis, acetyl-CoA => acetoacetate\/3-hydroxybutyrate\/acetone [PATH:map00072 map01100]"
+					"name":"M00088  Ketone body biosynthesis, acetyl-CoA => acetoacetate\/3-hydroxybutyrate\/acetone [PATH:map00650 map01100]"
 				},
 				{
 					"name":"M00089  Triacylglycerol biosynthesis [PATH:map00561 map01100]"
@@ -498,13 +498,22 @@
 				"name":"Purine metabolism",
 				"children":[
 				{
-					"name":"M00048  Inosine monophosphate biosynthesis, PRPP + glutamine => IMP [PATH:map00230 map01100]"
+					"name":"M00048  De novo purine biosynthesis, PRPP + glutamine => IMP [PATH:map00230 map01100]"
 				},
 				{
-					"name":"M00049  Adenine ribonucleotide biosynthesis, IMP => ADP,ATP [PATH:map00230 map01240 map01100]"
+					"name":"M00049  Adenine ribonucleotide biosynthesis, IMP => ADP,ATP [PATH:map00230 map01232 map01240 map01100]"
 				},
 				{
-					"name":"M00050  Guanine ribonucleotide biosynthesis, IMP => GDP,GTP [PATH:map00230 map01100]"
+					"name":"M00050  Guanine ribonucleotide biosynthesis, IMP => GDP,GTP [PATH:map00230 map01232 map01100]"
+				},
+				{
+					"name":"M00053  Deoxyribonucleotide biosynthesis, ADP\/GDP\/CDP\/UDP => dATP\/dGTP\/dCTP\/dUTP [PATH:map00230 map00240 map01232 map01100]"
+				},
+				{
+					"name":"M00958  Adenine ribonucleotide degradation, AMP => Urate [PATH:map00230 map01232 map01100]"
+				},
+				{
+					"name":"M00959  Guanine ribonucleotide degradation, GMP => Urate [PATH:map00230 map01232 map01100]"
 				},
 				{
 					"name":"M00546  Purine degradation, xanthine => urea [PATH:map00230 map01100]"
@@ -515,22 +524,19 @@
 				"name":"Pyrimidine metabolism",
 				"children":[
 				{
-					"name":"M00051  Uridine monophosphate biosynthesis, glutamine (+ PRPP) => UMP [PATH:map00240 map01240 map01100]"
+					"name":"M00051  De novo pyrimidine biosynthesis, glutamine (+ PRPP) => UMP [PATH:map00240 map01240 map01100]"
 				},
 				{
-					"name":"M00052  Pyrimidine ribonucleotide biosynthesis, UMP => UDP\/UTP,CDP\/CTP [PATH:map00240 map01240 map01100]"
+					"name":"M00052  Pyrimidine ribonucleotide biosynthesis, UMP => UDP\/UTP,CDP\/CTP [PATH:map00240 map01232 map01240 map01100]"
 				},
 				{
-					"name":"M00053  Pyrimidine deoxyribonuleotide biosynthesis, CDP => dCTP [PATH:map00240]"
-				},
-				{
-					"name":"M00938  Pyrimidine deoxyribonuleotide biosynthesis, UDP => dTTP [PATH:map00240]"
+					"name":"M00938  Pyrimidine deoxyribonucleotide biosynthesis, UDP => dTTP [PATH:map00240 map01232 map01100]"
 				},
 				{
 					"name":"M00046  Pyrimidine degradation, uracil => beta-alanine, thymine => 3-aminoisobutanoate [PATH:map00240 map01100]"
 				},
 				{
-					"name":"M00939  Pyrimidine degradation, uracil => 3-hydroxypropanoate [PATH:map00240]"
+					"name":"M00939  Pyrimidine degradation, uracil => 3-hydroxypropanoate [PATH:map00240 map01100]"
 				}
 				]
 			}
@@ -572,7 +578,7 @@
 					"name":"M00609  Cysteine biosynthesis, methionine => cysteine [PATH:map00270 map01230 map01100]"
 				},
 				{
-					"name":"M00017  Methionine biosynthesis, apartate => homoserine => methionine [PATH:map00270 map01230 map01100]"
+					"name":"M00017  Methionine biosynthesis, aspartate => homoserine => methionine [PATH:map00270 map01230 map01100]"
 				},
 				{
 					"name":"M00034  Methionine salvage pathway [PATH:map00270 map01100]"
@@ -631,6 +637,15 @@
 				},
 				{
 					"name":"M00032  Lysine degradation, lysine => saccharopine => acetoacetyl-CoA [PATH:map00310 map01100]"
+				},
+				{
+					"name":"M00956  Lysine degradation, bacteria, L-lysine => succinate [PATH:map00310]"
+				},
+				{
+					"name":"M00957  Lysine degradation, bacteria, L-lysine => glutarate => succinate\/acetyl-CoA [PATH:map00310]"
+				},
+				{
+					"name":"M00960  Lysine degradation, bacteria, L-lysine => D-lysine => succinate [PATH:map00310]"
 				}
 				]
 			},
@@ -746,6 +761,15 @@
 				},
 				{
 					"name":"M00118  Glutathione biosynthesis, glutamate => glutathione [PATH:map00480 map01240 map01100]"
+				},
+				{
+					"name":"M00947  D-Arginine racemization, D-arginine => L-arginine [PATH:map00470 map01100]"
+				},
+				{
+					"name":"M00948  Hydroxyproline degradation, trans-4-hydroxy-L-proline => 2-oxoglutarate [PATH:map00470 map01100]"
+				},
+				{
+					"name":"M00949  Staphylopine biosynthesis, L-histidine => staphylopine [PATH:map00470 map01100]"
 				}
 				]
 			}
@@ -834,16 +858,16 @@
 					"name":"M00867  KDO2-lipid A modification pathway [PATH:map00540 map01100]"
 				},
 				{
-					"name":"M00063  CMP-KDO biosynthesis [PATH:map00540 map01100]"
+					"name":"M00063  CMP-KDO biosynthesis [PATH:map00540 map01250 map01100]"
 				},
 				{
-					"name":"M00064  ADP-L-glycero-D-manno-heptose biosynthesis [PATH:map00540 map01100]"
+					"name":"M00064  ADP-L-glycero-D-manno-heptose biosynthesis [PATH:map00540 map01250 map01100]"
 				},
 				{
-					"name":"M00922  CMP-Neu5Ac biosynthesis [PATH:map00541 map01100]"
+					"name":"M00922  CMP-Neu5Ac biosynthesis [PATH:map00541 map01250 map01100]"
 				},
 				{
-					"name":"M00923  UDP-L-FucNAm biosynthesis [PATH:map00541 map01100]"
+					"name":"M00923  UDP-L-FucNAm biosynthesis [PATH:map00541 map01250 map01100]"
 				}
 				]
 			}
@@ -917,6 +941,9 @@
 				},
 				{
 					"name":"M00123  Biotin biosynthesis, pimeloyl-ACP\/CoA => biotin [PATH:map00780 map01240 map01100]"
+				},
+				{
+					"name":"M00950  Biotin biosynthesis, BioU pathway, pimeloyl-ACP\/CoA => biotin [PATH:map00780 map01240 map01100]"
 				},
 				{
 					"name":"M00573  Biotin biosynthesis, BioI pathway, long-chain-acyl-ACP => pimeloyl-ACP => biotin [PATH:map00780 map01240 map01100]"
@@ -1060,7 +1087,7 @@
 					"name":"M00927  Gibberellin A12 biosynthesis, GAPP => GA12 [PATH:map00904 map01100 map01110]"
 				},
 				{
-					"name":"M00928  Gibberellin A4\/A1 biosynthesis, GA12 => GA4 \/ GA53 => GA1 [PATH:map00904 map01100 map01110]"
+					"name":"M00928  Gibberellin A4\/A1 biosynthesis, GA12\/GA53 => GA4\/GA1 [PATH:map00904 map01100 map01110]"
 				},
 				{
 					"name":"M00929  Gibberellin A1 biosynthesis, GGPP => GA1 [PATH:map00904 map01100 map01110]"
@@ -1161,37 +1188,37 @@
 				"name":"Polyketide sugar unit biosynthesis",
 				"children":[
 				{
-					"name":"M00793  dTDP-L-rhamnose biosynthesis [PATH:map00521 map00523 map00541 map01100 map01110]"
+					"name":"M00793  dTDP-L-rhamnose biosynthesis [PATH:map00521 map00523 map00541 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00794  dTDP-6-deoxy-D-allose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00794  dTDP-6-deoxy-D-allose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00795  dTDP-beta-L-noviose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00795  dTDP-beta-L-noviose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00796  dTDP-D-mycaminose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00796  dTDP-D-mycaminose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00797  dTDP-D-desosamine biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00797  dTDP-D-desosamine biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00798  dTDP-L-mycarose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00798  dTDP-L-mycarose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00799  dTDP-L-oleandrose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00799  dTDP-L-oleandrose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00800  dTDP-L-megosamine biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00800  dTDP-L-megosamine biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00801  dTDP-L-olivose biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00801  dTDP-L-olivose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00802  dTDP-D-forosamine biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00802  dTDP-D-forosamine biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
-					"name":"M00803  dTDP-D-angolosamine biosynthesis [PATH:map00523 map01100 map01110]"
+					"name":"M00803  dTDP-D-angolosamine biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				}
 				]
 			}
@@ -1210,19 +1237,61 @@
 					"name":"M00137  Flavanone biosynthesis, phenylalanine => naringenin [PATH:map00940 map00941 map01100 map01110]"
 				},
 				{
+					"name":"M00940  Flavanone biosynthesis, p-coumaroyl-CoA => liquiritigenin [PATH:map00941 map01100 map01110]"
+				},
+				{
 					"name":"M00138  Flavonoid biosynthesis, naringenin => pelargonidin [PATH:map00941 map01100 map01110]"
+				},
+				{
+					"name":"M00941  Isoflavone biosynthesis, liquiritigenin\/naringenin => daidzein\/genistein [PATH:map00943 map01100 map01110]"
+				},
+				{
+					"name":"M00942  Pterocarpan biosynthesis, daidzein => medicarpin [PATH:map00943 map01100 map01110]"
+				},
+				{
+					"name":"M00962  Psilocybin biosynthesis, tryptophan => psilocybin [PATH:map00901]"
+				},
+				{
+					"name":"M00963  Chanoclavine aldehyde biosynthesis, tryptophan => chanoclavine-I aldehyde [PATH:map00901]"
+				},
+				{
+					"name":"M00964  Fumigaclavine biosynthesis, chanoclavine-I aldehyde => fumigaclavine C [PATH:map00901]"
+				},
+				{
+					"name":"M00965  Vindoline biosynthesis, tabersonine => vindoline [PATH:map00901]"
+				},
+				{
+					"name":"M00943  Reticuline biosynthesis, dopamine + 4HPAA => (S)-reticuline [PATH:map00950 map01100 map01110]"
+				},
+				{
+					"name":"M00944  Morphine biosynthesis, (S)-reticuline => morphine [PATH:map00950 map01100 map01110]"
+				},
+				{
+					"name":"M00945  Sanguinarine biosynthesis, (S)-reticuline => sanguinarine [PATH:map00950 map01100 map01110]"
+				},
+				{
+					"name":"M00946  Noscapine biosynthesis, (S)-reticuline => noscapine [PATH:map00950 map01100 map01110]"
+				},
+				{
+					"name":"M00961  Betacyanin biosynthesis, L-tyrosine => amaranthin [PATH:map00965]"
 				},
 				{
 					"name":"M00370  Glucosinolate biosynthesis, tryptophan => glucobrassicin [PATH:map00380 map00966 map01210 map01100 map01110]"
 				},
 				{
-					"name":"M00900  Cronin biosynthesis, zeaxanthin => crocin [PATH:map00999 map01100 map01110]"
+					"name":"M00900  Crocin biosynthesis, crocetin => crocin [PATH:map00999 map01100 map01110]"
 				},
 				{
 					"name":"M00894  Cannabidiol biosynthesis, malonyl-CoA => cannabidiol\/dronabinol [PATH:map00999 map01100 map01110]"
 				},
 				{
-					"name":"M00902  Podophyllotoxin biosynthesis, coniferyl alcohol => podophyllotoxin [PATH:map00998 map01100 map01110]"
+					"name":"M00953  Mugineic acid biosynthesis, methionine => 3-epihydroxymugineic acid [PATH:map00999]"
+				},
+				{
+					"name":"M00952  Benzoxazinoid biosynthesis, indoleglycerol phosphate => DIMBOA-glucoside"
+				},
+				{
+					"name":"M00902  Podophyllotoxin biosynthesis, coniferyl alcohol => podophyllotoxin [PATH:map00999 map01100 map01110]"
 				}
 				]
 			},
@@ -1250,7 +1319,7 @@
 				"name":"Biosynthesis of other antibiotics",
 				"children":[
 				{
-					"name":"M00877  Kanosamine biosynthesis glucose 6-phosphate => kanosamine [PATH:map00998 map01100 map01110]"
+					"name":"M00877  Kanosamine biosynthesis, glucose 6-phosphate => kanosamine [PATH:map00998 map01100 map01110]"
 				},
 				{
 					"name":"M00889  Puromycin biosynthesis, ATP => puromycin [PATH:map00998 map01100 map01110]"
@@ -1259,28 +1328,31 @@
 					"name":"M00815  Validamycin A biosynthesis, sedoheptulopyranose-7P => validamycin A [PATH:map00525 map01100 map01110]"
 				},
 				{
-					"name":"M00904  Dapdiamides biosynthesis, L-2,3-diaminopropanoate => dapdiamide A\/B\/C [PATH:map00997 map01100 map01110]"
-				},
-				{
-					"name":"M00785  Cycloserine biosynthesis, arginine\/serine => cycloserine [PATH:map00997 map01100 map01110]"
+					"name":"M00904  Dapdiamides biosynthesis, L-2,3-diaminopropanoate => dapdiamide A\/B\/C [PATH:map00998 map01100 map01110]"
 				},
 				{
 					"name":"M00787  Bacilysin biosynthesis, prephenate => bacilysin [PATH:map00998 map01100 map01110]"
 				},
 				{
+					"name":"M00785  Cycloserine biosynthesis, arginine\/serine => cycloserine [PATH:map00998 map01100 map01110]"
+				},
+				{
 					"name":"M00848  Aurachin biosynthesis, anthranilate => aurachin A [PATH:map00998 map01100 map01110]"
 				},
 				{
-					"name":"M00788  Terpentecin biosynthesis, GGAP => terpentecin [PATH:map00999 map01100 map01110]"
+					"name":"M00788  Terpentecin biosynthesis, GGAP => terpentecin [PATH:map00998 map01100 map01110]"
 				},
 				{
-					"name":"M00819  Pentalenolactone biosynthesis, farnesyl-PP => pentalenolactone [PATH:map00999 map01100 map01110]"
+					"name":"M00819  Pentalenolactone biosynthesis, farnesyl-PP => pentalenolactone [PATH:map00998 map01100 map01110]"
 				},
 				{
 					"name":"M00903  Fosfomycin biosynthesis, phosphoenolpyruvate => fosfomycin [PATH:map00998 map01100 map01110]"
 				},
 				{
-					"name":"M00890  Roseoflavin biosynthesis, FMN => roseoflavin [PATH:map00997 map01100 map01110]"
+					"name":"M00890  Roseoflavin biosynthesis, FMN => roseoflavin [PATH:map00998 map01100 map01110]"
+				},
+				{
+					"name":"M00951  Cremeomycin biosynthesis, aspartate\/3,4-AHBA => cremeomycin [PATH:map00998 map01100]"
 				}
 				]
 			},
@@ -1297,13 +1369,13 @@
 					"name":"M00937  Aflatoxin biosynthesis, malonyl-CoA => aflatoxin B1 [PATH:map00254 map01100 map01110]"
 				},
 				{
-					"name":"M00893  Lovastatin biosynthesis, malonyl-CoA => lovastatin acid [PATH:map00999 map01100 map01110]"
+					"name":"M00893  Lovastatin biosynthesis, malonyl-CoA => lovastatin acid [PATH:map00997 map01100 map01110]"
 				},
 				{
-					"name":"M00891  Ditryptophenaline biosynthesis, tryptophan + phenylalanine => ditryptophenaline [PATH:map00998 map01100 map01110]"
+					"name":"M00891  Ditryptophenaline biosynthesis, tryptophan + phenylalanine => ditryptophenaline [PATH:map00997 map01100 map01110]"
 				},
 				{
-					"name":"M00901  Fumiquinazoline biosynthesis, tryptophan + alanine + anthranilate => fumiquinazoline [PATH:map00998 map01100 map01110]"
+					"name":"M00901  Fumiquinazoline biosynthesis, tryptophan + alanine + anthranilate => fumiquinazoline [PATH:map00997 map01100 map01110]"
 				}
 				]
 			},
@@ -1335,7 +1407,7 @@
 					"name":"M00838  Undecylprodigiosin biosynthesis, L-proline => undecylprodigiosin [PATH:map00333 map01100 map01110]"
 				},
 				{
-					"name":"M00921  Cyclooctatin biosynthesis, dimethylallyl-PP + isopentenyl-PP => cyclooctatin [PATH:map00900 map00999 map01100 map01110]"
+					"name":"M00921  Cyclooctatin biosynthesis, dimethylallyl-PP + isopentenyl-PP => cyclooctatin [PATH:map00900 map00997 map01100 map01110]"
 				},
 				{
 					"name":"M00905  Grixazone biosynthesis, aspartate 4-semialdehyde => grixazone B [PATH:map00997 map01100 map01110]"

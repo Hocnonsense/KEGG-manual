@@ -1,5 +1,5 @@
 ENTRY       M00928            Pathway   Module
-NAME        Gibberellin A4/A1 biosynthesis, GA12 => GA4 / GA53 => GA1
+NAME        Gibberellin A4/A1 biosynthesis, GA12/GA53 => GA4/GA1
 DEFINITION  K05282 K04124
 ORTHOLOGY   K05282  gibberellin-44 dioxygenase [EC:1.14.11.12] [RN:R06322 R06323 R06326 R05097 R03806 R03807]
             K04124  gibberellin 3beta-dioxygenase [EC:1.14.11.15] [RN:R06336 R03009]

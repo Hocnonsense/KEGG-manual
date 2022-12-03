@@ -7,6 +7,7 @@ ORTHOLOGY   K16435  oleV; dTDP-4-dehydro-6-deoxy-alpha-D-glucopyranose 2,3-dehyd
             K13319  oleU; 4-ketoreductase [RN:R06434]
 CLASS       Pathway modules; Biosynthesis of terpenoids and polyketides; Polyketide sugar unit biosynthesis
 PATHWAY     map00523  Polyketide sugar unit biosynthesis
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R05518  C11907 -> C06620

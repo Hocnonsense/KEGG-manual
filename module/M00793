@@ -10,6 +10,7 @@ CLASS       Pathway modules; Biosynthesis of terpenoids and polyketides; Polyket
 PATHWAY     map00521  Streptomycin biosynthesis
             map00523  Polyketide sugar unit biosynthesis
             map00541  O-Antigen nucleotide sugar biosynthesis
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R02328  C00103 -> C00842

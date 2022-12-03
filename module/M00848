@@ -13,7 +13,7 @@ ORTHOLOGY   K09460  auaEII; anthranilate-CoA ligase [EC:6.2.1.32] [RN:R00982]
             K22801  auaJ; aurachin B monooxygenase [EC:1.14.13.-] [RN:R12052 R12053]
             K22802  auaI; aurichin B epoxide hydrolase [RN:R12054]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of other antibiotics
-PATHWAY     map00998  Biosynthesis of various secondary metabolites - part 2
+PATHWAY     map00998  Biosynthesis of various antibiotics
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
 REACTION    R00982  C00108 -> C02247

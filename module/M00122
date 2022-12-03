@@ -13,7 +13,7 @@ ORTHOLOGY   K00798,K19221  cob(I)alamin adenosyltransferase [EC:2.5.1.17] [RN:R1
             K22316  adenosylcobalamin/alpha-ribazole phosphatase [EC:3.1.26.4 3.1.3.73] [RN:R04594]
             K02233  adenosylcobinamide-GDP ribazoletransferase [EC:2.7.8.26] [RN:R05223]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
-PATHWAY     map00860  Porphyrin and chlorophyll metabolism
+PATHWAY     map00860  Porphyrin metabolism
             map01240  Biosynthesis of cofactors
             map01100  Metabolic pathways
 REACTION    R12184  C06504 -> C06506

@@ -10,6 +10,7 @@ ORTHOLOGY   K00844  HK; hexokinase [EC:2.7.1.1] [RN:R01786]
             K00972  UAP1; UDP-N-acetylglucosamine/UDP-N-acetylgalactosamine diphosphorylase [EC:2.7.7.23] [RN:R00416]
 CLASS       Pathway modules; Carbohydrate metabolism; Other carbohydrate metabolism
 PATHWAY     map00520  Amino sugar and nucleotide sugar metabolism
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R01786  C00267 -> C00668
             R02740  C00668 -> C05345

@@ -14,7 +14,7 @@ ORTHOLOGY   K02303,K13542  cobA; uroporphyrin-III C-methyltransferase [EC:2.1.1.
             K02224  cobB; cobyrinic acid a,c-diamide synthase [EC:6.3.5.9] [RN:R05224]
             K02230+K09882+K09883  cobNST; cobaltochelatase CobNST [EC:6.6.1.2] [RN:R05227]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
-PATHWAY     map00860  Porphyrin and chlorophyll metabolism
+PATHWAY     map00860  Porphyrin metabolism
             map01240  Biosynthesis of cofactors
             map01100  Metabolic pathways
 REACTION    R03194  C01051 -> C02463

@@ -6,6 +6,7 @@ ORTHOLOGY   K24257  UDP-N-acetylglucosamine 2-epimerase (hydrolysing) [EC:3.2.1.
             K00983  N-acylneuraminate cytidylyltransferase [EC:2.7.7.43] [RN:R01117]
 CLASS       Pathway modules; Glycan metabolism; Lipopolysaccharide metabolism
 PATHWAY     map00541  O-Antigen nucleotide sugar biosynthesis
+            map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R00414  C00043 -> C00645 
             R01804  C00645 -> C00270

@@ -17,7 +17,7 @@ ORTHOLOGY   K02302  cysG; uroporphyrin-III C-methyltransferase / precorrin-2 deh
             K06042  cbiC; cobalt-precorrin-8 methylmutase [EC:5.4.99.60] [RN:R05814]
             K02224  cbiA; cobyrinic acid a,c-diamide synthase [EC:6.3.5.11] [RN:R05815]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
-PATHWAY     map00860  Porphyrin and chlorophyll metabolism
+PATHWAY     map00860  Porphyrin metabolism
             map01240  Biosynthesis of cofactors
             map01100  Metabolic pathways
 REACTION    R03194  C01051 -> C02463
