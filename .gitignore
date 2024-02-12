@@ -1,3 +1,8 @@
 !*
 *.png
 
+!setup.py
+!MANIFEST.in
+*.egg-info
+
+*.pyc
