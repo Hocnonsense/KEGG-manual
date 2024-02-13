@@ -2,19 +2,19 @@
 """
  * @Date: 2024-02-12 11:22:41
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-12 11:46:48
+ * @LastEditTime: 2024-02-12 22:57:04
  * @FilePath: /KEGG/tests/kegg_manual/test_kmodule.py
  * @Description:
 """
 # """
 
-from kegg_manual.kmodule import KModule
+from kegg_manual import kmodule
 
 
 def test_kmodule_express():
     def echo(express: str, updated_express: str | None = None):
         """repeat the express"""
-        km = KModule(express)
+        km = kmodule.KModule(express)
         if updated_express is not None:
             assert str(km) == updated_express
         else:
@@ -41,11 +41,19 @@ def test_kmodule_express():
 
 
 def test_kmodule_getitem():
-    assert KModule("K00058 K00831 (K01079,K02203,K22305)")["K00831"][0][1] == ["K00831"]
-    assert KModule("K00058 K00831 (K01079,K02203,K22305)")["K00831"][1] == [1, 0]
-    assert KModule("K00058 K00831 (K01079,K02203,K22305)")["K02079"] == ([], [-1])
+    assert kmodule.KModule("K00058 K00831 (K01079,K02203,K22305)")["K00831"][0][1] == [
+        "K00831"
+    ]
+    assert kmodule.KModule("K00058 K00831 (K01079,K02203,K22305)")["K00831"][1] == [
+        1,
+        0,
+    ]
+    assert kmodule.KModule("K00058 K00831 (K01079,K02203,K22305)")["K02079"] == (
+        [],
+        [-1],
+    )
 
-    e, i = KModule(
+    e, i = kmodule.KModule(
         "K00826 ((K00166+K00167,K11381)+K09699+K00382) (K00253,K00249) (K01968+K01969) (K05607,K13766) K01640"
     )["K00382"]
     assert i == [1, 2, 0]
