@@ -2,13 +2,33 @@
 """
  * @Date: 2020-07-01 00:29:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-12 11:43:54
+ * @LastEditTime: 2024-02-14 14:01:58
  * @FilePath: /KEGG/kegg_manual/kmodule.py
  * @Description:
 """
 import pickle
 from io import StringIO
-from typing import Iterable, Optional, Sequence, TextIO, Union
+from typing import Iterable, Literal, Optional, Sequence, TextIO, Union
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def rget_sub(express: str, p: int):
+    bracket_stack = 1
+    plb = express.rfind("(", 0, p)
+    prb = express.rfind(")", 0, p)
+    while bracket_stack:
+        if plb < prb:
+            bracket_stack += 1
+            p = prb
+            prb = express.rfind(")", 0, p)
+        else:
+            bracket_stack -= 1
+            p = plb
+            plb = express.rfind("(", 0, p)
+    return p
 
 
 class KModule:
@@ -21,7 +41,6 @@ class KModule:
     """
 
     def __init__(self, express="", additional_info=""):
-        # print(express)
         self._is_chain = True
         self._elements: list[KModule] = []
         self._ko = ""
@@ -33,47 +52,69 @@ class KModule:
         """Calculate express"""
         if not express:
             return
-        # print(express, "<")
-        p = len(express) - 1
+
+        logger.debug(f"| 1. decode {express} <")
+        express_ = express.strip("-").strip("+")
+        p = len(express_) - 1
         if p == 5:  # ko
-            self._ko = express
+            logger.debug(f"|> 2.   KO {express_} detected")
+            self._ko = express_
             return
-        no_comma = []
-        while p >= 0:
-            c = express[p]
-            if c in "0123456789":  # get a brief KO numbner
-                no_comma.append(KModule(express[p - 5 : p + 1]))
-                p -= 5
-            elif c in ")":  # you are trapped into a sub element
+
+        # this time, we first remove all sub modules with bracket
+        subexpresses: dict[str, str] = {}
+        while ")" in express_:
+            c = express_[p]
+            if c in ")":  # you are trapped into a sub element
                 last_p = p
-                bracket_stack = 1
-                plb = express.rfind("(", 0, p)
-                prb = express.rfind(")", 0, p)
-                while bracket_stack:
-                    if plb < prb:
-                        bracket_stack += 1
-                        p = prb
-                        prb = express.rfind(")", 0, p)
-                    else:
-                        bracket_stack -= 1
-                        p = plb
-                        plb = express.rfind("(", 0, p)
-                no_comma.append(KModule(express[p + 1 : last_p]))
-            elif c in ",":
-                if self._is_chain:
-                    self._is_chain = False
-                # Stupid KEGG think "(K09880,K08965 K08966)" is equal to "(K09880,(K08965 K08966))".
-                no_comma.reverse()  # "," is in this express. Reverse "no_comma"
-                self._elements.append(KModule.from_list(no_comma))
-                no_comma = []
+                p = rget_sub(express_, p)
+                subentry = f"{p:X>6}"
+                subexpresses[subentry] = express_[p + 1 : last_p]
+                express_ = express_[:p] + subentry + express_[last_p + 1 :]
+                logger.debug(
+                    f"|>> 3.1 sub {subexpresses[subentry]} detected as {subentry} "
+                    + ("-" * 5)
+                    + f" {express_[:p]}>{express_[p:]}",
+                )
             p -= 1
-        if self._elements:  # "," is in this express. Reverse "no_comma"
-            no_comma.reverse()
-            self._elements.append(KModule.from_list(no_comma))
-        else:  # no "," is in this express, so just add it.
-            self._elements = no_comma
-        # print(*self.elements)
-        self._elements.reverse()
+
+        logger.debug(
+            f"|>> 3.2 sub {express_[:p]}>{express_[p:]} " + ("-" * 5) + f" {express}",
+        )
+
+        def update_subexpress(express_: str):
+            if express_ in subexpresses:
+                return subexpresses[express_]
+            for subentry in subexpresses:
+                if subentry in express_:
+                    express_ = express_.replace(subentry, f"({subexpresses[subentry]})")
+            return express_
+
+        elements: list[KModule] = []
+        if "," in express_:
+            self._is_chain = False
+            elements = [KModule(update_subexpress(x)) for x in express_.split(",")]
+            logger.debug(f"|>> 4.1 `,` {self._is_chain}; elements {elements}")
+        elif " " in express_:
+            elements = [
+                KModule(update_subexpress(x))
+                for x in express_.split(" ")
+                if x.replace("+", "-").strip("-")
+            ]
+            logger.debug(f"|>> 4.2 ` ` {self._is_chain}; elements {elements}")
+        else:
+            elements = [
+                KModule(update_subexpress(x))
+                for x in express_.replace("-", "+").strip("+").split("+")
+            ]
+            logger.debug(f"|>> 4.3 `+` {self._is_chain}; elements {elements}")
+        if len(elements) == 1 and elements[0]._is_chain and not elements[0]._ko:
+            self._elements.extend(elements[0]._elements)
+        else:
+            self._elements.extend(elements)
+
+        logger.debug(f"|> 5. exp: {express}")
+        logger.debug(f"...   str: {self}")
 
     def list_ko(self) -> list[str]:
         if self._ko:
@@ -110,16 +151,30 @@ class KModule:
                 return e_key, i_key
         return [], [-1]
 
-    def __str__(self):
+    def str2(self, sep_chain: Literal[" ", "+", "-"] = "+"):
         if self._ko:
             return self._ko
-        sep = " " if self._is_chain else ","
-        return sep.join(
-            [kid._ko if kid._ko else "(" + str(kid) + ")" for kid in self._elements]
-        )
+        sep = sep_chain if self._is_chain else ","
+        kids = []
+        for kid in self._elements:
+            if kid._ko:
+                kids.append(str(kid))
+            elif kid._is_chain and sep == ",":
+                kids.append(str(kid))
+            elif kid._is_chain and sep == " ":
+                kids.append(kid.str2("+"))
+            else:
+                kids.append("(" + str(kid) + ")")
+        return sep.join(kids)
+
+    def __str__(self):
+        return self.str2(" ")
+
+    def __repr__(self):
+        return f"`{self}`"
 
     @classmethod
-    def from_list(cls, no_comma, is_chain=True, additional_info=""):
+    def from_list(cls, no_comma: list["KModule"], is_chain=True, additional_info=""):
         """New Element by a list"""
         if len(no_comma) == 1:
             e = no_comma[0]
