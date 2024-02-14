@@ -2,48 +2,62 @@
 """
  * @Date: 2021-06-14 18:41:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-13 13:18:59
+ * @LastEditTime: 2024-02-14 14:00:09
  * @FilePath: /KEGG/kegg_manual/data/query.py
  * @Description:
 """
 
 import json
-import os
 from pathlib import Path
+from time import sleep
 from typing import TextIO, Union
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = iter
 
 from Bio.KEGG import REST
 
-from kegg_manual.data import cache
+from .. import kmodule
+from . import cache
+
+
+def parse_module_text(file: TextIO):
+    raw_module: dict[str, list] = {}
+    k = ""
+    listv: list[str | tuple[str, list[str]]] = []
+    for line in file:
+        if line.startswith("///"):
+            break
+        is_k, v = line[:12].rstrip(), line[12:].strip()
+        if is_k:
+            if is_k.startswith("  "):
+                listv = []
+                raw_module[k].append((is_k.strip(), listv))
+            else:
+                k = is_k
+                listv = raw_module.setdefault(k, [])
+        if v:
+            listv.append(v)
+    return raw_module
 
 
 def load_module_single(
-    source: Union[str, TextIO],
-    db: str | Path | None = None,
+    source: Union[str, TextIO], db: str | Path | None = None, download_wait_s=1
 ) -> dict[str, list[str]]:
-    @cache.file_cached(lambda x: x.replace("M", "module/M"))
+    @cache.file_cached(
+        lambda x: x.replace("M", "module/M"),
+        lambda x: x.parent.parent / "manual" / x.parent.name / x.name,
+    )
     def _load_module_txt(source: str) -> TextIO:
         assert source.startswith("M"), "not a file nor a right module number"
         assert len(source) == 6, "only single module allowed"
+        sleep(download_wait_s)
         return REST.kegg_get(source)
 
     with _load_module_txt(source, db) as file:
-        raw_module: dict[str, list] = {}
-        k = ""
-        listv: list[str | tuple[str, list[str]]] = []
-        for line in file:
-            if line.startswith("///"):
-                break
-            is_k, v = line[:12].rstrip(), line[12:].strip()
-            if is_k:
-                if is_k.startswith("  "):
-                    listv = []
-                    raw_module[k].append((is_k.strip(), listv))
-                else:
-                    k = is_k
-                    listv = raw_module.setdefault(k, [])
-            if v:
-                listv.append(v)
+        raw_module = parse_module_text(file)
 
     return raw_module
 
@@ -69,3 +83,37 @@ def load_brite(
     with _load_brite_json(source, db) as json_in:
         brite_doc: dict[str, Union[str, list[dict]]] = json.loads(json_in.read())
         return read_brite_json(brite_doc)
+
+
+def load_brite_ko00002(db: str | Path | None = None):
+    """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
+    import pandas as pd
+
+    _, brite = load_brite("br:ko00002", db)
+    module_levels = []
+    modules = set()
+    for modules1_name, modules1 in brite.items():
+        for metabolism_name, metabolism in modules1.items():
+            for metabolism_name2, metabolism2 in metabolism.items():
+                for entry, name in metabolism2.items():
+                    module_levels.append(
+                        (modules1_name, metabolism_name, metabolism_name2, entry, name)
+                    )
+                    modules.add(entry)
+
+    module_levels_ = pd.DataFrame(
+        module_levels, columns=["A", "B", "C", "entry", "name"]
+    )
+    module_levels_.index = module_levels_["entry"]
+
+    modules_d = {}
+    for entry in tqdm(modules):
+        raw_module = load_module_single(entry, db, download_wait_s=0.3)
+        raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
+        km = kmodule.KModule(
+            raw_def,
+            additional_info="".join(raw_module.get("NAME", [entry])),
+        )
+        modules_d[entry] = km
+
+    return module_levels_, modules_d
