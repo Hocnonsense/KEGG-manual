@@ -1,4 +1,4 @@
-ENTRY       M00145            Complex   Module
+ENTRY       M00145            Pathway   Module
 NAME        NAD(P)H:quinone oxidoreductase, chloroplasts and cyanobacteria
 DEFINITION  K05574+K05582+K05581+K05579+K05572+K05580+K05578+K05576+K05577+K05575+K05573-K05583-K05584-K05585
 ORTHOLOGY   K05574  ndhC; NAD(P)H-quinone oxidoreductase subunit 3 [EC:7.1.1.2]
@@ -17,9 +17,11 @@ ORTHOLOGY   K05574  ndhC; NAD(P)H-quinone oxidoreductase subunit 3 [EC:7.1.1.2]
             K05585  ndhN; NAD(P)H-quinone oxidoreductase subunit N [EC:7.1.1.2]
 CLASS       Pathway modules; Energy metabolism; ATP synthesis
 PATHWAY     map00190  Oxidative phosphorylation
-REACTION    R11945  C00399 + C00004 -> C00390 + C00003
+            map01100  Metabolic pathways
+REACTION    R11945  C00399 + C00004 + C00080 -> C00390 + C00003
 COMPOUND    C00399  Ubiquinone
             C00004  NADH
+            C00080  H+
             C00390  Ubiquinol
             C00003  NAD+
 ///

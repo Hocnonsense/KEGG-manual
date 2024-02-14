@@ -1,4 +1,4 @@
-ENTRY       M00146            Complex   Module
+ENTRY       M00146            Pathway   Module
 NAME        NADH dehydrogenase (ubiquinone) 1 alpha subcomplex
 DEFINITION  K03945+K03946+K03947+K03948+K03949+K03950+K03951+K03952+K03953+K03954+K03955+K03956+K11352+K11353
 ORTHOLOGY   K03945  NADH dehydrogenase (ubiquinone) 1 alpha subcomplex 1
@@ -17,4 +17,11 @@ ORTHOLOGY   K03945  NADH dehydrogenase (ubiquinone) 1 alpha subcomplex 1
             K11353  NADH dehydrogenase (ubiquinone) 1 alpha subcomplex 13
 CLASS       Pathway modules; Energy metabolism; ATP synthesis
 PATHWAY     map00190  Oxidative phosphorylation
+            map01100  Metabolic pathways
+REACTION    R11945  C00399 + C00004 + C00080 -> C00390 + C00003
+COMPOUND    C00399  Ubiquinone
+            C00004  NADH
+            C00080  H+
+            C00390  Ubiquinol
+            C00003  NAD+
 ///

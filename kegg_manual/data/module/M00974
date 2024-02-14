@@ -1,0 +1,23 @@
+ENTRY       M00974            Pathway   Module
+NAME        Betaine metabolism, animals, betaine => glycine
+DEFINITION  K00544 K00315 (K00306,K00314)
+ORTHOLOGY   K00544  betaine-homocysteine S-methyltransferase [EC:2.1.1.5] [RN:R02821]
+            K00315  dimethylglycine dehydrogenase [EC:1.5.8.4] [RN:R01565]
+            K00306  sarcosine oxidase [EC:1.5.3.1] [RN:R00610]
+            K00314  sarcosine dehydrogenase [EC:1.5.8.3] [RN:R00611]
+CLASS       Pathway modules; Amino acid metabolism; Serine and threonine metabolism
+PATHWAY     map00260  Glycine, serine and threonine metabolism
+            map01100  Metabolic pathways
+REACTION    R02821  C00719 -> C01026
+            R01565  C01026 -> C00213
+            R00610,R00611  C00213 -> C00037
+COMPOUND    C00719  Betaine
+            C01026  N,N-Dimethylglycine
+            C00213  Sarcosine
+            C00037  Glycine
+REFERENCE   PMID:29094215
+  AUTHORS   Adeva-Andany M, Souto-Adeva G, Ameneiros-Rodriguez E, Fernandez-Fernandez C, Donapetry-Garcia C, Dominguez-Montero A
+  TITLE     Insulin resistance and glycine metabolism in humans.
+  JOURNAL   Amino Acids 50:11-27 (2018)
+            DOI:10.1007/s00726-017-2508-0
+///

@@ -1,6 +1,6 @@
 ENTRY       M00563            Pathway   Module
 NAME        Methanogenesis, methylamine/dimethylamine/trimethylamine => methane
-DEFINITION  K14082 ((K16177-K16176),(K16179-K16178),(K14084-K14083)) (K00399+K00401+K00402) ((K22480+K22481+K22482),(K03388+K03389+K03390),(K08264+K08265),(K03388+K03389+K03390+K14127+((K14126+K14128),(K22516+K00125))))
+DEFINITION  K14082 ((K16177-K16176),(K16179-K16178),(K14084-K14083)) K00399+K00401+K00402 (K22480+K22481+K22482,K03388+K03389+K03390,K08264+K08265,K03388+K03389+K03390+K14127+(K14126+K14128,K22516+K00125))
 ORTHOLOGY   K14082  mtbA; [methyl-Co(III) methylamine-specific corrinoid protein]:coenzyme M methyltransferase [EC:2.1.1.247] [RN:R09998]
             K16176  mtmB; methylamine---corrinoid protein Co-methyltransferase [EC:2.1.1.248] [RN:R09998]
             K16177  mtmC; monomethylamine corrinoid protein [RN:R09998]
@@ -22,7 +22,7 @@ PATHWAY     map00680  Methane metabolism
             map01120  Microbial metabolism in diverse environments
 REACTION    R09998  C00218 -> C03920
             R09999  C00543 -> C03920
-            R09124  C00565 -> C03920
+            R09124  C00565 -> C03920 
             R04541  C03920 + C04628 -> C01438 + C04832
             R11931,R04540,R11928,R11943,R11944  C04832 -> C04628
 COMPOUND    C00218  Methylamine

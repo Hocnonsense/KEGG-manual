@@ -1,8 +1,8 @@
-ENTRY       M00158            Complex   Module
+ENTRY       M00158            Pathway   Module
 NAME        F-type ATPase, eukaryotes
 DEFINITION  K02132+K02133+K02136+K02134+K02135+K02137+K02126+K02127+K02128+K02138+(K02129,K01549)+(K02130,K02139)+K02140+(K02141,K02131)-K02142-K02143+K02125
 ORTHOLOGY   K02132  ATPeF1A; F-type H+-transporting ATPase subunit alpha
-            K02133  ATPeF1B; F-type H+-transporting ATPase subunit beta [EC:3.6.3.14]
+            K02133  ATPeF1B; F-type H+-transporting ATPase subunit beta [EC:7.1.2.2]
             K02136  ATPeF1G; F-type H+-transporting ATPase subunit gamma
             K02134  ATPeF1D; F-type H+-transporting ATPase subunit delta
             K02135  ATPeF1E; F-type H+-transporting ATPase subunit epsilon
@@ -23,6 +23,12 @@ ORTHOLOGY   K02132  ATPeF1A; F-type H+-transporting ATPase subunit alpha
             K02125  ATPeF08; F-type H+-transporting ATPase subunit 8
 CLASS       Pathway modules; Energy metabolism; ATP synthesis
 PATHWAY     map00190  Oxidative phosphorylation
+            map01100  Metabolic pathways
+REACTION    R00086  C00008 + C00009 -> C00002 + C00001
+COMPOUND    C00008  ADP
+            C00009  Orthophosphate
+            C00002  ATP
+            C00001  H2O
 REFERENCE   PMID:16164973
   AUTHORS   Ackerman SH, Tzagoloff A
   TITLE     Function, structure, and biogenesis of mitochondrial ATP synthase.

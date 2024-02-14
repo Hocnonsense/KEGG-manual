@@ -1,4 +1,4 @@
-ENTRY       M00147            Complex   Module
+ENTRY       M00147            Pathway   Module
 NAME        NADH dehydrogenase (ubiquinone) 1 beta subcomplex
 DEFINITION  K03957+K03958+K03959+K03960+K03961+K03962+K03963+K03964+K03965+K03966+K11351+K03967+K03968
 ORTHOLOGY   K03957  NADH dehydrogenase (ubiquinone) 1 beta subcomplex 1
@@ -16,4 +16,11 @@ ORTHOLOGY   K03957  NADH dehydrogenase (ubiquinone) 1 beta subcomplex 1
             K03968  NADH dehydrogenase (ubiquinone) 1 subcomplex unknown 2
 CLASS       Pathway modules; Energy metabolism; ATP synthesis
 PATHWAY     map00190  Oxidative phosphorylation
+            map01100  Metabolic pathways
+REACTION    R11945  C00399 + C00004 + C00080 -> C00390 + C00003
+COMPOUND    C00399  Ubiquinone
+            C00004  NADH
+            C00080  H+
+            C00390  Ubiquinol
+            C00003  NAD+
 ///

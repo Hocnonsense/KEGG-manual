@@ -1,6 +1,6 @@
 ENTRY       M00631            Pathway   Module
 NAME        D-Galacturonate degradation (bacteria), D-galacturonate => pyruvate + D-glyceraldehyde 3P
-DEFINITION  K01812 K00041 (K01685,(K16849+K16850)) K00874 (K01625,K17463)
+DEFINITION  K01812 K00041 (K01685,K16849+K16850) K00874 (K01625,K17463)
 ORTHOLOGY   K01812  glucuronate isomerase [EC:5.3.1.12] [RN:R01983]
             K00041  tagaturonate reductase [EC:1.1.1.58] [RN:R02555]
             K01685,K16849,K16850  altronate hydrolase [EC:4.2.1.7] [RN:R01540]

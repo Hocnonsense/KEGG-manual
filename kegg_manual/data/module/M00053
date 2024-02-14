@@ -1,6 +1,6 @@
 ENTRY       M00053            Pathway   Module
 NAME        Deoxyribonucleotide biosynthesis, ADP/GDP/CDP/UDP => dATP/dGTP/dCTP/dUTP
-DEFINITION  ((K00525+K00526),(K10807+K10808)) (K00940,K18533)
+DEFINITION  (K00525+K00526,K10807+K10808) (K00940,K18533)
 ORTHOLOGY   K00525,K00526,K10807,K10808  ribonucleoside-diphosphate reductase [EC:1.17.4.1] [RN:R02017 R02019 R02024 R02018]
             K00940,K18533  nucleoside-diphosphate kinase [EC:2.7.4.6] [RN:R01137 R01857 R02326 R02331]
 CLASS       Pathway modules; Nucleotide metabolism; Purine metabolism

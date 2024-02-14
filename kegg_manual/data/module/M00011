@@ -1,6 +1,6 @@
 ENTRY       M00011            Pathway   Module
 NAME        Citrate cycle, second carbon oxidation, 2-oxoglutarate => oxaloacetate
-DEFINITION  ((((K00164+K00658),K01616)+K00382),(K00174+K00175-K00177-K00176)) ((K01902+K01903),(K01899+K01900),K18118) ((K00234+K00235+K00236+(K00237,K25801)),(K00239+K00240+K00241-(K00242,K18859,K18860)),(K00244+K00245+K00246-K00247)) (K01676,K01679,(K01677+K01678)) (K00026,K00025,K00024,K00116)
+DEFINITION  ((K00164+K00658,K01616)+K00382,K00174+K00175-K00177-K00176) (K01902+K01903,K01899+K01900,K18118) (K00234+K00235+K00236+(K00237,K25801),K00239+K00240+K00241-(K00242,K18859,K18860),K00244+K00245+K00246-K00247) (K01676,K01679,K01677+K01678) (K00026,K00025,K00024,K00116)
 ORTHOLOGY   K00164,K01616,K00658,K00382  2-oxoglutarate dehydrogenase [EC:1.2.4.2 2.3.1.61 1.8.1.4] [RN:R00621 R03316 R01700 R02570 R07618]
             K00174  2-oxoglutarate/2-oxoacid ferredoxin oxidoreductase subunit alpha [EC:1.2.7.3 1.2.7.11] [RN:R01197]
             K00175  2-oxoglutarate/2-oxoacid ferredoxin oxidoreductase subunit beta [EC:1.2.7.3 1.2.7.11] [RN:R01197]
@@ -18,6 +18,7 @@ ORTHOLOGY   K00164,K01616,K00658,K00382  2-oxoglutarate dehydrogenase [EC:1.2.4.
 CLASS       Pathway modules; Carbohydrate metabolism; Central carbohydrate metabolism
 PATHWAY     map00020  Citrate cycle (TCA cycle)
             map01200  Carbon metabolism
+            map01210  2-Oxocarboxylic acid metabolism
             map01100  Metabolic pathways
 REACTION    R00621+R03316,R01700  C00026 + C15972 -> C16254
             R02570  C16254 -> C00091 + C15973
@@ -36,4 +37,5 @@ COMPOUND    C00026  2-Oxoglutarate
             C00122  Fumarate
             C00149  (S)-Malate
             C00036  Oxaloacetate
+RMODULE     RM044  2-Oxocarboxylic acid conversion to its CoA derivative
 ///

@@ -1,4 +1,4 @@
-ENTRY       M00154            Complex   Module
+ENTRY       M00154            Pathway   Module
 NAME        Cytochrome c oxidase
 DEFINITION  (K02257+K02262+K02256+K02261+K02263+K02264+K02265+K02266+K02267+K02268+K02270-K02271+K02272-K02273+K02258+K02259+K02260)
 ORTHOLOGY   K02257  COX10; protoheme IX farnesyltransferase [EC:2.5.1.141]
@@ -20,5 +20,12 @@ ORTHOLOGY   K02257  COX10; protoheme IX farnesyltransferase [EC:2.5.1.141]
             K02260  COX17; cytochrome c oxidase assembly protein subunit 17
 CLASS       Pathway modules; Energy metabolism; ATP synthesis
 PATHWAY     map00190  Oxidative phosphorylation
+            map01100  Metabolic pathways
+REACTION    R00081  C00007 + 4 C00126 + 4 C00080 -> 4 C00125 + 2 C00001
+COMPOUND    C00007  Oxygen
+            C00126  Ferrocytochrome c
+            C00080  H+
+            C00125  Ferricytochrome c
+            C00001  H2O
 COMMENT     Complex IV in the electron transport chain.
 ///

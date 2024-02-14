@@ -1,0 +1,32 @@
+ENTRY       M00975            Pathway   Module
+NAME        Betaine degradation, bacteria, betaine => pyruvate
+DEFINITION  K00479+K21832 (((K00309,K00315) (K00301,K00302+K00303+K00304+K00305)),K21833+K21834+K25960+K25961) K00600 (K01752,K01754)
+ORTHOLOGY   K00479,K21832  glycine betaine monooxygenase [EC:1.14.13.251] [RN:R13016]
+            K00309  dimethylglycine oxidase [EC:1.5.3.10] [RN:R01564]
+            K00315  dimethylglycine dehydrogenase [EC:1.5.8.4] [RN:R01565] 
+            K00301  sarcosine oxidase [EC:1.5.3.1] [RN:R00610]
+            K00302,K00303,K00304,K00305  sarcosine oxidase [EC:1.5.3.24 1.5.3.1] [RN:R00610 R12967]
+            K21833,K21834,K25960,K25961  N,N-dimethylglycine/sarcosine dehydrogenase [EC:1.5.7.3] [RN:R13028 R13029]
+            K00600  glycine hydroxymethyltransferase [EC:2.1.2.1] [RN:R00945]
+            K01752  L-serine dehydratase [EC:4.3.1.17] [RN:R00220]
+            K01754  threonine dehydratase [EC:4.3.1.19] [RN:R00220]
+CLASS       Pathway modules; Amino acid metabolism; Serine and threonine metabolism
+PATHWAY     map00260  Glycine, serine and threonine metabolism
+            map01100  Metabolic pathways
+REACTION    R13016  C00719 -> C01026
+            R01564,R01565,R13028  C01026 -> C00213
+            R00610,R12967,R13029  C00213 -> C00037
+            R00945  C00037 -> C00065
+            R00220  C00065 -> C00022
+COMPOUND    C00719  Betaine
+            C01026  N,N-Dimethylglycine
+            C00213  Sarcosine
+            C00037  Glycine
+            C00065  L-Serine
+            C00022  Pyruvate
+REFERENCE   PMID:32631860
+  AUTHORS   Yang T, Shao YH, Guo LZ, Meng XL, Yu H, Lu WD.
+  TITLE     Role of N,N-Dimethylglycine and Its Catabolism to Sarcosine in Chromohalobacter salexigens DSM 3043.
+  JOURNAL   Appl Environ Microbiol 86:e01186-20 (2020)
+            DOI:10.1128/AEM.01186-20
+///
