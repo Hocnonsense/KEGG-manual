@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 10:58:21
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-13 12:58:54
+ * @LastEditTime: 2024-02-13 14:14:52
  * @FilePath: /KEGG/kegg_manual/data/cache.py
  * @Description:
 """
@@ -43,6 +43,9 @@ def file_cached(
 
     After given time (default 180 days (180d * 24h * 60m * 60s)), file should be created again
 
+        - if keep_seconds < 0, file will never be updated
+        - if keep_seconds < -1, file will never be updated or downloaded
+
     If there is a modify version of function default generated text, will return the modified version
 
     If file is updated, will warn user
@@ -76,11 +79,13 @@ def file_cached(
                 db_file = db_ / func_to_file(source)
 
             # file read case 1: cached, read it:
+            _keep_seconds = (
+                keep_seconds if keep_seconds is not None else default_keep_seconds
+            )
             if db_file.is_file():
-                _keep_seconds = (
-                    keep_seconds if keep_seconds is not None else default_keep_seconds
-                )
-                if file_modified_before(db_file, _keep_seconds):
+                if _keep_seconds < 0:
+                    cache_action = "use"
+                elif file_modified_before(db_file, _keep_seconds):
                     warnings.warn(
                         f"{source}: cached file {db_file} is out of date, will update"
                     )
@@ -88,6 +93,9 @@ def file_cached(
                 else:
                     cache_action = "use"
             else:
+                assert (
+                    -1 <= _keep_seconds
+                ), "you forced not to update the existing cache, but nothing cached"
                 db_file.parent.mkdir(parents=True, exist_ok=True)
                 cache_action = "create"
 
