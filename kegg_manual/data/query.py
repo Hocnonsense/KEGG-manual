@@ -2,7 +2,7 @@
 """
  * @Date: 2021-06-14 18:41:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-14 14:00:09
+ * @LastEditTime: 2024-02-14 14:19:40
  * @FilePath: /KEGG/kegg_manual/data/query.py
  * @Description:
 """
@@ -12,14 +12,8 @@ from pathlib import Path
 from time import sleep
 from typing import TextIO, Union
 
-try:
-    from tqdm import tqdm
-except ImportError:
-    tqdm = iter
-
 from Bio.KEGG import REST
 
-from .. import kmodule
 from . import cache
 
 
@@ -83,37 +77,3 @@ def load_brite(
     with _load_brite_json(source, db) as json_in:
         brite_doc: dict[str, Union[str, list[dict]]] = json.loads(json_in.read())
         return read_brite_json(brite_doc)
-
-
-def load_brite_ko00002(db: str | Path | None = None):
-    """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
-    import pandas as pd
-
-    _, brite = load_brite("br:ko00002", db)
-    module_levels = []
-    modules = set()
-    for modules1_name, modules1 in brite.items():
-        for metabolism_name, metabolism in modules1.items():
-            for metabolism_name2, metabolism2 in metabolism.items():
-                for entry, name in metabolism2.items():
-                    module_levels.append(
-                        (modules1_name, metabolism_name, metabolism_name2, entry, name)
-                    )
-                    modules.add(entry)
-
-    module_levels_ = pd.DataFrame(
-        module_levels, columns=["A", "B", "C", "entry", "name"]
-    )
-    module_levels_.index = module_levels_["entry"]
-
-    modules_d = {}
-    for entry in tqdm(modules):
-        raw_module = load_module_single(entry, db, download_wait_s=0.3)
-        raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
-        km = kmodule.KModule(
-            raw_def,
-            additional_info="".join(raw_module.get("NAME", [entry])),
-        )
-        modules_d[entry] = km
-
-    return module_levels_, modules_d
