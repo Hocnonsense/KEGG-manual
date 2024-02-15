@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 10:58:21
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-13 14:14:52
+ * @LastEditTime: 2024-02-15 14:42:44
  * @FilePath: /KEGG/kegg_manual/data/cache.py
  * @Description:
 """
@@ -12,12 +12,15 @@ import atexit
 import datetime
 import shutil
 import warnings
+from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import Callable, TextIO
+from time import sleep
+from typing import Callable, Literal, TextIO
 
 import importlib_resources
 
+from . import cache
 
 db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
 
@@ -31,6 +34,65 @@ def report_updated_on_exit():
             "updated files:\n    "
             + ("\n    ".join(str(i) for i in changed_cached_files))
         )
+
+
+@dataclass
+class CachedModified:
+    func_to_file: Callable[[str], str] = None  # type: ignore [assignment]
+    func_to_file_modify: Callable[[Path], Path] | None = None
+    keep_seconds = 15552000
+    db: str | Path | None = None
+    download_wait_s: int | float = 1
+
+    def __post_init__(self) -> None:
+        self.rset_get_io = staticmethod(
+            cache.file_cached(
+                self.func_to_file, self.func_to_file_modify, self.keep_seconds
+            )(self._get_io)
+        )
+
+    def _get_io(self, source: str) -> TextIO:
+        sleep(self.download_wait_s)
+        return  # type: ignore [return-value]
+
+    def load_single_raw(
+        self,
+        source: str,
+        db: str | Path | None | Literal[-1] = -1,
+        download_wait_s=-1,
+    ):
+        self.check_source_valid(source)
+
+        rset_get_io = cache.file_cached(self.func_to_file, None, self.keep_seconds)(
+            self._get_io
+        )
+
+        with rset_get_io(
+            source,
+            self.db if db == -1 else db,
+            self.download_wait_s if download_wait_s == -1 else download_wait_s,
+        ) as file:
+            raw_module = self.load_single_from_io(file)
+
+        return self.update_entry(source, raw_module)
+
+    def load_single(self, source: str):
+        self.check_source_valid(source)
+        with self.rset_get_io(source, self.db, self.keep_seconds) as file:
+            raw_module = self.load_single_from_io(file)
+
+        return self.update_entry(source, raw_module)
+
+    def load_single_from_io(self, file: TextIO):
+        return
+
+    def check_source_valid(self, source: str):
+        return True
+
+    def update_entry(
+        self, source: str, raw_module: dict[str, list[str | tuple[str, list[str]]]]
+    ):
+        return raw_module
 
 
 def file_cached(

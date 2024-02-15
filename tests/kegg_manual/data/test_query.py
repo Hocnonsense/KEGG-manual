@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 11:35:32
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-14 14:03:34
+ * @LastEditTime: 2024-02-15 15:15:26
  * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
  * @Description:
 """
@@ -10,6 +10,7 @@
 
 from pathlib import Path
 from kegg_manual import kmodule
+from kegg_manual import entry as _entry
 from kegg_manual.data import query, cache
 
 try:
@@ -18,17 +19,71 @@ except (ModuleNotFoundError, ImportError):
     from tests.kegg_manual._decorator import temp_output, test_temp, test_files
 
 
-def test_load_brite():
-    name, brite = query.load_brite("br:ko00002", cache.db_kegg_manual_data)
+def test_kbritedb_load_single():
+    name, brite = query.kbritedb.load_single("br:ko00002")
     assert name == "ko00002"
 
 
-def test_load_module_single():
-    raw_module = query.load_module_single("M00357", cache.db_kegg_manual_data)
+def test_kmoduledb_load_single():
+    raw_module = query.kmoduledb.load_single("M00357")
     if "ENTRY" in raw_module:
         assert raw_module["ENTRY"] == ["M00357            Pathway   Module"]
     # may be problematic:
     # M00651
+
+
+def test_kodb_link_reacion():
+    # Test when EC has one reaction
+    ko2gene = {"K01647": ["Gene1"]}
+    rxn2gene = query.kodb.link_reacion(ko2gene)
+    assert len(rxn2gene) == 1
+    assert len(rxn2gene["R00351"]) == 1
+    assert "R00351" in rxn2gene
+    assert rxn2gene["R00351"] == {"Gene1"}
+    # Test when EC has multiple reactions
+    ko2gene = {"K01681": ["Gene1"]}
+    rxn2gene = query.kodb.link_reacion(ko2gene)
+    assert len(rxn2gene) == 3
+    assert "R01324" in rxn2gene
+    assert "R01325" in rxn2gene
+    assert "R01900" in rxn2gene
+    assert rxn2gene["R01324"] == {"Gene1"}
+    assert rxn2gene["R01325"] == {"Gene1"}
+    assert rxn2gene["R01900"] == {"Gene1"}
+    # Test for multiple genes
+    ko2gene = {"K01647": ["Gene1", "Gene2"]}
+    rxn2gene = query.kodb.link_reacion(ko2gene)
+    assert len(rxn2gene) == 1
+    assert len(rxn2gene["R00351"]) == 2
+    assert "R00351" in rxn2gene
+    assert rxn2gene["R00351"] == {"Gene1", "Gene2"}
+
+
+def test_ec_link_reacion():
+    # Test when EC has one reaction
+    ec2gene = {"2.3.3.1": ["Gene1"]}
+    ec = query.kecdb.link_reacion(ec2gene)
+    assert len(ec) == 1
+    assert len(ec["R00351"]) == 1
+    assert "R00351" in ec
+    assert ec["R00351"] == {"Gene1"}
+    # Test when EC has multiple reactions
+    ec2gene = {"4.2.1.3": ["Gene1"]}
+    ec = query.kecdb.link_reacion(ec2gene)
+    assert len(ec) == 3
+    assert "R01324" in ec
+    assert "R01325" in ec
+    assert "R01900" in ec
+    assert ec["R01324"] == {"Gene1"}
+    assert ec["R01325"] == {"Gene1"}
+    assert ec["R01900"] == {"Gene1"}
+    # Test for multiple genes
+    ec2gene = {"2.3.3.1": ["Gene1", "Gene2"]}
+    ec = query.kecdb.link_reacion(ec2gene)
+    assert len(ec) == 1
+    assert len(ec["R00351"]) == 2
+    assert "R00351" in ec
+    assert ec["R00351"] == {"Gene1", "Gene2"}
 
 
 manual_updated_modules = [
@@ -48,7 +103,7 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
             if len(entry) != 6:
                 continue
             with open(entry_file) as fi:
-                raw_module = query.parse_module_text(fi)
+                raw_module = next(_entry.KEntry.yield_from_testio(fi)).properties
 
             raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
             km = kmodule.KModule(
@@ -72,7 +127,9 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
             ) == entry_file_manual.is_file()
             if entry_file_manual.is_file():
                 with open(entry_file_manual) as fi:
-                    raw_module_manual = query.parse_module_text(fi)
+                    raw_module_manual = next(
+                        _entry.KEntry.yield_from_testio(fi)
+                    ).properties
 
                 raw_def_manual = " ".join(
                     i.strip() for i in raw_module_manual["DEFINITION"]
@@ -86,7 +143,7 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
                 assert (str(km) != str(km_manual)) == (entry in manual_updated_modules)
                 assert str(km_manual) == raw_def_manual
                 assert (
-                    query.load_module_single(entry, db=db)["DEFINITION"]
+                    query.kmoduledb.load_single(entry)["DEFINITION"]
                     == raw_module_manual["DEFINITION"]
                 )
 

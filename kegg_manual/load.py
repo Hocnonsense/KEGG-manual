@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 14:17:35
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-14 14:21:59
+ * @LastEditTime: 2024-02-15 14:22:43
  * @FilePath: /KEGG/kegg_manual/load.py
  * @Description:
 """
@@ -23,8 +23,7 @@ except ImportError:
 
 def brite_ko00001(db: str | Path | None = None):
     """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
-
-    _, brite = query.load_brite("br:ko00001", db)
+    _, brite = query.CachedKBrite(db=db).load_single("br:ko00001")
     ko_levels: list[tuple[str, str, str, str, str]] = []
     levels_name: dict[str, str] = {}
     for modules1_name, modules1 in brite.items():
@@ -49,7 +48,7 @@ def brite_ko00001(db: str | Path | None = None):
 
 def brite_ko00002(db: str | Path | None = None):
     """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
-    _, brite = query.load_brite("br:ko00002", db)
+    _, brite = query.CachedKBrite(db=db).load_single("br:ko00002")
     module_levels = []
     modules = set()
     for modules1_name, modules1 in brite.items():
@@ -66,9 +65,10 @@ def brite_ko00002(db: str | Path | None = None):
     )
     module_levels_.index = module_levels_["entry"]
 
+    kmoduledb = query.CachedKModule(db=db, download_wait_s=0.3)
     modules_d: dict[str, kmodule.KModule] = {}
     for entry in tqdm(modules):
-        raw_module = query.load_module_single(entry, db, download_wait_s=0.3)
+        raw_module = kmoduledb.load_single(entry)
         raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
         km = kmodule.KModule(
             raw_def,
