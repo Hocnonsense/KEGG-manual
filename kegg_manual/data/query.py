@@ -2,7 +2,7 @@
 """
  * @Date: 2021-06-14 18:41:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 15:12:45
+ * @LastEditTime: 2024-02-15 15:23:26
  * @FilePath: /KEGG/kegg_manual/data/query.py
  * @Description:
 """
@@ -29,7 +29,7 @@ class CachedKBrite(cache.CachedModified):
 
     def _get_io(self, source: str) -> TextIO:
         super()._get_io(source)
-        return REST.kegg_get(source)
+        return REST.kegg_get(source, "json")
 
     def load_single(self, source: str) -> tuple[str, dict[str, dict]]:
         return super().load_single(source)
