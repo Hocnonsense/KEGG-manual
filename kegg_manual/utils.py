@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 00:13:03
+ * @LastEditTime: 2024-02-16 00:43:24
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -30,7 +30,12 @@ Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
 
 import abc
 import collections.abc
-from typing import Mapping
+from pathlib import Path
+from typing import Iterable
+
+
+class ParseError(Exception):
+    """Exception used to signal errors while parsing"""
 
 
 class FozenDict(collections.abc.Mapping):
@@ -141,3 +146,58 @@ class ModelEntry(metaclass=abc.ABCMeta):
 
     def __repr__(self):
         return str("<{} id={!r}>").format(self.__class__.__name__, self.id)
+
+
+class RheaDb:
+    """Allows storing and searching Rhea db"""
+
+    def __init__(self, filepath: str | Path):
+        self._values = self._parse_db_from_tsv(filepath)
+
+    @staticmethod
+    def _parse_db_from_tsv(filepath: str | Path):
+        """
+        $ head psamm/external-data/chebi_pH7_3_mapping.tsv
+        CHEBI   CHEBI_PH7_3     ORIGIN
+        3       3       computation
+        7       7       computation
+        8       8       computation
+        19      19      computation
+        20      20      computation
+        """
+        db: dict[str, str] = {}
+        with open(filepath) as f:
+            for line in f:
+                split = line.split("\t")
+                db[split[0]] = split[1]
+        return db
+
+    def select_chebi_id(self, id_list: list[str]):
+        return [self._values[x] for x in id_list if x in self._values]
+
+
+class FrozenOrderedSet(collections.abc.Set, collections.abc.Hashable):
+    """An immutable set that retains insertion order."""
+
+    def __init__(self, seq: Iterable | None = None):
+        self.__map: dict = collections.OrderedDict()
+        for e in seq or []:
+            self.__map[e] = None
+
+    def __contains__(self, element):
+        return element in self.__map
+
+    def __iter__(self):
+        return iter(self.__map)
+
+    def __len__(self):
+        return len(self.__map)
+
+    def __hash__(self):
+        h = 0
+        for e in self:
+            h ^= 31 * hash(e)
+        return h
+
+    def __repr__(self):
+        return str("{}({})").format(self.__class__.__name__, list(self))

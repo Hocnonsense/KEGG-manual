@@ -1,0 +1,503 @@
+# This file is part of PSAMM.
+#
+# PSAMM is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# PSAMM is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with PSAMM.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright 2014-2017  Jon Lund Steffensen <jon_steffensen@uri.edu>
+# Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
+
+"""Parser and representation of chemical formulas.
+
+Chemical formulas (:class:`.Formula`) are represented as a number of
+:class:`FormulaElements <.FormulaElement>` with associated counts. A
+:class:`.Formula` is itself a :class:`.FormulaElement` so a formula can contain
+subformulas. This allows some simple structure to be represented.
+"""
+
+import re
+from collections import Counter
+import functools
+import operator
+import numbers
+
+from .expression.affine import Expression
+
+
+class FormulaElement(object):
+    """Base class representing elements of a formula"""
+
+    def __add__(self, other):
+        """Add formula elements creating subformulas"""
+        if isinstance(other, FormulaElement):
+            if self == other:
+                return Formula({self: 2})
+            return Formula({self: 1, other: 1})
+        return NotImplemented
+
+    def __radd__(self, other):
+        return self + other
+
+    def __or__(self, other):
+        """Merge formula elements into one formula"""
+        return Formula({self: 1}) | other
+
+    def __ror__(self, other):
+        return self | other
+
+    def __mul__(self, other):
+        """Multiply formula element by other"""
+        return Formula({self: other})
+
+    def __rmul__(self, other):
+        return self * other
+
+    def repeat(self, count):
+        """Repeat formula element by creating a subformula"""
+        return Formula({self: count})
+
+    def variables(self):
+        """Iterator over variables in formula element"""
+        return iter([])
+
+    def substitute(self, mapping):
+        """Return formula element with substitutions performed"""
+        return self
+
+
+class _AtomType(type):
+    """Metaclass that gives the Atom class properties for each element.
+
+    A class based on this metaclass (i.e. :class:`.Atom`) will have singleton
+    elements with each name, and will have a property for each element which
+    contains the instance for that element.
+    """
+
+    _ELEMENTS = set(
+        "H                                                  He "
+        "Li Be                               B  C  N  O  F  Ne "
+        "Na Mg                               Al Si P  S  Cl Ar "
+        "K  Ca Sc Ti V  Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr "
+        "Rb Sr Y  Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I  Xe "
+        "Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu "
+        "         Hf Ta W  Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn "
+        "Fr Ra Ac Th Pa U  Np Pu Am Cm Bk Cf Es Fm Md No Lr "
+        "         Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og"
+        "                                    Uut   Uup  Uus Uuo".split()
+    )
+
+    _instances: dict["_AtomType", dict] = {}
+
+    def __call__(self, name, *args, **kwargs):
+        instances = _AtomType._instances.setdefault(self, {})
+        if name not in instances:
+            instances[name] = super(_AtomType, self).__call__(name, *args, **kwargs)
+        return instances[name]
+
+    def __getattribute__(self, name):
+        if name in _AtomType._ELEMENTS:
+            return self(name)
+        return super(_AtomType, self).__getattribute__(name)
+
+
+@functools.total_ordering
+class Atom(FormulaElement, metaclass=_AtomType):
+    """Represent an atom in a chemical formula
+
+    >>> hydrogen = Atom.H
+    >>> oxygen = Atom.O
+    >>> str(oxygen | 2*hydrogen)
+    'H2O'
+    """
+
+    def __init__(self, symbol):
+        self._symbol = symbol
+
+    @property
+    def symbol(self):
+        """Atom symbol
+
+        >>> Atom.H.symbol
+        'H'
+        """
+
+        return self._symbol
+
+    def __hash__(self):
+        return hash("Atom") ^ hash(self._symbol)
+
+    def __eq__(self, other):
+        return isinstance(other, Atom) and self._symbol == other._symbol
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __lt__(self, other):
+        if isinstance(other, Atom):
+            return self._symbol < other._symbol
+        return NotImplemented
+
+    def __str__(self):
+        return self._symbol
+
+    def __repr__(self):
+        return str("Atom({})").format(repr(self._symbol))
+
+
+class Radical(FormulaElement):
+    """Represents a radical or other unknown subformula"""
+
+    def __init__(self, symbol):
+        self._symbol = symbol
+
+    @property
+    def symbol(self):
+        """Radical symbol
+
+        >>> Radical('R1').symbol
+        'R1'
+        """
+
+        return self._symbol
+
+    def __hash__(self):
+        return hash("Radical") ^ hash(self._symbol)
+
+    def __eq__(self, other):
+        return isinstance(other, Radical) and self._symbol == other._symbol
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        return self._symbol
+
+    def __repr__(self):
+        return str("Radical({})").format(repr(self._symbol))
+
+
+class Formula(FormulaElement):
+    """Representation of a chemial formula
+
+    This is represented as a number of
+    :class:`FormulaElements <.FormulaElement>` with associated counts.
+
+    >>> f = Formula({Atom.C: 6, Atom.H: 12, Atom.O: 6})
+    >>> str(f)
+    'C6H12O6'
+    """
+
+    def __init__(self, values: dict = {}):
+        self._values: dict = Counter()
+        self._variables = set()
+
+        for element, value in values.items():
+            if not isinstance(element, FormulaElement):
+                raise ValueError("Not a formula element: {}".format(repr(element)))
+            if value != 0 and (not isinstance(element, Formula) or len(element) > 0):
+                self._values[element] = value
+
+            if callable(getattr(value, "variables", None)):
+                for var in value.variables():
+                    self._variables.add(var)
+            for var in element.variables():
+                self._variables.add(var)
+
+    def substitute(self, mapping):
+        result = self.__class__()
+        for element, value in self._values.items():
+            if callable(getattr(value, "substitute", None)):
+                value_ = value.substitute(mapping)
+                if isinstance(value_, int) and value_ <= 0:
+                    raise ValueError("Expression evaluated to non-positive number")
+            # TODO does not merge correctly with subformulas
+            result += value_ * element.substitute(mapping)
+        return result
+
+    def flattened(self):
+        """Return formula where subformulas have been flattened
+
+        >>> str(Formula.parse('(CH2)(CH2)2').flattened())
+        'C3H6'
+        """
+
+        stack = [(self, 1)]
+        result: dict = Counter()
+        while len(stack) > 0:
+            var, value = stack.pop()
+            if isinstance(var, Formula):
+                for sub_var, sub_value in var._values.items():
+                    stack.append((sub_var, value * sub_value))
+            else:
+                result[var] += value
+        return Formula(result)
+
+    def variables(self):
+        return iter(self._variables)
+
+    def __iter__(self):
+        return iter(self._values)
+
+    def items(self):
+        """Iterate over (:class:`.FormulaElement`, value)-pairs"""
+        return self._values.items()
+
+    def is_variable(self):
+        return len(self._variables) > 0
+
+    def __contains__(self, element):
+        return element in self._values
+
+    def get(self, element, default=None):
+        """Return value for element or default if not in the formula."""
+        return self._values.get(element, default)
+
+    def __getitem__(self, element):
+        if element not in self._values:
+            raise KeyError(repr(element))
+        return self._values[element]
+
+    def __len__(self):
+        return len(self._values)
+
+    def __str__(self):
+        """Return formula represented using Hill notation system
+
+        >>> str(Formula({Atom.C: 6, Atom.H: 12, Atom.O: 6}))
+        'C6H12O6'
+        """
+
+        def hill_sorted_elements(values):
+            def element_sort_key(pair):
+                element, value = pair
+                if isinstance(element, Atom):
+                    return 0, element.symbol
+                elif isinstance(element, Radical):
+                    return 1, element.symbol
+                else:
+                    return 2, None
+
+            if Atom.C in values:
+                yield Atom.C, values[Atom.C]
+                if Atom.H in values:
+                    yield Atom.H, values[Atom.H]
+                for element, value in sorted(values.items(), key=element_sort_key):
+                    if element not in (Atom.C, Atom.H):
+                        yield element, value
+            else:
+                for element, value in sorted(values.items(), key=element_sort_key):
+                    yield element, value
+
+        s = ""
+        for element, value in hill_sorted_elements(self._values):
+
+            def grouped(element, value):
+                return "({}){}".format(element, value if value != 1 else "")
+
+            def nongrouped(element, value):
+                return "{}{}".format(element, value if value != 1 else "")
+
+            if isinstance(element, Radical):
+                if len(element.symbol) == 1:
+                    s += nongrouped(element, value)
+                else:
+                    s += grouped(element, value)
+            elif isinstance(element, Atom):
+                s += nongrouped(element, value)
+            else:
+                s += grouped(element, value)
+        return s
+
+    def __repr__(self):
+        return str("Formula({})").format(repr(dict(self._values)))
+
+    def __and__(self, other):
+        """Intersection of formula elements."""
+        if isinstance(other, Formula):
+            return Formula(self._values & other._values)
+        elif isinstance(other, FormulaElement):
+            return Formula(self._values & Counter([other]))
+        return NotImplemented
+
+    def __or__(self, other):
+        """Merge formulas into one formula."""
+        # Note: This operator corresponds to the add-operator on Counter not
+        # the or-operator! The add-operator is used here (on the superclass)
+        # to compose formula elements into subformulas.
+        if isinstance(other, Formula):
+            return Formula(self._values | other._values)
+        elif isinstance(other, FormulaElement):
+            return Formula(self._values | Counter([other]))
+        return NotImplemented
+
+    def __sub__(self, other):
+        """Substract other formula from this formula."""
+        if isinstance(other, Formula):
+            return Formula(self._values - other._values)
+        elif isinstance(other, FormulaElement):
+            return Formula(self._values - Counter([other]))
+        return NotImplemented
+
+    def __mul__(self, other):
+        """Multiply formula element by other."""
+        values = {key: value * other for key, value in self._values.items()}
+        return Formula(values)
+
+    def __hash__(self):
+        h = hash("Formula")
+        for element, value in self._values.items():
+            h ^= hash(element) ^ hash(value)
+        return h
+
+    def __eq__(self, other):
+        return isinstance(other, Formula) and self._values == other._values
+
+    def __ne__(self, other):
+        return not self == other
+
+    @classmethod
+    def parse(cls, s):
+        """Parse a formula string (e.g. C6H10O2)."""
+        return _parse_formula(s)
+
+    @classmethod
+    def balance(cls, lhs, rhs):
+        """Return formulas that need to be added to balance given formulas
+
+        Given complete formulas for right side and left side of a reaction,
+        calculate formulas for the missing compounds on both sides. Return
+        as a left, right tuple. Formulas can be flattened before balancing
+        to disregard grouping structure.
+        """
+
+        def missing(formula, other):
+            for element, value in formula._values.items():
+                if element not in other._values:
+                    yield value * element
+                else:
+                    delta = value - other._values[element]
+                    if isinstance(delta, numbers.Number) and delta > 0:  # type: ignore [operator]
+                        yield delta * element
+
+        return (
+            functools.reduce(operator.or_, missing(rhs, lhs), Formula()),
+            functools.reduce(operator.or_, missing(lhs, rhs), Formula()),
+        )
+
+
+class ParseError(Exception):
+    """Signals error parsing formula."""
+
+    def __init__(self, *args, **kwargs):
+        self._span = kwargs.pop("span", None)
+        super(ParseError, self).__init__(*args, **kwargs)
+
+    @property
+    def indicator(self):
+        if self._span is None:
+            return None
+        pre = " " * self._span[0]
+        ind = "^" * max(1, self._span[1] - self._span[0])
+        return pre + ind
+
+
+def _parse_formula(s):
+    """Parse formula string."""
+    scanner = re.compile(
+        r"""
+        (\s+) |         # whitespace
+        (\(|\)) |       # group
+        ([A-Z][a-z]*) | # element
+        (\d+) |         # number
+        ([a-z]) |       # variable
+        (\Z) |          # end
+        (.)             # error
+    """,
+        re.DOTALL | re.VERBOSE,
+    )
+
+    def transform_subformula(form):
+        """Extract radical if subformula is a singleton with a radical."""
+        if isinstance(form, dict) and len(form) == 1:
+            # A radical in a singleton subformula is interpreted as a
+            # numbered radical.
+            element, value = next(iter(form.items()))
+            if isinstance(element, Radical):
+                return Radical("{}{}".format(element.symbol, value))
+        return form
+
+    stack = []
+    formula: dict | FormulaElement = {}
+    expect_count = False
+
+    def close(formula, count=1):
+        if len(stack) == 0:
+            raise ParseError("Unbalanced parenthesis group in formula")
+        subformula = transform_subformula(formula)
+        if isinstance(subformula, dict):
+            subformula = Formula(subformula)
+
+        formula = stack.pop()
+        if subformula not in formula:
+            formula[subformula] = 0
+        formula[subformula] += count
+        return formula
+
+    for match in re.finditer(scanner, s):
+        (whitespace, group, element, number, variable, end, error) = match.groups()
+
+        if error is not None:
+            raise ParseError(
+                "Invalid token in formula string: {!r}".format(match.group(0)),
+                span=(match.start(), match.end()),
+            )
+        elif whitespace is not None:
+            continue
+        elif group is not None and group == "(":
+            if expect_count:
+                formula = close(formula)
+            stack.append(formula)
+            formula = {}
+            expect_count = False
+        elif group is not None and group == ")":
+            if expect_count:
+                formula = close(formula)
+            expect_count = True
+        elif element is not None:
+            if expect_count:
+                formula = close(formula)
+            stack.append(formula)
+            if element in "RX":
+                formula = Radical(element)
+            else:
+                formula = Atom(element)
+            expect_count = True
+        elif number is not None and expect_count:
+            formula = close(formula, int(number))
+            expect_count = False
+        elif variable is not None and expect_count:
+            formula = close(formula, Expression(variable))
+            expect_count = False
+        elif end is not None:
+            if expect_count:
+                formula = close(formula)
+        else:
+            raise ParseError(
+                "Invalid token in formula string: {!r}".format(match.group(0)),
+                span=(match.start(), match.end()),
+            )
+
+    if len(stack) > 0:
+        raise ParseError("Unbalanced parenthesis group in formula")
+
+    assert isinstance(formula, dict)
+    return Formula(formula)

@@ -2,14 +2,14 @@
 """
  * @Date: 2024-02-13 11:35:32
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 15:15:26
+ * @LastEditTime: 2024-02-16 00:48:38
  * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
  * @Description:
 """
 # """
 
 from pathlib import Path
-from kegg_manual import kmodule
+from kegg_manual import kmodule, utils
 from kegg_manual import entry as _entry
 from kegg_manual.data import query, cache
 
@@ -84,6 +84,48 @@ def test_ec_link_reacion():
     assert len(ec["R00351"]) == 2
     assert "R00351" in ec
     assert ec["R00351"] == {"Gene1", "Gene2"}
+
+
+@temp_output
+def test_kcompounddb_load_single(test_temp: Path):
+    # Test that the download of compounds works
+    cpd_id = "C00001"
+    cpd = query.kcompounddb.load_single(cpd_id)
+    assert cpd.id == cpd_id
+    assert cpd.name == "H2O"
+    assert cpd.formula == "H2O"
+    assert cpd.mol_weight is None
+    assert cpd.chebi == "15377"
+
+    if _entry.use_chebi:
+        assert cpd.charge == 0
+    else:
+        assert cpd.charge is None
+
+    chebi_file = test_temp / "chebi_pH7_3_mapping.tsv"
+    with open(chebi_file, "w") as fo:
+        print("CHEBI", "CHEBI_PH7_3", "ORIGIN", sep="\t", file=fo)
+        print("15377", "15377", "computation", sep="\t", file=fo)
+        print("16234", "15377", "computation", sep="\t", file=fo)
+        print("29356", "15377", "computation", sep="\t", file=fo)
+        print("29412", "15377", "computation", sep="\t", file=fo)
+        print("30490", "15377", "computation", sep="\t", file=fo)
+
+    rhea = utils.RheaDb(chebi_file)
+    cpd_id = "C00001"
+    cpd = query.CachedKCompound(db=cache.db_kegg_manual_data, rhea=rhea).load_single(
+        cpd_id
+    )
+    assert cpd.mol_weight is None
+    assert cpd.chebi == "15377"
+
+
+def test_generic_compoundID():
+    # Test that the download of compounds works
+    generic_cpd_ids = {"C02987": True, "C00001": False}
+    cpd_outs = [query.kcompounddb.load_single(i) for i in generic_cpd_ids]
+    generic = {cpd.id: cpd.is_generic() for cpd in cpd_outs}
+    assert generic == generic_cpd_ids
 
 
 manual_updated_modules = [

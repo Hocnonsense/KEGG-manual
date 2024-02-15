@@ -2,21 +2,20 @@
 """
  * @Date: 2021-06-14 18:41:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 15:23:26
+ * @LastEditTime: 2024-02-16 00:40:17
  * @FilePath: /KEGG/kegg_manual/data/query.py
  * @Description:
 """
 
 from dataclasses import dataclass
 import json
-from pathlib import Path
-from time import sleep
 from typing import TextIO, Union
 
 from Bio.KEGG import REST
 
+
 from . import cache
-from .. import entry
+from .. import entry, utils
 
 
 @dataclass
@@ -157,3 +156,28 @@ class CachedKEC(CachedKEntry):
 
 
 kecdb = CachedKEC(db=cache.db_kegg_manual_data)
+
+
+@dataclass
+class CachedKCompound(CachedKEntry):
+    rhea: utils.RheaDb | None = None
+
+    def __post_init__(self) -> None:
+        if self.func_to_file is None:
+            self.func_to_file = lambda x: x.replace("C", "compound/C")
+        return super().__post_init__()
+
+    def check_source_valid(self, source: str):
+        assert source.startswith("C"), "not a file nor a right compound number"
+        assert len(source) == 6, "only single module allowed"
+        return True
+
+    def load_single(self, source: str) -> entry.KCompound:  # type: ignore [override]
+        return super().load_single(source)  # type: ignore [return-value]
+
+    def load_single_from_io(self, file: TextIO):
+        e = next(entry.KCompound.yield_from_testio(file, rhea=self.rhea))
+        return entry.KCompound(e.properties, e.filemark)
+
+
+kcompounddb = CachedKCompound(db=cache.db_kegg_manual_data)

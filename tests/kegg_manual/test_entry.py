@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:56:31
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-14 23:15:38
+ * @LastEditTime: 2024-02-16 00:48:10
  * @FilePath: /KEGG/tests/kegg_manual/test_entry.py
  * @Description:
 """
@@ -10,7 +10,7 @@
 
 from io import StringIO
 
-from kegg_manual import entry
+from kegg_manual import entry, utils
 
 
 def test_check_entry_key_indend():
@@ -21,7 +21,7 @@ def test_check_entry_key_indend():
     )
     try:
         entry.check_entry_key_indend("          property!")
-    except entry.ParseError:
+    except utils.ParseError:
         pass
     else:
         assert False
