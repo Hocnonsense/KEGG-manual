@@ -2,13 +2,12 @@
 """
  * @Date: 2020-07-01 00:29:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-14 14:01:58
+ * @LastEditTime: 2024-02-16 23:27:29
  * @FilePath: /KEGG/kegg_manual/kmodule.py
  * @Description:
 """
-import pickle
-from io import StringIO
-from typing import Iterable, Literal, Optional, Sequence, TextIO, Union
+
+from typing import Iterable, Literal, Optional, Sequence
 
 import logging
 
@@ -222,7 +221,7 @@ class KModule:
             )
             return paths
 
-    def abundance(self, ko_match: dict[str, Union[float, int]]):
+    def abundance(self, ko_match: dict[str, float | int]):
         return sum(ko_match.get(ko, 0) for ko in self.list_ko())
 
     def completeness(self, ko_match: Iterable) -> float:
@@ -237,53 +236,3 @@ class KModule:
             return count / len(self._elements)
         # self.is_chain is False
         return max([element.completeness(ko_match) for element in self._elements])
-
-
-def init_module(module_str: Union[str, StringIO, TextIO]):
-    """
-    @description: init modules
-    @param module_str:
-        string or IO of modules from KEGG module
-        e.g. Amino_acid_metabolism
-    @return module{metabolism: {Entry: KModule(Definition)}}
-    """
-    if not isinstance(module_str, str):
-        module_str_ = module_str
-    else:
-        module_str_ = StringIO(module_str)
-
-    module: dict[str, dict[str, KModule]] = {}
-    title = ""
-    line = module_str_.readline()
-    while line:
-        if line.strip()[0:5] == "Entry":
-            Entry = line.split()[1]
-            line = module_str_.readline()
-            Name = " ".join(line.strip().split()[1:])
-            # Name = Name[: Name.find(",")]
-            line = module_str_.readline()
-            express = " ".join(line.strip().split()[1:])
-            module[title][Entry] = KModule(express, Name)
-        else:  # title
-            title = line.strip()[:-1]
-            if title:
-                module[title] = {}
-        line = module_str_.readline()
-
-    return module
-
-
-def _load_module(module_name):
-    """
-    @description: load module by pickle files or text files
-    """
-    try:
-        pin = open(module_name + ".pickle", "rb")
-        module = pickle.load(pin)
-    except (OSError, FileNotFoundError, EOFError) as exc:
-        if getattr(exc, "errno", None) != 36:  # file too long :)
-            raise
-        module = init_module(module_name)
-        # with open(module_name + ".pickle", "wb") as pout:
-        #     pickle.dump(module, pout)
-    return module
