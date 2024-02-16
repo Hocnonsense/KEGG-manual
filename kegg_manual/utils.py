@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 19:55:00
+ * @LastEditTime: 2024-02-16 20:45:34
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -399,16 +399,16 @@ class LineExpression(Variable):
         If the expression is of the form 'x', the variable will be returned,
         and if the expression contains no variables, the offset will be
         returned as a number.
-
-        TODO: regressively
         """
-        result = self.__class__(self._variables, self._offset)
-        if len(result._variables) == 0:
-            return result._offset
-        if len(result._variables) == 1 and result._offset == 0:
-            for var, value in result._variables.items():
+        if len(self._variables) == 0:
+            return self._offset
+        if len(self._variables) == 1 and self._offset == 0:
+            for var, value in self._variables.items():
                 if value == 1:
-                    return var
+                    return var.simplify()
+        result = self.__class__({}, self._offset)
+        for var, value in self._variables.items():
+            result += var.simplify() * value
         return result
 
     def substitute(self, mapping):
