@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 10:58:21
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 14:42:44
+ * @LastEditTime: 2024-02-16 22:11:24
  * @FilePath: /KEGG/kegg_manual/data/cache.py
  * @Description:
 """
@@ -20,7 +20,6 @@ from typing import Callable, Literal, TextIO
 
 import importlib_resources
 
-from . import cache
 
 db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
 
@@ -46,9 +45,9 @@ class CachedModified:
 
     def __post_init__(self) -> None:
         self.rset_get_io = staticmethod(
-            cache.file_cached(
-                self.func_to_file, self.func_to_file_modify, self.keep_seconds
-            )(self._get_io)
+            file_cached(self.func_to_file, self.func_to_file_modify, self.keep_seconds)(
+                self._get_io
+            )
         )
 
     def _get_io(self, source: str) -> TextIO:
@@ -63,7 +62,7 @@ class CachedModified:
     ):
         self.check_source_valid(source)
 
-        rset_get_io = cache.file_cached(self.func_to_file, None, self.keep_seconds)(
+        rset_get_io = file_cached(self.func_to_file, None, self.keep_seconds)(
             self._get_io
         )
 
