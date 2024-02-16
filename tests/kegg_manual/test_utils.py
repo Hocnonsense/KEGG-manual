@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-16 11:59:29
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 20:23:13
+ * @LastEditTime: 2024-02-16 22:04:21
  * @FilePath: /KEGG/tests/kegg_manual/test_utils.py
  * @Description:
 """
@@ -10,6 +10,7 @@
 
 from kegg_manual.utils import Variable as V
 from kegg_manual.utils import LineExpression as E
+from kegg_manual.utils import ParseError
 
 
 def test_variable():
@@ -148,3 +149,11 @@ def test_expression_substitute():
     assert e.substitute(lambda v: {"x": e, "y": e}.get(v.symbol, v)) == E(
         {V("x"): 2, V("y"): 2}
     )
+
+
+def test_ParseError():
+    e = ParseError("This is an error", span=(4, 7))
+    assert e.indicator == "    ^^^"
+
+    e = ParseError("This is an error")
+    assert e.indicator is None

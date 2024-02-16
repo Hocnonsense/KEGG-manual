@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-15 21:53:25
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 20:59:20
+ * @LastEditTime: 2024-02-16 23:17:49
  * @FilePath: /KEGG/kegg_manual/formula.py
  * @Description:
  Parser and representation of chemical formulas.
@@ -39,7 +39,7 @@ from collections import Counter
 import functools
 import operator
 import numbers
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from .utils import ParseError, Variable, LineExpression
 
@@ -65,6 +65,9 @@ class FormulaElement(Variable):
 
     def __eq__(self, other):
         return isinstance(other, FormulaElement) and self._symbol == other._symbol
+
+    def __hash__(self):
+        return super().__hash__()
 
     def substitute(self, mapping):
         """Return formula element with substitutions performed"""
@@ -163,6 +166,9 @@ class Radical(FormulaElement):
         return isinstance(other, Radical) and self._symbol == other._symbol
 
 
+T_Formula = Union[FormulaElement, "Formula"]
+
+
 class Formula(LineExpression):
     """Representation of a chemial formula
 
@@ -174,12 +180,12 @@ class Formula(LineExpression):
     'C6H12O6'
     """
 
-    def __init__(self, values: dict[FormulaElement, int | LineExpression] = {}):
+    def __init__(self, values: dict[T_Formula, int | LineExpression] = {}):
         self._not_yet_fix: set[Variable] = set()
-        self._variables: Counter[FormulaElement] = Counter()  # type: ignore [assignment]
+        self._variables: Counter[T_Formula] = Counter()  # type: ignore [assignment]
 
         for element, value in values.items():
-            if not isinstance(element, FormulaElement):
+            if not isinstance(element, (FormulaElement, Formula)):
                 raise ValueError("Not a formula element: {}".format(repr(element)))
             if value != 0 and (not isinstance(element, Formula) or len(element) > 0):
                 self._variables[element] = value  # type: ignore [assignment]
@@ -191,15 +197,19 @@ class Formula(LineExpression):
                 for var in element.variables():
                     self._not_yet_fix.add(var)
 
+    @property
+    def _offset(self):
+        return 0
+
     def substitute(self, mapping):
-        result = self.__class__()
+        result: Formula = self.__class__()
         for element, value in self._variables.items():
             if callable(getattr(value, "substitute", None)):
-                value_ = getattr(value, "substitute")(mapping)
-                if isinstance(value_, int) and value_ <= 0:
+                value = getattr(value, "substitute")(mapping)
+                if isinstance(value, int) and value <= 0:
                     raise ValueError("Expression evaluated to non-positive number")
             # TODO does not merge correctly with subformulas
-            result += value_ * element.substitute(mapping)
+            result += value * element.substitute(mapping)
         return result
 
     def simplify(self):
@@ -209,7 +219,7 @@ class Formula(LineExpression):
         'C3H6'
         """
 
-        stack: list[tuple[FormulaElement | Formula, int]] = [(self, 1)]
+        stack: list[tuple[T_Formula, int]] = [(self, 1)]
         result: dict = Counter()
         while len(stack) > 0:
             var, value = stack.pop()
@@ -279,16 +289,22 @@ class Formula(LineExpression):
             return Formula(dict(self._variables & Counter([other])))
         return NotImplemented
 
+    def __rand__(self, other):
+        return self & other
+
     def __or__(self, other):
         """Merge formulas into one formula."""
         # Note: This operator corresponds to the add-operator on Counter not
         # the or-operator! The add-operator is used here (on the superclass)
         # to compose formula elements into subformulas.
         if isinstance(other, Formula):
-            return Formula(dict(self._variables | other._variables))
+            return Formula(dict(self._variables + other._variables))
         elif isinstance(other, FormulaElement):
-            return Formula(dict(self._variables | Counter([other])))
+            return Formula(dict(self._variables + Counter([other])))
         return NotImplemented
+
+    def __ror__(self, other):
+        return self | other
 
     def __sub__(self, other):
         """Substract other formula from this formula."""
@@ -306,6 +322,9 @@ class Formula(LineExpression):
     def __eq__(self, other):
         return isinstance(other, Formula) and self._variables == other._variables
 
+    def __hash__(self):
+        return super().__hash__()
+
     @classmethod
     def parse(cls, s):
         """
@@ -318,7 +337,7 @@ class Formula(LineExpression):
         return cls(_parse_formula(s))
 
     @classmethod
-    def balance(cls, lhs, rhs):
+    def balance(cls, lhs: "Formula", rhs: "Formula"):
         """Return formulas that need to be added to balance given formulas
 
         Given complete formulas for right side and left side of a reaction,
@@ -327,12 +346,12 @@ class Formula(LineExpression):
         to disregard grouping structure.
         """
 
-        def missing(formula, other):
-            for element, value in formula._values.items():
-                if element not in other._values:
+        def missing(formula: Formula, other: Formula):
+            for element, value in formula._variables.items():
+                if element not in other._variables:
                     yield value * element
                 else:
-                    delta = value - other._values[element]
+                    delta = value - other._variables[element]
                     if isinstance(delta, numbers.Number) and delta > 0:  # type: ignore [operator]
                         yield delta * element
 
@@ -386,16 +405,6 @@ def _parse_formula(s: str):
     for match in re.finditer(scanner, s):
         match = next(a)
         (whitespace, group, element, number, variable, end, error) = match.groups()
-        print(
-            f"{whitespace = }\n"
-            f"{group = }\n"
-            f"{element = }\n"
-            f"{number = }\n"
-            f"{variable = }\n"
-            f"{end = }\n"
-            f"{error = }\n"
-        )
-        print(f"{stack = }\n" f"{formula = }\n" f"{expect_count = }\n")
 
         if error is not None:
             raise ParseError(

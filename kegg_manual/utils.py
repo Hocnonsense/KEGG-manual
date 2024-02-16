@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 20:45:34
+ * @LastEditTime: 2024-02-16 23:13:39
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -456,9 +456,11 @@ class LineExpression(Variable):
             _variables = Counter(self._variables)
             _variables.update(other._variables)
             variables = {var: value for var, value in _variables.items() if value != 0}
-            return self.__class__(variables, self._offset + other._offset)
+            if _offset := self._offset + other._offset:
+                return self.__class__(variables, _offset)
+            return self.__class__(variables)
         if isinstance(other, Variable):
-            return self + LineExpression({other: 1})
+            return self + self.__class__({other: 1})
         return NotImplemented
 
     def __radd__(self, other):
