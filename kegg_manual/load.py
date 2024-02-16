@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 14:17:35
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-15 14:22:43
+ * @LastEditTime: 2024-02-16 22:11:30
  * @FilePath: /KEGG/kegg_manual/load.py
  * @Description:
 """
@@ -69,9 +69,9 @@ def brite_ko00002(db: str | Path | None = None):
     modules_d: dict[str, kmodule.KModule] = {}
     for entry in tqdm(modules):
         raw_module = kmoduledb.load_single(entry)
-        raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
+        raw_def: list[str] = raw_module["DEFINITION"]  # type: ignore [assignment]
         km = kmodule.KModule(
-            raw_def,
+            " ".join(i.strip() for i in raw_def),
             additional_info="".join(raw_module.get("NAME", [entry])),
         )
         modules_d[entry] = km
