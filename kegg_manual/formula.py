@@ -1,27 +1,37 @@
-# This file is part of PSAMM.
-#
-# PSAMM is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# PSAMM is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with PSAMM.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright 2014-2017  Jon Lund Steffensen <jon_steffensen@uri.edu>
-# Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
+# -*- coding: utf-8 -*-
+"""
+ * @Date: 2024-02-15 21:53:25
+ * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+ * @LastEditTime: 2024-02-16 17:41:54
+ * @FilePath: /KEGG/kegg_manual/formula.py
+ * @Description:
+ Parser and representation of chemical formulas.
 
-"""Parser and representation of chemical formulas.
 
 Chemical formulas (:class:`.Formula`) are represented as a number of
 :class:`FormulaElements <.FormulaElement>` with associated counts. A
 :class:`.Formula` is itself a :class:`.FormulaElement` so a formula can contain
 subformulas. This allows some simple structure to be represented.
+
+ * @OriginalLicense:
+
+This file is part of PSAMM.
+
+PSAMM is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PSAMM is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PSAMM.  If not, see <http://www.gnu.org/licenses/>.
+
+Copyright 2014-2017  Jon Lund Steffensen <jon_steffensen@uri.edu>
+Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
 """
 
 import re
@@ -30,45 +40,30 @@ import functools
 import operator
 import numbers
 
-from .expression.affine import Expression
-from .utils import ParseError
+from .utils import ParseError, Variable, LineExpression
 
 
-class FormulaElement(object):
+class FormulaElement(Variable):
     """Base class representing elements of a formula"""
+
+    @property
+    def _MultiVars(self):
+        return Formula
 
     def __add__(self, other):
         """Add formula elements creating subformulas"""
         if isinstance(other, FormulaElement):
             if self == other:
-                return Formula({self: 2})
-            return Formula({self: 1, other: 1})
+                return self._MultiVars({self: 2})
+            return self._MultiVars({self: 1, other: 1})
         return NotImplemented
-
-    def __radd__(self, other):
-        return self + other
-
-    def __or__(self, other):
-        """Merge formula elements into one formula"""
-        return Formula({self: 1}) | other
-
-    def __ror__(self, other):
-        return self | other
 
     def __mul__(self, other):
         """Multiply formula element by other"""
-        return Formula({self: other})
+        return self._MultiVars({self: other})
 
-    def __rmul__(self, other):
-        return self * other
-
-    def repeat(self, count):
-        """Repeat formula element by creating a subformula"""
-        return Formula({self: count})
-
-    def variables(self):
-        """Iterator over variables in formula element"""
-        return iter([])
+    def __eq__(self, other):
+        return isinstance(other, FormulaElement) and self._symbol == other._symbol
 
     def substitute(self, mapping):
         """Return formula element with substitutions performed"""
@@ -118,20 +113,9 @@ class Atom(FormulaElement, metaclass=_AtomType):
     >>> oxygen = Atom.O
     >>> str(oxygen | 2*hydrogen)
     'H2O'
+    >>> Atom.H.symbol
+    'H'
     """
-
-    def __init__(self, symbol):
-        self._symbol = symbol
-
-    @property
-    def symbol(self):
-        """Atom symbol
-
-        >>> Atom.H.symbol
-        'H'
-        """
-
-        return self._symbol
 
     def __hash__(self):
         return hash("Atom") ^ hash(self._symbol)
@@ -139,36 +123,19 @@ class Atom(FormulaElement, metaclass=_AtomType):
     def __eq__(self, other):
         return isinstance(other, Atom) and self._symbol == other._symbol
 
-    def __ne__(self, other):
-        return not self == other
-
     def __lt__(self, other):
         if isinstance(other, Atom):
             return self._symbol < other._symbol
         return NotImplemented
 
-    def __str__(self):
-        return self._symbol
-
-    def __repr__(self):
-        return str("Atom({})").format(repr(self._symbol))
-
 
 class Radical(FormulaElement):
-    """Represents a radical or other unknown subformula"""
+    """
+    Represents a radical or other unknown subformula
 
-    def __init__(self, symbol):
-        self._symbol = symbol
-
-    @property
-    def symbol(self):
-        """Radical symbol
-
-        >>> Radical('R1').symbol
-        'R1'
-        """
-
-        return self._symbol
+    >>> Radical('R1').symbol
+    'R1'
+    """
 
     def __hash__(self):
         return hash("Radical") ^ hash(self._symbol)
@@ -176,17 +143,8 @@ class Radical(FormulaElement):
     def __eq__(self, other):
         return isinstance(other, Radical) and self._symbol == other._symbol
 
-    def __ne__(self, other):
-        return not self == other
 
-    def __str__(self):
-        return self._symbol
-
-    def __repr__(self):
-        return str("Radical({})").format(repr(self._symbol))
-
-
-class Formula(FormulaElement):
+class Formula(LineExpression):
     """Representation of a chemial formula
 
     This is represented as a number of
@@ -197,78 +155,54 @@ class Formula(FormulaElement):
     'C6H12O6'
     """
 
-    def __init__(self, values: dict = {}):
-        self._values: dict = Counter()
-        self._variables = set()
+    def __init__(self, values: dict[FormulaElement, int | LineExpression] = {}):
+        self._not_yet_fix: set[Variable] = set()
+        self._variables: Counter[FormulaElement] = Counter()  # type: ignore [assignment]
 
         for element, value in values.items():
             if not isinstance(element, FormulaElement):
                 raise ValueError("Not a formula element: {}".format(repr(element)))
             if value != 0 and (not isinstance(element, Formula) or len(element) > 0):
-                self._values[element] = value
+                self._variables[element] = value  # type: ignore [assignment]
 
-            if callable(getattr(value, "variables", None)):
+            if isinstance(value, LineExpression):
                 for var in value.variables():
-                    self._variables.add(var)
-            for var in element.variables():
-                self._variables.add(var)
+                    self._not_yet_fix.add(var)
+            if isinstance(element, Formula):
+                for var in element.variables():
+                    self._not_yet_fix.add(var)
 
     def substitute(self, mapping):
         result = self.__class__()
-        for element, value in self._values.items():
+        for element, value in self._variables.items():
             if callable(getattr(value, "substitute", None)):
-                value_ = value.substitute(mapping)
+                value_ = getattr(value, "substitute")(mapping)
                 if isinstance(value_, int) and value_ <= 0:
                     raise ValueError("Expression evaluated to non-positive number")
             # TODO does not merge correctly with subformulas
             result += value_ * element.substitute(mapping)
         return result
 
-    def flattened(self):
+    def simplify(self):
         """Return formula where subformulas have been flattened
 
         >>> str(Formula.parse('(CH2)(CH2)2').flattened())
         'C3H6'
         """
 
-        stack = [(self, 1)]
+        stack: list[tuple[FormulaElement | Formula, int]] = [(self, 1)]
         result: dict = Counter()
         while len(stack) > 0:
             var, value = stack.pop()
             if isinstance(var, Formula):
-                for sub_var, sub_value in var._values.items():
+                for sub_var, sub_value in var._variables.items():
                     stack.append((sub_var, value * sub_value))
             else:
                 result[var] += value
         return Formula(result)
 
-    def variables(self):
-        return iter(self._variables)
-
-    def __iter__(self):
-        return iter(self._values)
-
-    def items(self):
-        """Iterate over (:class:`.FormulaElement`, value)-pairs"""
-        return self._values.items()
-
     def is_variable(self):
-        return len(self._variables) > 0
-
-    def __contains__(self, element):
-        return element in self._values
-
-    def get(self, element, default=None):
-        """Return value for element or default if not in the formula."""
-        return self._values.get(element, default)
-
-    def __getitem__(self, element):
-        if element not in self._values:
-            raise KeyError(repr(element))
-        return self._values[element]
-
-    def __len__(self):
-        return len(self._values)
+        return len(self._not_yet_fix) > 0
 
     def __str__(self):
         """Return formula represented using Hill notation system
@@ -299,7 +233,7 @@ class Formula(FormulaElement):
                     yield element, value
 
         s = ""
-        for element, value in hill_sorted_elements(self._values):
+        for element, value in hill_sorted_elements(self._variables):
 
             def grouped(element, value):
                 return "({}){}".format(element, value if value != 1 else "")
@@ -318,15 +252,12 @@ class Formula(FormulaElement):
                 s += grouped(element, value)
         return s
 
-    def __repr__(self):
-        return str("Formula({})").format(repr(dict(self._values)))
-
     def __and__(self, other):
         """Intersection of formula elements."""
         if isinstance(other, Formula):
-            return Formula(self._values & other._values)
+            return Formula(dict(self._variables & other._variables))
         elif isinstance(other, FormulaElement):
-            return Formula(self._values & Counter([other]))
+            return Formula(dict(self._variables & Counter([other])))
         return NotImplemented
 
     def __or__(self, other):
@@ -335,40 +266,37 @@ class Formula(FormulaElement):
         # the or-operator! The add-operator is used here (on the superclass)
         # to compose formula elements into subformulas.
         if isinstance(other, Formula):
-            return Formula(self._values | other._values)
+            return Formula(dict(self._variables | other._variables))
         elif isinstance(other, FormulaElement):
-            return Formula(self._values | Counter([other]))
+            return Formula(dict(self._variables | Counter([other])))
         return NotImplemented
 
     def __sub__(self, other):
         """Substract other formula from this formula."""
         if isinstance(other, Formula):
-            return Formula(self._values - other._values)
+            return Formula(dict(self._variables - other._variables))
         elif isinstance(other, FormulaElement):
-            return Formula(self._values - Counter([other]))
+            return Formula(dict(self._variables - Counter([other])))
         return NotImplemented
 
     def __mul__(self, other):
         """Multiply formula element by other."""
-        values = {key: value * other for key, value in self._values.items()}
+        values = {key: value * other for key, value in self._variables.items()}
         return Formula(values)
 
-    def __hash__(self):
-        h = hash("Formula")
-        for element, value in self._values.items():
-            h ^= hash(element) ^ hash(value)
-        return h
-
     def __eq__(self, other):
-        return isinstance(other, Formula) and self._values == other._values
-
-    def __ne__(self, other):
-        return not self == other
+        return isinstance(other, Formula) and self._variables == other._variables
 
     @classmethod
     def parse(cls, s):
-        """Parse a formula string (e.g. C6H10O2)."""
-        return _parse_formula(s)
+        """
+        Parse a formula string (e.g. C6H10O2).
+
+        >>> from kegg_manual import formula
+        >>> form = formula.Formula.parse(str("C6H10O2"))
+        >>> form = formula.Formula.parse(str("C20H28N6O13PR(C5H8O6PR)n"))
+        """
+        return cls(_parse_formula(s))
 
     @classmethod
     def balance(cls, lhs, rhs):
@@ -395,7 +323,7 @@ class Formula(FormulaElement):
         )
 
 
-def _parse_formula(s):
+def _parse_formula(s: str):
     """Parse formula string."""
     scanner = re.compile(
         r"""
@@ -406,7 +334,7 @@ def _parse_formula(s):
         ([a-z]) |       # variable
         (\Z) |          # end
         (.)             # error
-    """,
+        """,
         re.DOTALL | re.VERBOSE,
     )
 
@@ -420,8 +348,8 @@ def _parse_formula(s):
                 return Radical("{}{}".format(element.symbol, value))
         return form
 
-    stack = []
-    formula: dict | FormulaElement = {}
+    stack: list[dict[Atom, int] | FormulaElement] = []
+    formula: dict[Atom, int] | FormulaElement = {}
     expect_count = False
 
     def close(formula, count=1):
@@ -432,22 +360,32 @@ def _parse_formula(s):
             subformula = Formula(subformula)
 
         formula = stack.pop()
-        if subformula not in formula:
-            formula[subformula] = 0
-        formula[subformula] += count
+        formula[subformula] = formula.get(subformula, 0) + count
         return formula
 
+    a = re.finditer(scanner, s)
     for match in re.finditer(scanner, s):
+        match = next(a)
         (whitespace, group, element, number, variable, end, error) = match.groups()
+        print(
+            f"{whitespace = }\n"
+            f"{group = }\n"
+            f"{element = }\n"
+            f"{number = }\n"
+            f"{variable = }\n"
+            f"{end = }\n"
+            f"{error = }\n"
+        )
+        print(f"{stack = }\n" f"{formula = }\n" f"{expect_count = }\n")
 
         if error is not None:
             raise ParseError(
                 "Invalid token in formula string: {!r}".format(match.group(0)),
                 span=(match.start(), match.end()),
             )
-        elif whitespace is not None:
+        if whitespace is not None:
             continue
-        elif group is not None and group == "(":
+        if group is not None and group == "(":
             if expect_count:
                 formula = close(formula)
             stack.append(formula)
@@ -470,7 +408,7 @@ def _parse_formula(s):
             formula = close(formula, int(number))
             expect_count = False
         elif variable is not None and expect_count:
-            formula = close(formula, Expression(variable))
+            formula = close(formula, Variable(variable))
             expect_count = False
         elif end is not None:
             if expect_count:
@@ -485,4 +423,4 @@ def _parse_formula(s):
         raise ParseError("Unbalanced parenthesis group in formula")
 
     assert isinstance(formula, dict)
-    return Formula(formula)
+    return formula

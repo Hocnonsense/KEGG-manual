@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-16 00:03:38
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 11:59:20
+ * @LastEditTime: 2024-02-16 17:55:28
  * @FilePath: /KEGG/tests/kegg_manual/expression/test_boolean.py
  * @Description:
 """
@@ -90,12 +90,9 @@ def test_expression_parse():
 
     e = Expression("b1 or b2")
     assert e == Expression(Or(V("b1"), V("b2"))), "or"
-    assert Expression("b1 and order") == Expression(
-        And(V("b1"), V("order"))
-    ), "name_starting_with_or"
-    assert Expression("b1 or anderson") == Expression(
-        Or(V("b1"), V("anderson"))
-    ), "name_starting_with_and"
+    assert Expression("andor and orand") == Expression(
+        And(V("andor"), V("orand"))
+    ), "name_with_or_and"
     assert Expression("b1    and   b2       and b3") == Expression(
         And(V("b1"), V("b2"), V("b3"))
     ), "with_extra_space"

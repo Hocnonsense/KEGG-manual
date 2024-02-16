@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 11:35:32
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:48:38
+ * @LastEditTime: 2024-02-16 13:18:23
  * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
  * @Description:
 """
@@ -37,26 +37,19 @@ def test_kodb_link_reacion():
     ko2gene = {"K01647": ["Gene1"]}
     rxn2gene = query.kodb.link_reacion(ko2gene)
     assert len(rxn2gene) == 1
-    assert len(rxn2gene["R00351"]) == 1
-    assert "R00351" in rxn2gene
-    assert rxn2gene["R00351"] == {"Gene1"}
+    assert "R00351" in rxn2gene and rxn2gene["R00351"] == {"Gene1"}
     # Test when EC has multiple reactions
     ko2gene = {"K01681": ["Gene1"]}
     rxn2gene = query.kodb.link_reacion(ko2gene)
     assert len(rxn2gene) == 3
-    assert "R01324" in rxn2gene
-    assert "R01325" in rxn2gene
-    assert "R01900" in rxn2gene
-    assert rxn2gene["R01324"] == {"Gene1"}
-    assert rxn2gene["R01325"] == {"Gene1"}
-    assert rxn2gene["R01900"] == {"Gene1"}
+    assert "R01324" in rxn2gene and rxn2gene["R01324"] == {"Gene1"}
+    assert "R01325" in rxn2gene and rxn2gene["R01325"] == {"Gene1"}
+    assert "R01900" in rxn2gene and rxn2gene["R01900"] == {"Gene1"}
     # Test for multiple genes
     ko2gene = {"K01647": ["Gene1", "Gene2"]}
     rxn2gene = query.kodb.link_reacion(ko2gene)
     assert len(rxn2gene) == 1
-    assert len(rxn2gene["R00351"]) == 2
-    assert "R00351" in rxn2gene
-    assert rxn2gene["R00351"] == {"Gene1", "Gene2"}
+    assert "R00351" in rxn2gene and rxn2gene["R00351"] == {"Gene1", "Gene2"}
 
 
 def test_ec_link_reacion():
@@ -64,26 +57,19 @@ def test_ec_link_reacion():
     ec2gene = {"2.3.3.1": ["Gene1"]}
     ec = query.kecdb.link_reacion(ec2gene)
     assert len(ec) == 1
-    assert len(ec["R00351"]) == 1
-    assert "R00351" in ec
-    assert ec["R00351"] == {"Gene1"}
+    assert "R00351" in ec and ec["R00351"] == {"Gene1"}
     # Test when EC has multiple reactions
     ec2gene = {"4.2.1.3": ["Gene1"]}
     ec = query.kecdb.link_reacion(ec2gene)
     assert len(ec) == 3
-    assert "R01324" in ec
-    assert "R01325" in ec
-    assert "R01900" in ec
-    assert ec["R01324"] == {"Gene1"}
-    assert ec["R01325"] == {"Gene1"}
-    assert ec["R01900"] == {"Gene1"}
+    assert "R01324" in ec and ec["R01324"] == {"Gene1"}
+    assert "R01325" in ec and ec["R01325"] == {"Gene1"}
+    assert "R01900" in ec and ec["R01900"] == {"Gene1"}
     # Test for multiple genes
     ec2gene = {"2.3.3.1": ["Gene1", "Gene2"]}
     ec = query.kecdb.link_reacion(ec2gene)
     assert len(ec) == 1
-    assert len(ec["R00351"]) == 2
-    assert "R00351" in ec
-    assert ec["R00351"] == {"Gene1", "Gene2"}
+    assert "R00351" in ec and ec["R00351"] == {"Gene1", "Gene2"}
 
 
 @temp_output
@@ -97,10 +83,7 @@ def test_kcompounddb_load_single(test_temp: Path):
     assert cpd.mol_weight is None
     assert cpd.chebi == "15377"
 
-    if _entry.use_chebi:
-        assert cpd.charge == 0
-    else:
-        assert cpd.charge is None
+    assert cpd.charge == 0 if _entry.use_chebi else cpd.charge is None
 
     chebi_file = test_temp / "chebi_pH7_3_mapping.tsv"
     with open(chebi_file, "w") as fo:
@@ -112,9 +95,8 @@ def test_kcompounddb_load_single(test_temp: Path):
         print("30490", "15377", "computation", sep="\t", file=fo)
 
     rhea = utils.RheaDb(chebi_file)
-    cpd_id = "C00001"
     cpd = query.CachedKCompound(db=cache.db_kegg_manual_data, rhea=rhea).load_single(
-        cpd_id
+        "C00001"
     )
     assert cpd.mol_weight is None
     assert cpd.chebi == "15377"

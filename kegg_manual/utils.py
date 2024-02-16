@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 11:58:37
+ * @LastEditTime: 2024-02-16 19:55:00
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -29,8 +29,10 @@ Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
 # """
 
 import abc
+from collections import Counter
 import collections.abc
 import functools
+import numbers
 import re
 from pathlib import Path
 from typing import Callable, Iterable, TypeVar
@@ -226,7 +228,7 @@ class Variable:
     Equality of variables is based on the symbol.
     """
 
-    def __init__(self, symbol, strict=False):
+    def __init__(self, symbol, symbol_strict=False):
         """Create variable with given symbol
 
         in strict mode, Symbol must
@@ -238,9 +240,11 @@ class Variable:
         Variable('x')
         >>> # Variable('123'), Variable('x.1'), Variable('')
         """
-        if strict and not re.match(r"^[^\d\W]\w*\Z", symbol):
+        if isinstance(symbol, Variable):
+            symbol = symbol._symbol  # type: ignore [has-type]
+        if symbol_strict and not re.match(r"^[^\d\W]\w*\Z", symbol):
             raise ValueError("Invalid symbol `{}`".format(symbol))
-        self._symbol = str(symbol)
+        self._symbol = symbol
 
     @property
     def symbol(self):
@@ -277,13 +281,18 @@ class Variable:
         return mapping(self)
 
     def __repr__(self):
-        return str("Variable({})").format(repr(self._symbol))
+        return f"{self.__class__.__name__}({repr(self._symbol)})"
 
     def __str__(self):
-        return self._symbol
+        return f"{self._symbol}"
 
     def __eq__(self, other):
-        return isinstance(other, Variable) and self._symbol == other._symbol
+        """Check equality of variables"""
+        if isinstance(self._symbol, numbers.Real):
+            return other == self._symbol
+        if isinstance(other, self._MultiVars):
+            return other == self
+        return isinstance(other, self.__class__) and self._symbol == other._symbol
 
     def __ne__(self, other):
         return not self == other
@@ -295,3 +304,262 @@ class Variable:
         if isinstance(other, Variable):
             return self._symbol < other._symbol
         return NotImplemented
+
+    @property
+    def _MultiVars(self):
+        return LineExpression
+
+    def __neg__(self):
+        return self * -1
+
+    def __add__(self, other):
+        if isinstance(self._symbol, numbers.Real):
+            return self.__class__(self._symbol + other)
+        return self._MultiVars({self: 1}) + other
+
+    def __mul__(self, other):
+        if isinstance(self._symbol, numbers.Real):
+            return self.__class__(self._symbol * other)
+        return self._MultiVars({self: 1}) * other
+
+    def __radd__(self, other):
+        return self + other
+
+    def __sub__(self, other):
+        return self._MultiVars({self: 1}) - other
+
+    def __rsub__(self, other):
+        return -self + other
+
+    def __or__(self, other):
+        """Merge formula elements into one formula"""
+        if isinstance(self._symbol, numbers.Real):
+            return self.__class__(self._symbol | other)
+        return self._MultiVars({self: 1}) | other
+
+    def __ror__(self, other):
+        return self | other
+
+    def __rmul__(self, other):
+        return self * other
+
+    def repeat(self, count):
+        """Repeat formula element by creating a subformula"""
+        return self * count
+
+    def __div__(self, other):
+        if isinstance(self._symbol, numbers.Real):
+            return self.__class__(self._symbol / other)
+        return self._MultiVars({self: 1}) / other
+
+    __truediv__ = __div__
+
+    def __floordiv__(self, other):
+        if isinstance(self._symbol, numbers.Real):
+            return self.__class__(self._symbol // other)
+        return self._MultiVars({self: 1}) // other
+
+
+class LineExpression(Variable):
+    """Represents an affine expression (e.g. 2x + 3y - z + 5)"""
+
+    def __init__(self, arg: dict[Variable, int] | None = None, /, _vars=0):
+        """Create new expression
+
+        >>> Expression({ Variable('x'): 2 }, 3)
+        Expression('2x + 3')
+        >>> Expression({ Variable('x'): 1, Variable('y'): 1 })
+        Expression('x + y')
+        """
+        self._variables: dict[Variable, int] = {}
+        self._offset = _vars
+
+        variables = arg or {}
+        for var, value in variables.items():
+            if not isinstance(var, Variable):
+                raise ValueError("Not a variable: {}".format(var))
+            if value != 0:
+                self._variables[var] = value
+
+    @classmethod
+    def parse(cls, s: str):
+        return Variable(s)
+
+    @property
+    def _symbol(self):
+        return str(self)
+
+    def variables(self):
+        """Return iterator of variables in expression"""
+        yield from self._variables
+
+    def simplify(self):
+        """Return simplified expression.
+
+        If the expression is of the form 'x', the variable will be returned,
+        and if the expression contains no variables, the offset will be
+        returned as a number.
+
+        TODO: regressively
+        """
+        result = self.__class__(self._variables, self._offset)
+        if len(result._variables) == 0:
+            return result._offset
+        if len(result._variables) == 1 and result._offset == 0:
+            for var, value in result._variables.items():
+                if value == 1:
+                    return var
+        return result
+
+    def substitute(self, mapping):
+        """Return expression with variables substituted
+
+        >>> Expression('x + 2y').substitute(
+        ...     lambda v: {'y': -3}.get(v.symbol, v))
+        Expression('x - 6')
+        >>> Expression('x + 2y').substitute(
+        ...     lambda v: {'y': Variable('z')}.get(v.symbol, v))
+        Expression('x + 2z')
+        """
+        expr = self.__class__()
+        for var, value in self._variables.items():
+            expr += value * var.substitute(mapping)
+        return (expr + self._offset).simplify()
+
+    def __iter__(self):
+        yield from self._variables
+
+    def items(self):
+        """Iterate over (:class:`.FormulaElement`, value)-pairs"""
+        return self._variables.items()
+
+    def __contains__(self, element):
+        return element in self._variables
+
+    def get(self, element, default=None):
+        """Return value for element or default if not in the formula."""
+        return self._variables.get(element, default)
+
+    def __getitem__(self, element):
+        if element not in self._variables:
+            raise KeyError(repr(element))
+        return self._variables[element]
+
+    def __len__(self):
+        return len(self._variables)
+
+    def __add__(self, other):
+        """Add expressions, variables or numbers"""
+        if isinstance(other, numbers.Number):
+            return self.__class__(self._variables, self._offset + other)
+        if isinstance(other, LineExpression):
+            _variables = Counter(self._variables)
+            _variables.update(other._variables)
+            variables = {var: value for var, value in _variables.items() if value != 0}
+            return self.__class__(variables, self._offset + other._offset)
+        if isinstance(other, Variable):
+            return self + LineExpression({other: 1})
+        return NotImplemented
+
+    def __radd__(self, other):
+        return self + other
+
+    def __sub__(self, other):
+        """Subtract expressions, variables or numbers"""
+        return self + -other
+
+    def __rsub__(self, other):
+        return -self + other
+
+    def __mul__(self, other):
+        """Multiply by scalar"""
+        return self.__class__(
+            {var: value * other for var, value in self._variables.items()},
+            self._offset * other,
+        )
+
+    def __rmul__(self, other):
+        return self * other
+
+    def __div__(self, other):
+        """Divide by scalar"""
+        if isinstance(other, numbers.Real):
+            return self.__class__(
+                {var: value / other for var, value in self._variables.items()},
+                self._offset / other,
+            )
+        return NotImplemented
+
+    __truediv__ = __div__
+
+    def __floordiv__(self, other):
+        if isinstance(other, numbers.Real):
+            return self.__class__(
+                {var: value // other for var, value in self._variables.items()},
+                self._offset // other,
+            )
+        return NotImplemented
+
+    def __neg__(self):
+        return self * -1
+
+    def __eq__(self, other):
+        """Expression equality"""
+        if isinstance(other, LineExpression):
+            return self._variables == other._variables and self._offset == other._offset
+        elif isinstance(other, Variable):
+            # Check that there is just one variable in the expression
+            # with a coefficient of one.
+            return (
+                self._offset == 0
+                and len(self._variables) == 1
+                and list(self._variables.keys())[0] == other
+                and list(self._variables.values())[0] == 1
+            )
+        elif isinstance(other, numbers.Number):
+            return len(self._variables) == 0 and self._offset == other
+        return False
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self})"
+
+    def __str__(self):
+        def all_terms():
+            count_vars = 0
+            for symbol, value in sorted(
+                (var.symbol, value) for var, value in self._variables.items()
+            ):
+                if value != 0:
+                    count_vars += 1
+                    yield symbol, value
+            if self._offset != 0 or count_vars == 0:
+                yield None, self._offset
+
+        terms = []
+        for i, (symbol, value) in enumerate(all_terms()):
+            if i == 0:
+                # First term is special
+                if symbol is None:
+                    terms.append(f"{value}")
+                elif abs(value) == 1:
+                    terms.append(symbol if value > 0 else "-" + symbol)
+                else:
+                    terms.append(f"{value}{symbol}")
+            else:
+                prefix = "+" if value >= 0 else "-"
+                if symbol is None:
+                    terms.append(f"{prefix} {abs(value)}")
+                elif abs(value) == 1:
+                    terms.append(f"{prefix} {symbol}")
+                else:
+                    terms.append(f"{prefix} {abs(value)}{symbol}")
+        return " ".join(terms)
+
+    def __hash__(self):
+        h = hash(self.__class__.__name__)
+        for element, value in self._variables.items():
+            h ^= hash(element) ^ hash(value)
+        return h

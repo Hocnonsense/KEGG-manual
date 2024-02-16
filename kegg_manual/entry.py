@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:16:17
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:58:57
+ * @LastEditTime: 2024-02-16 14:01:00
  * @FilePath: /KEGG/kegg_manual/entry.py
  * @Description:
     Representation of compound/reaction entries in models.
@@ -292,15 +292,12 @@ class KCompound(KEntry):
         - the formula cannot be variable (e.g. presence of X),
         - and R groups are generally discouraged.
         """
+        if self.formula is None:
+            return True
+        if "R" in str(self.formula):
+            return True
         try:
             form = formula.Formula.parse(str(self.formula))
-            if form.is_variable():
-                return True
-            elif self.formula is None:
-                return True
-            elif "R" in str(self.formula):
-                return True
-            else:
-                return False
+            return form.is_variable()
         except utils.ParseError:
             return True
