@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:43:24
+ * @LastEditTime: 2024-02-16 11:58:37
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -30,37 +30,28 @@ Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
 
 import abc
 import collections.abc
+import functools
+import re
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable, TypeVar
+
+T = TypeVar("T")
 
 
 class ParseError(Exception):
     """Exception used to signal errors while parsing"""
 
+    def __init__(self, *args, **kwargs):
+        self._span = kwargs.pop("span", None)
+        super(ParseError, self).__init__(*args, **kwargs)
 
-class FozenDict(collections.abc.Mapping):
-    """An immutable wrapper around another dict-like object."""
-
-    def __init__(self, d: dict):
-        self.__d = d
-
-    def __getitem__(self, key):
-        return self.__d[key]
-
-    def __iter__(self):
-        return iter(self.__d)
-
-    def __len__(self):
-        return len(self.__d)
-
-    def __eq__(self, __other: object) -> bool:
-        return self.__d.__eq__(__other)
-
-    def __str__(self) -> str:
-        return self.__d.__str__()
-
-    def __repr__(self) -> str:
-        return self.__d.__repr__()
+    @property
+    def indicator(self):
+        if self._span is None:
+            return None
+        pre = " " * self._span[0]
+        ind = "^" * max(1, self._span[1] - self._span[0])
+        return pre + ind
 
 
 class FileMark:
@@ -176,22 +167,47 @@ class RheaDb:
         return [self._values[x] for x in id_list if x in self._values]
 
 
+class FozenDict(collections.abc.Mapping):
+    """An immutable wrapper around another dict-like object."""
+
+    def __init__(self, d: dict):
+        self.__d = d
+
+    def __getitem__(self, key):
+        return self.__d[key]
+
+    def __iter__(self):
+        return iter(self.__d)
+
+    def __len__(self):
+        return len(self.__d)
+
+    def __eq__(self, __other: object) -> bool:
+        return self.__d.__eq__(__other)
+
+    def __str__(self) -> str:
+        return self.__d.__str__()
+
+    def __repr__(self) -> str:
+        return self.__d.__repr__()
+
+
 class FrozenOrderedSet(collections.abc.Set, collections.abc.Hashable):
     """An immutable set that retains insertion order."""
 
     def __init__(self, seq: Iterable | None = None):
-        self.__map: dict = collections.OrderedDict()
+        self.__d: dict = collections.OrderedDict()
         for e in seq or []:
-            self.__map[e] = None
+            self.__d[e] = None
 
     def __contains__(self, element):
-        return element in self.__map
+        return element in self.__d
 
     def __iter__(self):
-        return iter(self.__map)
+        return iter(self.__d)
 
     def __len__(self):
-        return len(self.__map)
+        return len(self.__d)
 
     def __hash__(self):
         h = 0
@@ -201,3 +217,81 @@ class FrozenOrderedSet(collections.abc.Set, collections.abc.Hashable):
 
     def __repr__(self):
         return str("{}({})").format(self.__class__.__name__, list(self))
+
+
+@functools.total_ordering
+class Variable:
+    """Represents a variable in an expression
+
+    Equality of variables is based on the symbol.
+    """
+
+    def __init__(self, symbol, strict=False):
+        """Create variable with given symbol
+
+        in strict mode, Symbol must
+        - start with a letter or underscore
+        - but can contain numbers in other positions
+        - other characters now allowed
+
+        >>> Variable('x')
+        Variable('x')
+        >>> # Variable('123'), Variable('x.1'), Variable('')
+        """
+        if strict and not re.match(r"^[^\d\W]\w*\Z", symbol):
+            raise ValueError("Invalid symbol `{}`".format(symbol))
+        self._symbol = str(symbol)
+
+    @property
+    def symbol(self):
+        """Symbol of variable
+
+        >>> Variable('x').symbol
+        'x'
+        """
+        return self._symbol
+
+    def simplify(self):
+        """Return simplified expression
+
+        The simplified form of a variable is always the
+        variable itself.
+
+        >>> Variable('x').simplify()
+        Variable('x')
+        """
+        return self
+
+    def substitute(self, mapping: Callable[["Variable"], T]) -> T:
+        """Return expression with variables substituted
+
+        >>> Variable('x').substitute(lambda v: {'x': 567}.get(v.symbol, v))
+        567
+        >>> Variable('x').substitute(lambda v: {'y': 42}.get(v.symbol, v))
+        Variable('x')
+        >>> Variable('x').substitute(
+        ...     lambda v: {'x': 123, 'y': 56}.get(v.symbol, v))
+        123
+        """
+
+        return mapping(self)
+
+    def __repr__(self):
+        return str("Variable({})").format(repr(self._symbol))
+
+    def __str__(self):
+        return self._symbol
+
+    def __eq__(self, other):
+        return isinstance(other, Variable) and self._symbol == other._symbol
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
+        return hash("Variable") ^ hash(self._symbol)
+
+    def __lt__(self, other):
+        if isinstance(other, Variable):
+            return self._symbol < other._symbol
+        return NotImplemented

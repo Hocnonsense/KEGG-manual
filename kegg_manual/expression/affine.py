@@ -26,56 +26,16 @@ particular variables.
 
 import re
 import numbers
-import functools
 from collections import Counter
 
-from . import boolean
+from .. import utils
 
 
-@functools.total_ordering
-class Variable(boolean.Variable):
+class V(utils.Variable):
     """Represents a variable in an expression
 
     Equality of variables is based on the symbol.
     """
-
-    def __init__(self, symbol):
-        """Create variable with given symbol
-
-        Symbol must start with a letter or underscore but
-        can contain numbers in other positions.
-
-        >>> Variable('x')
-        Variable('x')
-        """
-        if not re.match(r"^[^\d\W]\w*\Z", symbol):
-            raise ValueError("Invalid symbol {}".format(symbol))
-        super().__init__(symbol)
-
-    def simplify(self):
-        """Return simplified expression
-
-        The simplified form of a variable is always the
-        variable itself.
-
-        >>> Variable('x').simplify()
-        Variable('x')
-        """
-        return self
-
-    def substitute(self, mapping):
-        """Return expression with variables substituted
-
-        >>> Variable('x').substitute(lambda v: {'x': 567}.get(v.symbol, v))
-        567
-        >>> Variable('x').substitute(lambda v: {'y': 42}.get(v.symbol, v))
-        Variable('x')
-        >>> Variable('x').substitute(
-        ...     lambda v: {'x': 123, 'y': 56}.get(v.symbol, v))
-        123
-        """
-
-        return mapping(self)
 
     def __add__(self, other):
         return Expression({self: 1}) + other
@@ -110,12 +70,7 @@ class Variable(boolean.Variable):
         """Check equality of variables"""
         if isinstance(other, Expression):
             return other == self
-        return isinstance(other, Variable) and self._symbol == other._symbol
-
-    def __lt__(self, other):
-        if isinstance(other, Variable):
-            return self._symbol < other._symbol
-        return NotImplemented
+        return isinstance(other, V) and self._symbol == other._symbol
 
     def __hash__(self):
         return hash("Variable") ^ hash(self._symbol)
@@ -142,7 +97,7 @@ class Expression:
 
             variables = arg or {}
             for var, value in variables.items():
-                if not isinstance(var, Variable):
+                if not isinstance(var, V):
                     raise ValueError("Not a variable: {}".format(var))
                 if value != 0:
                     self._variables[var] = value
@@ -165,7 +120,7 @@ class Expression:
             re.DOTALL | re.VERBOSE,
         )
 
-        _variables: dict[Variable, int] = {}
+        _variables: dict[V, int] = {}
         offset = 0
 
         # Parse using four states:
@@ -185,8 +140,8 @@ class Expression:
             elif whitespace is not None:
                 continue
             elif variable is not None and state in (0, 2, 3):
-                _variables[Variable(variable)] = (
-                    _variables.get(Variable(variable), 0) + state_number
+                _variables[V(variable, strict=True)] = (
+                    _variables.get(V(variable, strict=True), 0) + state_number
                 )
                 state = 1
             elif sign is not None and state in (0, 1, 3):
@@ -249,7 +204,7 @@ class Expression:
 
         if isinstance(other, numbers.Number):
             return self.__class__(self._variables, self._offset + other)
-        elif isinstance(other, Variable):
+        elif isinstance(other, V):
             return self + Expression({other: 1})
         elif isinstance(other, Expression):
             _variables = Counter(self._variables)
@@ -308,7 +263,7 @@ class Expression:
         """Expression equality"""
         if isinstance(other, Expression):
             return self._variables == other._variables and self._offset == other._offset
-        elif isinstance(other, Variable):
+        elif isinstance(other, V):
             # Check that there is just one variable in the expression
             # with a coefficient of one.
             return (

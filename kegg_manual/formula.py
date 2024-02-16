@@ -31,6 +31,7 @@ import operator
 import numbers
 
 from .expression.affine import Expression
+from .utils import ParseError
 
 
 class FormulaElement(object):
@@ -392,22 +393,6 @@ class Formula(FormulaElement):
             functools.reduce(operator.or_, missing(rhs, lhs), Formula()),
             functools.reduce(operator.or_, missing(lhs, rhs), Formula()),
         )
-
-
-class ParseError(Exception):
-    """Signals error parsing formula."""
-
-    def __init__(self, *args, **kwargs):
-        self._span = kwargs.pop("span", None)
-        super(ParseError, self).__init__(*args, **kwargs)
-
-    @property
-    def indicator(self):
-        if self._span is None:
-            return None
-        pre = " " * self._span[0]
-        ind = "^" * max(1, self._span[1] - self._span[0])
-        return pre + ind
 
 
 def _parse_formula(s):

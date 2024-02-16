@@ -1,75 +1,56 @@
-# This file is part of PSAMM.
-#
-# PSAMM is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# PSAMM is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with PSAMM.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright 2014-2015  Jon Lund Steffensen <jon_steffensen@uri.edu>
-# Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
+# -*- coding: utf-8 -*-
+"""
+ * @Date: 2024-02-15 21:55:35
+ * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+ * @LastEditTime: 2024-02-16 11:58:02
+ * @FilePath: /KEGG/kegg_manual/expression/boolean.py
+ * @Description:
+ Representations of boolean expressions and variables.
 
-"""Representations of boolean expressions and variables.
 
 These classes can be used to represent simple boolean
 expressions and do evaluation with substitutions of
 particular variables.
+
+ * @OriginalLicense:
+
+This file is part of PSAMM.
+
+PSAMM is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PSAMM is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PSAMM.  If not, see <http://www.gnu.org/licenses/>.
+
+Copyright 2014-2015  Jon Lund Steffensen <jon_steffensen@uri.edu>
+Copyright 2015-2020  Keith Dufault-Thompson <keitht547@my.uri.edu>
 """
+# """
 
 import re
-from typing import Literal, Union
+from typing import Callable, Iterable, Literal, Union
 
-from ..utils import FrozenOrderedSet
-
-
-class Variable:
-    """Represents a variable in a boolean expression"""
-
-    def __init__(self, symbol):
-        self._symbol = str(symbol)
-
-    @property
-    def symbol(self):
-        """Symbol of variable
-
-        >>> Variable('x').symbol
-        'x'
-        """
-        return self._symbol
-
-    def __repr__(self):
-        return str("Variable({})").format(repr(self._symbol))
-
-    def __str__(self):
-        return self._symbol
-
-    def __eq__(self, other):
-        return isinstance(other, Variable) and self._symbol == other._symbol
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __hash__(self):
-        return hash("Variable") ^ hash(self._symbol)
+from ..utils import FrozenOrderedSet, ParseError
+from ..utils import Variable as V
 
 
 # region _OperatorTerm
 class _OperatorTerm:
     """Composite operator term."""
 
-    def __init__(self, *args: Union[bool, Variable, "_OperatorTerm"]):
-        terms: list[bool | Variable | _OperatorTerm] = []
+    def __init__(self, *args: Union[bool, V, "_OperatorTerm"]):
+        terms: list[bool | V | _OperatorTerm] = []
         for arg in args:
             if isinstance(arg, self.__class__):
                 terms.extend(arg)
-            elif isinstance(arg, (bool, Variable, _OperatorTerm)):
+            elif isinstance(arg, (bool, V, _OperatorTerm)):
                 terms.append(arg)
             else:
                 raise ValueError(f"Invalid term: {arg!r}")
@@ -121,8 +102,8 @@ class Expression:
     >>> e = Expression('a and (b or c)')
     """
 
-    def __init__(self, arg, _vars=None):
-        if isinstance(arg, (_OperatorTerm, Variable, bool)):
+    def __init__(self, arg, _vars: Iterable | None = None):
+        if isinstance(arg, (_OperatorTerm, V, bool)):
             self._root = arg
         elif isinstance(arg, str):
             self._root = _parse_expression(arg)
@@ -134,11 +115,11 @@ class Expression:
         # known.
         if _vars is None:
             variables = []
-            if isinstance(self._root, (_OperatorTerm, Variable)):
+            if isinstance(self._root, (_OperatorTerm, V)):
                 stack = [self._root]
                 while len(stack) > 0:
                     term = stack.pop()
-                    if isinstance(term, Variable):
+                    if isinstance(term, V):
                         variables.append(term)
                     elif isinstance(term, _OperatorTerm):
                         stack.extend(reversed(list(term)))
@@ -172,14 +153,16 @@ class Expression:
             raise ValueError("Expression is not fully evaluated")
         return self._root
 
-    def substitute(self, mapping):
+    def substitute(
+        self, mapping: Callable[["V"], _OperatorTerm | V | bool]
+    ) -> "Expression":
         """Substitute variables using mapping function."""
         next_terms = iter([self._root])
         output_stack = []
         current_type = None
         variables = []
-        terms: list[_OperatorTerm | Variable | bool | str] = []
-        term: _OperatorTerm | Variable | bool | str | None = None
+        terms: list[_OperatorTerm | V | bool | str] = []
+        term: _OperatorTerm | V | bool | str | None = None
 
         while True:
             try:
@@ -211,16 +194,15 @@ class Expression:
                     continue
 
             # Substitute variable
-            if isinstance(term, Variable):
+            if isinstance(term, V):
                 term = mapping(term)
-                if not isinstance(term, (_OperatorTerm, Variable, bool)):
+                if not isinstance(term, (_OperatorTerm, V, bool)):
                     raise SubstitutionError(
-                        "Expected Variable or bool from substitution,"
-                        " got: {!r}".format(term)
+                        "Expected Variable or bool from substitution," f" got: {term!r}"
                     )
 
             # Check again after substitution
-            if isinstance(term, Variable):
+            if isinstance(term, V):
                 variables.append(term)
 
             # Short circuit with booleans
@@ -253,8 +235,8 @@ class Expression:
         next_terms = iter([self._root])
         output_stack = []
         current_type = None
-        terms: list[_OperatorTerm | Variable | bool | str] = []
-        term: _OperatorTerm | Variable | bool | str | None = None
+        terms: list[_OperatorTerm | V | bool | str] = []
+        term: _OperatorTerm | V | bool | str | None = None
 
         while True:
             try:
@@ -300,22 +282,6 @@ class Expression:
         return NotImplemented
 
 
-class ParseError(Exception):
-    """Signals error parsing boolean expression."""
-
-    def __init__(self, *args, **kwargs):
-        self._span = kwargs.pop("span", None)
-        super(ParseError, self).__init__(*args, **kwargs)
-
-    @property
-    def indicator(self):
-        if self._span is None:
-            return None
-        pre = " " * self._span[0]
-        ind = "^" * max(1, self._span[1] - self._span[0])
-        return pre + ind
-
-
 def _parse_expression(s: str) -> _OperatorTerm:
     """Parse boolean expression containing and/or operators"""
 
@@ -343,8 +309,8 @@ def _parse_expression(s: str) -> _OperatorTerm:
     # At state 1 (expect_operator): Expect operator, parenthesis group end, or
     #  end.
     expect_operator = False
-    clause_stack: list[tuple[None | str, None | str, list[Variable]]] = []
-    current_clause: list[Variable] = []
+    clause_stack: list[tuple[None | str, None | str, list[V]]] = []
+    current_clause: list[V] = []
     clause_operator: Literal["or", "and", None] = None
     clause_symbol: Literal["(", ")", "[", "]", None] = None
 
@@ -383,7 +349,7 @@ def _parse_expression(s: str) -> _OperatorTerm:
         if expect_operator and operator is not None:
             operator = operator.lower()
             if operator == "and" and clause_operator != "and":
-                prev_term: Variable = current_clause.pop()
+                prev_term: V = current_clause.pop()
                 clause_stack.append((clause_operator, clause_symbol, current_clause))
                 current_clause = [prev_term]
             elif operator == "or" and clause_operator == "and":
@@ -410,7 +376,7 @@ def _parse_expression(s: str) -> _OperatorTerm:
             if clause_operator == "and":
                 clause_operator, clause_symbol, current_clause = close()
         elif not expect_operator and variable is not None:
-            current_clause.append(Variable(variable))
+            current_clause.append(V(variable))
             expect_operator = True
         elif not expect_operator and group_start is not None:
             clause_stack.append((clause_operator, clause_symbol, current_clause))

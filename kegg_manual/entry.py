@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:16:17
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:57:33
+ * @LastEditTime: 2024-02-16 00:58:57
  * @FilePath: /KEGG/kegg_manual/entry.py
  * @Description:
     Representation of compound/reaction entries in models.
@@ -33,7 +33,7 @@ Copyright 2020-2020  Elysha Sameth <esameth1@my.uri.edu>
 import logging
 from typing import TextIO
 import re
-from . import utils, formula, entry
+from . import utils, formula
 
 logger = logging.getLogger(__name__)
 
