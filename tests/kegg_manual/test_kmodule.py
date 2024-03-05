@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-12 11:22:41
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 13:13:44
+ * @LastEditTime: 2024-03-05 20:12:07
  * @FilePath: /KEGG/tests/kegg_manual/test_kmodule.py
  * @Description:
 """
@@ -14,6 +14,16 @@ from kegg_manual import kmodule
 def test_logger_debug():
     kmodule.logger.addHandler(kmodule.logging.StreamHandler())
     kmodule.logger.setLevel(-1)
+
+
+def skip_test_sympy():
+    import sympy as sym
+
+    s = sym.Symbol("1.-")
+    s1 = s + 1
+    assert s1.subs({s: 3}) == 4
+    type(s1)
+    str(s1)
 
 
 def test_kmodule_express():
