@@ -2,7 +2,7 @@
 """
  * @Date: 2020-07-01 00:29:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 23:27:29
+ * @LastEditTime: 2024-03-05 20:35:28
  * @FilePath: /KEGG/kegg_manual/kmodule.py
  * @Description:
 """
@@ -224,7 +224,7 @@ class KModule:
     def abundance(self, ko_match: dict[str, float | int]):
         return sum(ko_match.get(ko, 0) for ko in self.list_ko())
 
-    def completeness(self, ko_match: Iterable) -> float:
+    def completeness(self, ko_match: Iterable[str]) -> float:
         """Complessness of given match, ko is its dict"""
         count = 0.0
         if self._ko:

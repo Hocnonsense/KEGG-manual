@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 14:17:35
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 22:11:30
+ * @LastEditTime: 2024-03-05 20:44:53
  * @FilePath: /KEGG/kegg_manual/load.py
  * @Description:
 """
@@ -98,7 +98,7 @@ def brite_ko00002_gmodule(genomeko: pd.DataFrame, db: str | Path | None = None):
         genomeko.apply(lambda x: x[x > 0].index, axis=0)
         .apply(
             lambda x: {
-                mname: module.completeness(x) for mname, module in modules.items()
+                mname: module.completeness(list(x)) for mname, module in modules.items()
             }
         )
         .apply(lambda x: pd.Series(x))
