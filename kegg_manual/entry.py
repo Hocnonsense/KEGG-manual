@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:16:17
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 14:01:00
+ * @LastEditTime: 2024-07-09 15:55:54
  * @FilePath: /KEGG/kegg_manual/entry.py
  * @Description:
     Representation of compound/reaction entries in models.
@@ -36,16 +36,6 @@ import re
 from . import utils, formula
 
 logger = logging.getLogger(__name__)
-
-try:
-    from libchebipy._chebi_entity import ChebiEntity  # type: ignore [reportMissingImports]
-
-    use_chebi = True
-except ImportError:
-    logger.warning(
-        "WARNING: The Chebi API package not found! " "Some functions will be unusable"
-    )
-    use_chebi = False
 
 
 def check_entry_key_indend(line: str, lineno: int | None = None):
@@ -122,6 +112,8 @@ class KEntry(utils.ModelEntry):
 class KCompound(KEntry):
     """Representation of entry in KEGG compound file"""
 
+    chebi_entry = None
+
     def __init__(
         self,
         properties: dict[str, list[str]],
@@ -182,13 +174,28 @@ class KCompound(KEntry):
                     self._chebi_all = set(id_list)
 
         # libchebipy update charge and formula
-        if self._chebi != "" and use_chebi:
+        if self._chebi != "":
             self.update_charge_formula()
 
-    if use_chebi:
+    @classmethod
+    def use_chebi(cls):
+        if cls.chebi_entry is None:
+            try:
+                from libchebipy._chebi_entity import ChebiEntity  # type: ignore [reportMissingImports]
 
-        def update_charge_formula(self):
-            this_chebi_entity = ChebiEntity(self._chebi)
+                cls.chebi_entry = ChebiEntity
+
+            except ImportError:
+                logger.warning(
+                    "WARNING: The Chebi API package not found! "
+                    "Some functions will be unusable"
+                )
+                cls.chebi_entry = False
+        return cls.chebi_entry is not False
+
+    def update_charge_formula(self):
+        if self.use_chebi() and self.chebi_entry:
+            this_chebi_entity = self.chebi_entry(self._chebi)
             try:
                 try:
                     # libchebipy sometimes fails with an index error
@@ -203,11 +210,6 @@ class KCompound(KEntry):
                     self._formula = this_chebi_entity.get_formula()
             except ValueError:  # chebi entry has no charge; leave as None
                 pass
-
-    else:
-
-        def update_charge_formula(self):
-            pass
 
     @property
     def name(self):

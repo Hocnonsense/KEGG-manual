@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 11:35:32
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 13:18:23
+ * @LastEditTime: 2024-07-09 15:55:39
  * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
  * @Description:
 """
@@ -83,7 +83,7 @@ def test_kcompounddb_load_single(test_temp: Path):
     assert cpd.mol_weight is None
     assert cpd.chebi == "15377"
 
-    assert cpd.charge == 0 if _entry.use_chebi else cpd.charge is None
+    assert cpd.charge == 0 if cpd.use_chebi() else cpd.charge is None
 
     chebi_file = test_temp / "chebi_pH7_3_mapping.tsv"
     with open(chebi_file, "w") as fo:
