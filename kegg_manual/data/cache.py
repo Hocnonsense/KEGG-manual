@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 10:58:21
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-11 11:30:48
+ * @LastEditTime: 2024-07-11 11:50:37
  * @FilePath: /KEGG/kegg_manual/data/cache.py
  * @Description:
 """
@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from time import sleep
-from typing import Callable, Literal, TextIO, overload
+from typing import Callable, Literal, TextIO
 
 import importlib_resources
 
