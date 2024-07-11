@@ -2,21 +2,17 @@
 """
  * @Date: 2024-02-13 11:35:32
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-09 15:55:39
+ * @LastEditTime: 2024-07-11 11:11:36
  * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
  * @Description:
 """
 # """
 
-from pathlib import Path
 from kegg_manual import kmodule, utils
 from kegg_manual import entry as _entry
 from kegg_manual.data import query, cache
 
-try:
-    from _decorator import temp_output, test_temp, test_files
-except (ModuleNotFoundError, ImportError):
-    from tests.kegg_manual._decorator import temp_output, test_temp, test_files
+from tests import Path, temp_output, test_files, test_temp
 
 
 def test_kbritedb_load_single():

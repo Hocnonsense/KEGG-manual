@@ -2,20 +2,16 @@
 """
  * @Date: 2024-02-12 22:54:54
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-13 11:00:29
+ * @LastEditTime: 2024-07-11 11:11:14
  * @FilePath: /KEGG/tests/kegg_manual/data/test_cache.py
  * @Description:
 """
 # """
 
 from time import sleep
-from pathlib import Path
 from kegg_manual.data import cache
 
-try:
-    from _decorator import temp_output, test_temp, test_files
-except (ModuleNotFoundError, ImportError):
-    from tests.kegg_manual._decorator import temp_output, test_temp, test_files
+from tests import Path, temp_output, test_files, test_temp
 
 
 @temp_output
