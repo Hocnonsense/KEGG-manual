@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-13 10:58:21
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 22:11:24
+ * @LastEditTime: 2024-07-11 11:30:48
  * @FilePath: /KEGG/kegg_manual/data/cache.py
  * @Description:
 """
@@ -16,12 +16,84 @@ from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from time import sleep
-from typing import Callable, Literal, TextIO
+from typing import Callable, Literal, TextIO, overload
 
 import importlib_resources
 
 
 db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
+db_kegg_manual_data_config = Path(f"{db_kegg_manual_data}.yaml")
+db_kegg_manual_verbose = True
+
+
+def data_config(config=db_kegg_manual_data_config):
+    """
+    read database config of KEGG database
+
+    `dataconfig(<Path>):`
+        read given config file
+        missing values in config will be set by current settings
+    `dataconfig() -> (<key> = <value>):`
+        update settings:
+            db_kegg_manual_data: Path
+            db_kegg_manual_verbose: bool | Literal["true", "false"]
+    `dataconfig()() -> (<Path>):`
+        aply or write config to configfile
+    """
+    import yaml
+
+    global db_kegg_manual_data, db_kegg_manual_verbose
+
+    input_configfile = config
+    if Path(input_configfile).is_file():
+        with open(input_configfile) as fi:
+            raw_config = yaml.safe_load(fi)
+    else:
+        raw_config = {}
+    this_config = {
+        "db_kegg_manual_data": str(db_kegg_manual_data),
+        "db_kegg_manual_verbose": str(db_kegg_manual_verbose),
+    }
+
+    def _update(**kwargs):
+        """
+        params:
+            db_kegg_manual_data: Path
+            db_kegg_manual_verbose: bool | Literal["true", "false"]
+
+        settings will apply to this package
+        """
+        nonlocal this_config
+        global db_kegg_manual_data, db_kegg_manual_verbose
+        this_config |= {
+            "db_kegg_manual_data": str(
+                kwargs.get("db_kegg_manual_data", this_config["db_kegg_manual_data"])
+            ),
+            "db_kegg_manual_verbose": str(
+                kwargs.get(
+                    "db_kegg_manual_verbose", this_config["db_kegg_manual_verbose"]
+                )
+            ).lower(),
+        }
+        db_kegg_manual_data = Path(this_config["db_kegg_manual_data"])
+        db_kegg_manual_verbose = this_config["db_kegg_manual_verbose"] == "true"
+
+        def _set(config=input_configfile):
+            global db_kegg_manual_data, db_kegg_manual_verbose
+            Path(config).parent.mkdir(parents=True, exist_ok=True)
+            with open(config, "w") as fo:
+                yaml.safe_dump(this_config, fo)
+            return config
+
+        return _set
+
+    setattr(_update, "config", this_config)
+    _update(**raw_config)
+
+    return _update
+
+
+data_config()()
 
 changed_cached_files: dict[Path, tuple[str, Callable[[str], TextIO]]] = {}
 

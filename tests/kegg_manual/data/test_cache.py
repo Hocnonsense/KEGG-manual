@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-12 22:54:54
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-11 11:11:14
+ * @LastEditTime: 2024-07-11 11:35:44
  * @FilePath: /KEGG/tests/kegg_manual/data/test_cache.py
  * @Description:
 """
@@ -12,6 +12,25 @@ from time import sleep
 from kegg_manual.data import cache
 
 from tests import Path, temp_output, test_files, test_temp
+
+
+@temp_output
+def test_data_config(test_temp: Path):
+    cfg = cache.data_config()
+    cfg2 = cache.data_config()
+    assert cfg.config == cfg2.config
+    cfg(db_kegg_manual_data=test_temp / "test", db_kegg_manual_verbose=False)
+    assert cfg.config != cfg2.config
+    with open(cfg()(test_temp / "test.yaml")) as fi:
+        assert set(fi) == {
+            "db_kegg_manual_verbose: 'false'\n",
+            f"db_kegg_manual_data: {test_temp/ 'test'}\n",
+        }
+    cfg3 = cache.data_config()
+    assert cfg.config == cfg3.config
+    assert cache.db_kegg_manual_data == test_temp / "test"
+    cfg2()
+    assert cache.db_kegg_manual_data != test_temp / "test"
 
 
 @temp_output
