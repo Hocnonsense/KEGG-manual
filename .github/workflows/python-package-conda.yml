@@ -23,7 +23,7 @@ jobs:
           conda env update --file environment.yml --name base
       - name: Install checks
         run: |
-          conda install black pytest --name base
+          conda install black pytest --name base --solver classic
       - name: Lint with black
         run: |
           black --check --diff .
