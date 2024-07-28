@@ -2,7 +2,7 @@
 """
  * @Date: 2020-07-01 00:29:24
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-03-05 20:35:28
+ * @LastEditTime: 2024-07-28 17:44:54
  * @FilePath: /KEGG/kegg_manual/kmodule.py
  * @Description:
 """
@@ -36,29 +36,27 @@ class KModule:
         KEGG module units
         It contains the functions in elements.
 
-        if self.ko, then assert not self.elements, vice versa.
+        if self.ko, then assert not self._elements, vice versa.
     """
 
     def __init__(self, express="", additional_info=""):
-        self._is_chain = True
-        self._elements: list[KModule] = []
-        self._ko = ""
         self.additional_info = additional_info
+        self.steps: list[KModule]
+        self._ko, self.steps, self._is_chain = self.__calculate(express)
 
-        self.__calculate(express)
-
-    def __calculate(self, express: str):
+    @classmethod
+    def __calculate(cls, express: str):
         """Calculate express"""
+        _is_chain = True
         if not express:
-            return
+            return express, [], _is_chain
 
         logger.debug(f"| 1. decode {express} <")
         express_ = express.strip("-").strip("+")
         p = len(express_) - 1
         if p == 5:  # ko
             logger.debug(f"|> 2.   KO {express_} detected")
-            self._ko = express_
-            return
+            return express_, [], _is_chain
 
         # this time, we first remove all sub modules with bracket
         subexpresses: dict[str, str] = {}
@@ -89,48 +87,55 @@ class KModule:
                     express_ = express_.replace(subentry, f"({subexpresses[subentry]})")
             return express_
 
-        elements: list[KModule] = []
         if "," in express_:
-            self._is_chain = False
-            elements = [KModule(update_subexpress(x)) for x in express_.split(",")]
-            logger.debug(f"|>> 4.1 `,` {self._is_chain}; elements {elements}")
+            _is_chain = False
+            elements = [cls(update_subexpress(x)) for x in express_.split(",")]
+            logger.debug(f"|>> 4.1 `,` {_is_chain}; elements {elements}")
         elif " " in express_:
             elements = [
-                KModule(update_subexpress(x))
+                cls(update_subexpress(x))
                 for x in express_.split(" ")
                 if x.replace("+", "-").strip("-")
             ]
-            logger.debug(f"|>> 4.2 ` ` {self._is_chain}; elements {elements}")
+            logger.debug(f"|>> 4.2 ` ` {_is_chain}; elements {elements}")
         else:
             elements = [
-                KModule(update_subexpress(x))
+                cls(update_subexpress(x))
                 for x in express_.replace("-", "+").strip("+").split("+")
             ]
-            logger.debug(f"|>> 4.3 `+` {self._is_chain}; elements {elements}")
+            logger.debug(f"|>> 4.3 `+` {_is_chain}; elements {elements}")
+
         if len(elements) == 1 and elements[0]._is_chain and not elements[0]._ko:
-            self._elements.extend(elements[0]._elements)
-        else:
-            self._elements.extend(elements)
+            elements = elements[0].steps
 
         logger.debug(f"|> 5. exp: {express}")
-        logger.debug(f"...   str: {self}")
+        logger.debug(f"...   str: {cls.str2(('', elements, _is_chain), ' ')}")
+        return "", elements, _is_chain
 
     def list_ko(self) -> list[str]:
         if self._ko:
             return [self._ko]
-        return [ko for element in self._elements for ko in element.list_ko()]
+        kos = [ko for element in self.steps for ko in element.list_ko()]
+        return sorted(set(kos), key=kos.index)
 
     kos = property(fget=list_ko)
 
+    @property
+    def nsteps(self):
+        if self._ko:
+            return 1
+        return len(self.steps)
+
     def __len__(self):
-        return sum([len(e) for e in self._elements]) if self._elements else 1
+        return sum([len(e) for e in self.steps]) if self.steps else 1
 
     def __getitem__(self, key: str):
         """
         Return a way contains it
 
         >>> e, i = KModule(
-        ... "K00826 ((K00166+K00167,K11381)+K09699+K00382) (K00253,K00249) (K01968+K01969) (K05607,K13766) K01640"
+        ...     "K00826 ((K00166+K00167,K11381)+K09699+K00382) "
+        ...     "(K00253,K00249) (K01968+K01969) (K05607,K13766) K01640"
         ... )["K00382"]
         >>> i
         [1, 2, 0]
@@ -139,23 +144,31 @@ class KModule:
         """
         if key == self._ko:
             return [self._ko], [0]
-        for e in self._elements:
+        for e in self.steps:
             e_key, i_key = e[key]
             if i_key != [-1]:
                 if self._is_chain:  # all elements is important
                     e_key = [
-                        e_key if e_chain is e else e_chain for e_chain in self._elements
+                        e_key if e_chain is e else e_chain for e_chain in self.steps
                     ]
-                    i_key = [self._elements.index(e)] + i_key
+                    i_key = [self.steps.index(e)] + i_key
                 return e_key, i_key
         return [], [-1]
 
-    def str2(self, sep_chain: Literal[" ", "+", "-"] = "+"):
-        if self._ko:
-            return self._ko
-        sep = sep_chain if self._is_chain else ","
+    def str2(
+        self: "KModule|tuple[str, list[KModule], bool]",
+        sep_chain: Literal[" ", "+", "-"] = "+",
+    ):
+        _ko, steps, _is_chain = (
+            (self._ko, self.steps, self._is_chain)
+            if isinstance(self, KModule)
+            else self
+        )
+        if _ko:
+            return _ko
+        sep = sep_chain if _is_chain else ","
         kids = []
-        for kid in self._elements:
+        for kid in steps:
             if kid._ko:
                 kids.append(str(kid))
             elif kid._is_chain and sep == ",":
@@ -179,7 +192,7 @@ class KModule:
             e = no_comma[0]
         else:
             e = KModule()
-            e._elements = no_comma
+            e.steps = no_comma
             e._is_chain = is_chain
             e.additional_info = additional_info
         return e
@@ -197,7 +210,7 @@ class KModule:
                     return [self._ko]
                 return []  # this KO is not in list/dict/set, should not be detected
             last_paths = [""]
-            for kid in self._elements:
+            for kid in self.steps:
                 paths = kid.all_paths(ko_match)
                 if not paths:
                     return []
@@ -208,14 +221,14 @@ class KModule:
                 ]
             return last_paths
         else:
-            paths = [path for kid in self._elements for path in kid.all_paths(ko_match)]
+            paths = [path for kid in self.steps for path in kid.all_paths(ko_match)]
             if paths == []:
                 return []
             len_path = max(len(path) for path in paths)
             paths = sorted(
                 {
                     "[{path:^{len_path}}]".format(path=path, len_path=len_path)
-                    for kid in self._elements
+                    for kid in self.steps
                     for path in kid.all_paths(ko_match)
                 }
             )
@@ -231,8 +244,8 @@ class KModule:
             return 1 if self._ko in ko_match else 0
         # multipy elements
         if self._is_chain:
-            for element in self._elements:
+            for element in self.steps:
                 count += element.completeness(ko_match)
-            return count / len(self._elements)
+            return count / len(self.steps)
         # self.is_chain is False
-        return max([element.completeness(ko_match) for element in self._elements])
+        return max([element.completeness(ko_match) for element in self.steps])
