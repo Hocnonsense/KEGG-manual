@@ -5,7 +5,7 @@ ORTHOLOGY   K11782  mqnA; chorismate dehydratase [EC:4.2.1.151] [RN:R10666]
             K18285  mqnE; aminodeoxyfutalosine synthase [EC:2.5.1.120] [RN:R10667]
             K18284  K18284; aminodeoxyfutalosine nucleosidase [EC:3.2.2.30] [RN:R10668]
             K11784  mqnC; cyclic dehypoxanthinyl futalosine synthase [EC:1.21.98.1] [RN:R08588]
-            K11785  mqnD; 1,4-dihydroxy-6-naphthoate synthase [EC:1.14.-.-] [RN:R08589]
+            K11785  mqnD; 5,8-dihydroxy-2-naphthoate synthase [EC:4.1.99.29] [RN:R08589]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
 PATHWAY     map00130  Ubiquinone and other terpenoid-quinone biosynthesis
             map01240  Biosynthesis of cofactors

@@ -1,9 +1,9 @@
 ENTRY       M00047            Pathway   Module
 NAME        Creatine pathway
-DEFINITION  K00613 K00542 K00933
+DEFINITION  K00613 K00542 (K00933,K27382)
 ORTHOLOGY   K00613  glycine amidinotransferase [EC:2.1.4.1] [RN:R00565]
             K00542  guanidinoacetate N-methyltransferase [EC:2.1.1.2] [RN:R01883]
-            K00933  creatine kinase [EC:2.7.3.2] [RN:R01881]
+            K00933,K27382  creatine kinase [EC:2.7.3.2] [RN:R01881]
 CLASS       Pathway modules; Amino acid metabolism; Arginine and proline metabolism
 PATHWAY     map00330  Arginine and proline metabolism
             map00260  Glycine, serine and threonine metabolism

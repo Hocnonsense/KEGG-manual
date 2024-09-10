@@ -1,0 +1,29 @@
+ENTRY       M00888            Pathway   Module
+NAME        Galactofuranan biosynthesis, decaprenyl phosphate + UDP-GlcNAc (+ dTDP-Rha/UDP-Galf) => GL-5
+DEFINITION  K02851 K16870 K16649 K16650
+ORTHOLOGY   K02851  wecA; decaprenyl-phosphate GlcNAc-1-phosphate transferase [EC:2.7.8.35] [RN:R12075]
+            K16870  wbbL; N-acetylglucosaminyl-diphospho-decaprenol L-rhamnosyltransferase [EC:2.4.1.289] [RN:R12077]
+            K16649  glft1; rhamnopyranosyl-N-acetylglucosaminyl-diphospho-decaprenol beta-1,3/1,4-galactofuranosyltransferase [EC:2.4.1.287] [RN:R12078 R12079]
+            K16650  glft2; galactofuranosylgalactofuranosylrhamnosyl-N-acetylglucosaminyl-diphospho-decaprenol beta-1,5/1,6-galactofuranosyltransferase [EC:2.4.1.288] [RN:R12080]
+CLASS       Pathway modules; Glycan metabolism; Other polysaccharide metabolism
+PATHWAY     map00572  Arabinogalactan biosynthesis - Mycobacterium
+REACTION    R12075  C02970 + G10610 -> G13118
+            R12077  G13118 + C03319 -> G13119
+            R12078  G13119 + G13125 -> G13120
+            R12079  G13120 -> G13121
+            R12080  G13121 -> G13122
+COMPOUND    C02970  Decaprenol phosphate
+            G10610  UDP-N-acetyl-D-glucosamine
+            G13118  GlcNAc-pyrophosphoryldecaprenol
+            C03319  dTDP-L-rhamnose
+            G13119  Rhamnosyl-N-acetyl-glucosaminyl-decaprenyl diphosphate
+            G13125  UDP-alpha-D-galactofuranose
+            G13120  Glycolipid 3
+            G13121  Glycolipid 4
+            G13122  Glycolipid 5
+REFERENCE   PMID:18055597
+  AUTHORS   Belanova M, Dianiskova P, Brennan PJ, Completo GC, Rose NL, Lowary TL, Mikusova K
+  TITLE     Galactosyl transferases in mycobacterial cell wall synthesis.
+  JOURNAL   J Bacteriol 190:1141-5 (2008)
+            DOI:10.1128/JB.01326-07
+///

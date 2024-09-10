@@ -9,7 +9,7 @@ ORTHOLOGY   K01595  phosphoenolpyruvate carboxylase [EC:4.1.1.31] [RN:R00345]
             K14272  glutamate--glyoxylate aminotransferase [EC:2.6.1.2] [RN:R00258]
             K01006  pyruvate,orthophosphate dikinase [EC:2.7.9.1] [RN:R00206]
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
-PATHWAY     map00710  Carbon fixation in photosynthetic organisms
+PATHWAY     map00710  Carbon fixation by Calvin cycle
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

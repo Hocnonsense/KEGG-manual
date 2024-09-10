@@ -1,0 +1,79 @@
+ENTRY       M00885            Pathway   Module
+NAME        Meromycolic acid biosynthesis, initiation and elongation FAS II (KasA)
+DEFINITION  K02078
+            K11263+K18472 K00645 K11608
+            K11609+K11610+(K27071+K27072,K27689)+K11611
+ORTHOLOGY   K02078  acpM; acyl carrier protein
+            K11263  accA3; acetyl-CoA carboxylase, biotin carboxylase, biotin carboxyl carrier protein [EC:6.4.1.2 6.3.4.14] [RN:R00742]
+            K18472  accD6; acetyl-CoA carboxylase carboxyl transferase subunit [EC:6.4.1.2 2.1.3.15] [RN:R00742]
+            K00645  fabD; [acyl-carrier-protein] S-malonyltransferase [EC:2.3.1.39] [RN:R01626]
+            K11608  mtfabH; mycobacterial beta-ketoacyl-[acyl-carrier protein] synthase III [EC:2.3.1.301] [RN:R13257]
+            K11609  kasA; meromycolic acid 3-oxoacyl-[acyl-carrier protein] synthase I [EC:2.3.1.293] [RN:R13258 R13262 R13266]
+            K11610  mabA; meromycolic acid 3-oxoacyl-[acyl-carrier protein] reductase [EC:1.1.1.-] [RN:R13259 R13263 R13267]
+            K27071  hadA; meromycolic acid (3R)-3-hydroxyacyl-[acyl-carrier protein] dehydratase HadA [EC:4.2.1.-] [RN:R13260 R13264 R13268]
+            K27072  hadB; meromycolic acid (3R)-3-hydroxyacyl-[acyl-carrier protein] dehydratase HadB [EC:4.2.1.-] [RN:R13260 R13264 R13268]
+            K27689  hadAB; meromycolic acid (3R)-3-hydroxyacyl-[acyl-carrier protein] dehydratase HadAB [EC:4.2.1.-] [RN:R13260 R13264 R13268]
+            K11611  inhA; meromycolic acid enoyl-[acyl-carrier protein] reductase [EC:1.3.1.118] [RN:R13261 R13265 R13269]
+CLASS       Pathway modules; Lipid metabolism; Fatty acid metabolism
+PATHWAY     map00074  Mycolic acid biosynthesis
+REACTION    R00742  C00024 -> C00083
+            R01626  C00083 + C00229 -> C01209
+            R13257  C02843 + C01209 -> C22858
+            
+            R13258  C20683 + C01209 -> C22858
+            R13259  C22858 -> C22859
+            R13260  C22859 -> C22860
+            R13261  C22860 -> C20683
+            
+            R13262  C22861 + C01209 -> C22862
+            R13263  C22862 -> C22863
+            R13264  C22863 -> C22864
+            R13265  C22864 -> C22861
+            
+            R13266  C22865 + C01209 -> C22866
+            R13267  C22866 -> C22867
+            R13268  C22867 -> C22868
+            R13269  C22868 -> C22865
+COMPOUND    C00024  Acetyl-CoA
+            C00083  Malonyl-CoA
+            C00229  Acyl-carrier protein
+            C01209  Malonyl-[acyl-carrier protein]
+            C02843  Long-chain acyl-CoA
+            C22858  Long-chain 3-oxoacyl-[acyl-carrier protein]
+            C20683  Long-chain acyl-[acyl-carrier protein]
+            C22859  Long-chain (3R)-3-hydroxyacyl-[acyl-carrier protein]
+            C22860  Long-chain trans-2-enoyl-[acyl-carrier protein]
+            C22861  Very-long-chain acyl-[acyl-carrier protein]
+            C22862  Very-long-chain 3-oxoacyl-[acyl-carrier protein]
+            C22863  Very-long-chain (3R)-3-hydroxyacyl-[acyl-carrier protein]
+            C22864  Very-long-chain trans-2-enoyl-[acyl-carrier protein]
+            C22865  Ultra-long-chain mono-unsaturated acyl-[acyl-carrier protein]
+            C22866  Ultra-long-chain mono-unsaturated 3-oxo-fatty acyl-[acyl-carrier protein]
+            C22867  Ultra-long-chain mono-unsaturated (3R)-3-hydroxyacyl-[acyl-carrier protein]
+            C22868  Ultra-long-chain mono-unsaturated trans-2-enoyl-[acyl-carrier protein]
+REFERENCE   PMID:15653820
+  AUTHORS   Takayama K, Wang C, Besra GS.
+  TITLE     Pathway to synthesis and processing of mycolic acids in Mycobacterium tuberculosis.
+  JOURNAL   Clin Microbiol Rev 18:81-101 (2005)
+            DOI:10.1128/CMR.18.1.81-101.2005
+REFERENCE   PMID:21204864
+  AUTHORS   Gago G, Diacovich L, Arabolaza A, Tsai SC, Gramajo H.
+  TITLE     Fatty acid biosynthesis in actinomycetes.
+  JOURNAL   FEMS Microbiol Rev 35:475-97 (2011)
+            DOI:10.1111/j.1574-6976.2010.00259.x
+REFERENCE   PMID:24374164
+  AUTHORS   Marrakchi H, Laneelle MA, Daffe M.
+  TITLE     Mycolic acids: structures, biosynthesis, and beyond.
+  JOURNAL   Chem Biol 21:67-85 (2014)
+            DOI:10.1016/j.chembiol.2013.11.011
+REFERENCE   PMID:22216317
+  AUTHORS   Cantaloube S, Veyron-Churlet R, Haddache N, Daffe M, Zerbib D.
+  TITLE     The Mycobacterium tuberculosis FAS-II dehydratases and methyltransferases define  the specificity of the mycolic acid elongation complexes.
+  JOURNAL   PLoS One 6:e29564 (2011)
+            DOI:10.1371/journal.pone.0029564
+REFERENCE   PMID:17804795
+  AUTHORS   Sacco E, Covarrubias AS, O'Hare HM, Carroll P, Eynard N, Jones TA, Parish T, Daffe M, Backbro K, Quemard A
+  TITLE     The missing piece of the type II fatty acid synthase system from Mycobacterium tuberculosis.
+  JOURNAL   Proc Natl Acad Sci U S A 104:14628-33 (2007)
+            DOI:10.1073/pnas.0704132104
+///

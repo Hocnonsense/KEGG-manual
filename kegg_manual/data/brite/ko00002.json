@@ -286,10 +286,10 @@
 				"name":"Photosynthesis",
 				"children":[
 				{
-					"name":"M00161  Photosystem II [PATH:map00195]"
+					"name":"M00161  Photosystem II [PATH:map00195 map01100]"
 				},
 				{
-					"name":"M00163  Photosystem I [PATH:map00195]"
+					"name":"M00163  Photosystem I [PATH:map00195 map01100]"
 				},
 				{
 					"name":"M00597  Anoxygenic photosystem II"
@@ -303,70 +303,70 @@
 				"name":"ATP synthesis",
 				"children":[
 				{
-					"name":"M00144  NADH:quinone oxidoreductase, prokaryotes [PATH:map00190]"
+					"name":"M00144  NADH:quinone oxidoreductase, prokaryotes [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00145  NAD(P)H:quinone oxidoreductase, chloroplasts and cyanobacteria [PATH:map00190]"
+					"name":"M00145  NAD(P)H:quinone oxidoreductase, chloroplasts and cyanobacteria [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00142  NADH:ubiquinone oxidoreductase, mitochondria [PATH:map00190]"
+					"name":"M00142  NADH:ubiquinone oxidoreductase, mitochondria [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00143  NADH dehydrogenase (ubiquinone) Fe-S protein\/flavoprotein complex, mitochondria [PATH:map00190]"
+					"name":"M00143  NADH dehydrogenase (ubiquinone) Fe-S protein\/flavoprotein complex, mitochondria [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00146  NADH dehydrogenase (ubiquinone) 1 alpha subcomplex [PATH:map00190]"
+					"name":"M00146  NADH dehydrogenase (ubiquinone) 1 alpha subcomplex [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00147  NADH dehydrogenase (ubiquinone) 1 beta subcomplex [PATH:map00190]"
+					"name":"M00147  NADH dehydrogenase (ubiquinone) 1 beta subcomplex [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00149  Succinate dehydrogenase, prokaryotes [PATH:map00190]"
+					"name":"M00149  Succinate dehydrogenase, prokaryotes [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00150  Fumarate reductase, prokaryotes [PATH:map00190]"
+					"name":"M00150  Fumarate reductase, prokaryotes [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00148  Succinate dehydrogenase (ubiquinone) [PATH:map00190]"
+					"name":"M00148  Succinate dehydrogenase (ubiquinone) [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00162  Cytochrome b6f complex [PATH:map00195]"
+					"name":"M00162  Cytochrome b6f complex [PATH:map00195 map01100]"
 				},
 				{
-					"name":"M00151  Cytochrome bc1 complex respiratory unit [PATH:map00190]"
+					"name":"M00151  Cytochrome bc1 complex respiratory unit [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00152  Cytochrome bc1 complex [PATH:map00190]"
+					"name":"M00152  Cytochrome bc1 complex [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00154  Cytochrome c oxidase [PATH:map00190]"
+					"name":"M00154  Cytochrome c oxidase [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00155  Cytochrome c oxidase, prokaryotes [PATH:map00190]"
+					"name":"M00155  Cytochrome c oxidase, prokaryotes [PATH:map00190 map01100]"
 				},
 				{
 					"name":"M00153  Cytochrome bd ubiquinol oxidase [PATH:map00190]"
 				},
 				{
-					"name":"M00417  Cytochrome o ubiquinol oxidase [PATH:map00190]"
+					"name":"M00417  Cytochrome o ubiquinol oxidase [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00416  Cytochrome aa3-600 menaquinol oxidase [PATH:map00190]"
+					"name":"M00416  Cytochrome aa3-600 menaquinol oxidase [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00156  Cytochrome c oxidase, cbb3-type [PATH:map00190]"
+					"name":"M00156  Cytochrome c oxidase, cbb3-type [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00157  F-type ATPase, prokaryotes and chloroplasts [PATH:map00190 map00195]"
+					"name":"M00157  F-type ATPase, prokaryotes and chloroplasts [PATH:map00190 map00195 map01100]"
 				},
 				{
-					"name":"M00158  F-type ATPase, eukaryotes [PATH:map00190]"
+					"name":"M00158  F-type ATPase, eukaryotes [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00159  V\/A-type ATPase, prokaryotes [PATH:map00190]"
+					"name":"M00159  V\/A-type ATPase, prokaryotes [PATH:map00190 map01100]"
 				},
 				{
-					"name":"M00160  V-type ATPase, eukaryotes [PATH:map00190]"
+					"name":"M00160  V-type ATPase, eukaryotes [PATH:map00190 map01100]"
 				}
 				]
 			}
@@ -404,6 +404,15 @@
 				},
 				{
 					"name":"M00861  beta-Oxidation, peroxisome, VLCFA [PATH:map01040 map01212 map01100]"
+				},
+				{
+					"name":"M00885  Meromycolic acid biosynthesis, initiation and elongation FAS II (KasA) [PATH:map00074]"
+				},
+				{
+					"name":"M00886  Meromycolic acid biosynthesis, initiation and elongation FAS II (KasA and KasB) [PATH:map00074]"
+				},
+				{
+					"name":"M00887  Mycolic acid biosynthesis, meromycolic acid + alpha-carboxyacyl-CoA + trehalose => TMM => TDM\/mAGP\/GMM [PATH:map00074]"
 				}
 				]
 			},
@@ -411,10 +420,10 @@
 				"name":"Sterol biosynthesis",
 				"children":[
 				{
-					"name":"M00101  Cholesterol biosynthesis, squalene 2,3-epoxide => cholesterol [PATH:map00100 map01100]"
+					"name":"M00101  Cholesterol biosynthesis, FPP => cholesterol [PATH:map00100 map01100]"
 				},
 				{
-					"name":"M00102  Ergocalciferol biosynthesis, squalene 2,3-epoxide => ergosterol\/ergocalciferol [PATH:map00100 map01100 map01110]"
+					"name":"M00102  Ergocalciferol biosynthesis, FPP => ergosterol\/ergocalciferol [PATH:map00100 map01100 map01110]"
 				},
 				{
 					"name":"M00917  Phytosterol biosynthesis, squalene 2,3-epoxide => campesterol\/sitosterol [PATH:map00100 map01100 map01110]"
@@ -442,6 +451,12 @@
 				},
 				{
 					"name":"M00110  C19\/C18-Steroid hormone biosynthesis, pregnenolone => androstenedione => estrone [PATH:map00140 map01100]"
+				},
+				{
+					"name":"M00976  C19-Steroid hormone biosynthesis, pregnenolone => testosterone => dihydrotestosterone [PATH:map00140 map01100]"
+				},
+				{
+					"name":"M00977  C19-Steroid hormone biosynthesis (androgen backdoor pathway), pregnenolone => androsterone => dihydrotestosterone [PATH:map00140 map01100]"
 				}
 				]
 			},
@@ -677,6 +692,9 @@
 					"name":"M00029  Urea cycle [PATH:map00220 map01230 map01100]"
 				},
 				{
+					"name":"M00978  Ornithine-ammonia cycle [PATH:map00220 map01100 map01110]"
+				},
+				{
 					"name":"M00015  Proline biosynthesis, glutamate => proline [PATH:map00330 map01230 map01100]"
 				},
 				{
@@ -883,6 +901,14 @@
 				},
 				{
 					"name":"M00923  UDP-L-FucNAm biosynthesis [PATH:map00541 map01250 map01100]"
+				}
+				]
+			},
+			{
+				"name":"Other polysaccharide metabolism",
+				"children":[
+				{
+					"name":"M00888  Galactofuranan biosynthesis, decaprenyl phosphate + UDP-GlcNAc (+ dTDP-Rha\/UDP-Galf) => GL-5 [PATH:map00572]"
 				}
 				]
 			}
@@ -1279,7 +1305,16 @@
 					"name":"M00964  Fumigaclavine biosynthesis, chanoclavine-I aldehyde => fumigaclavine C [PATH:map00901 map01100 map01110]"
 				},
 				{
-					"name":"M00965  Vindoline biosynthesis, tabersonine => vindoline [PATH:map00901 map01100 map01110]"
+					"name":"M00981  Geissoschizine biosynthesis, tryptophan => geissoschizine [PATH:map00901]"
+				},
+				{
+					"name":"M00979  Ajmaline biosynthesis, geissoschizine => ajmaline [PATH:map00901]"
+				},
+				{
+					"name":"M00980  Strychnine biosynthesis, geissoschizine => strychnine [PATH:map00901]"
+				},
+				{
+					"name":"M00965  Vinblastine biosynthesis, geissoschizine => vinblastine [PATH:map00901]"
 				},
 				{
 					"name":"M00943  Reticuline biosynthesis, dopamine + 4HPAA => (S)-reticuline [PATH:map00950 map01100 map01110]"

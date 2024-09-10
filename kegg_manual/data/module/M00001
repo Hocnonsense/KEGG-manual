@@ -1,6 +1,6 @@
 ENTRY       M00001            Pathway   Module
 NAME        Glycolysis (Embden-Meyerhof pathway), glucose => pyruvate
-DEFINITION  (K00844,K12407,K00845,K25026,K00886,K08074,K00918) (K01810,K06859,K13810,K15916) (K00850,K16370,K21071,K00918) (K01623,K01624,K11645,K16305,K16306) K01803 ((K00134,K00150) K00927,K11389) (K01834,K15633,K15634,K15635) K01689 (K00873,K12406)
+DEFINITION  (K00844,K12407,K00845,K25026,K00886,K08074,K00918) (K01810,K06859,K13810,K15916) (K00850,K16370,K21071,K00918) (K01623,K01624,K11645,K16305,K16306) K01803 ((K00134,K00150) K00927,K11389) (K01834,K15633,K15634,K15635) (K01689,K27394) (K00873,K12406)
 ORTHOLOGY   K00844,K12407,K00845,K25026  hexokinase/glucokinase [EC:2.7.1.1 2.7.1.2] [RN:R01786]
             K00886  polyphosphate glucokinase [EC:2.7.1.63] [RN:R02189]
             K08074,K00918  ADP-dependent glucokinase [EC:2.7.1.147] [RN:R09085]
@@ -13,7 +13,7 @@ ORTHOLOGY   K00844,K12407,K00845,K25026  hexokinase/glucokinase [EC:2.7.1.1 2.7.
             K00927  phosphoglycerate kinase [EC:2.7.2.3] [RN:R01512]
             K11389  glyceraldehyde-3-phosphate dehydrogenase (ferredoxin) [EC:1.2.7.6] [RN:R07159]
             K01834,K15633,K15634,K15635  phosphoglycerate mutase [EC:5.4.2.11 5.4.2.12] [RN:R01518]
-            K01689  enolase [EC:4.2.1.11] [RN:R00658]
+            K01689,K27394  enolase [EC:4.2.1.11] [RN:R00658]
             K00873,K12406  pyruvate kinase [EC:2.7.1.40] [RN:R00200]
 CLASS       Pathway modules; Carbohydrate metabolism; Central carbohydrate metabolism
 PATHWAY     map00010  Glycolysis / Gluconeogenesis
@@ -22,7 +22,7 @@ PATHWAY     map00010  Glycolysis / Gluconeogenesis
 REACTION    R01786,R02189,R09085  C00267 -> C00668
             R13199  C00668 -> C00085
             R00756,R05805  C00085 -> C00354
-            R01070  C00354 -> C00111 + C00118
+            R01068  C00354 -> C00111 + C00118
             R01015  C00111 -> C00118
             R01061,R01063  C00118 -> C00236
             R01512  C00236 -> C00197

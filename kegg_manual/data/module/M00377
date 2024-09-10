@@ -12,7 +12,7 @@ ORTHOLOGY   K00198  carbon-monoxide dehydrogenase [EC:1.2.7.4] [RN:R07157]
             K14138  acetyl-CoA synthase [EC:2.3.1.169] [RN:R08433]
             K00197+K00194  acetyl-CoA decarbonylase/synthase complex [EC:2.3.1.-] [RN:R10243]
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
-PATHWAY     map00720  Carbon fixation pathways in prokaryotes
+PATHWAY     map00720  Other carbon fixation pathways
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

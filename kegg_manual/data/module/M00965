@@ -1,25 +1,53 @@
 ENTRY       M00965            Pathway   Module
-NAME        Vindoline biosynthesis, tabersonine => vindoline
-DEFINITION  K12696 K21895 K22365 K22323 K21896 K12697 K12698
-ORTHOLOGY   K12696  tabersonine 16-hydroxylase [EC:1.14.14.103] [RN:R05855]
+NAME        Vinblastine biosynthesis, geissoschizine => vinblastine
+DEFINITION  K27780 K27789 K27790 K27791 K27792 K27793 K27795 K12696 K21895 K22365 K22323 K21896 K12697 K12698
+            K27794
+            K27796 --
+ORTHOLOGY   K27780  (19E)-geissoschizine oxidase [EC:1.14.19.80] [RN:R13342]
+            K27789  3,17-didehydrostemmadenine reductase [EC:1.5.1.56] [RN:R13348]
+            K27790  17-dehydrostemmadenine reductase [EC:1.1.1.439] [RN:R13349]
+            K27791  stemmadenine O-acetyltransferase [EC:2.3.1.323] [RN:R13343]
+            K27792  precondylocarpine acetate synthase [EC:1.21.3.11] [RN:R13344]
+            K27793  dihydroprecondylocarpine acetate synthase [EC:1.3.1.128] [RN:R13345]
+            K27795  tabersonine synthase [EC:5.5.1.38] [RN:R13346]
+            K12696  tabersonine 16-hydroxylase [EC:1.14.14.103] [RN:R05855]
             K21895  tabersonine 16-O-methyltransferase [EC:2.1.1.94] [RN:R05885]
-            K22365  tabersonine 3-oxygenase [EC:1.14.14.50] [RN:R11810]
+            K22365  abersonine 3-oxygenase [EC:1.14.14.50] [RN:R11810]
             K22323  3-hydroxy-1,2-didehydro-2,3-dihydrotabersonine reductase [EC:1.1.99.41] [RN:R11777]
             K21896  3-hydroxy-16-methoxy-2,3-dihydrotabersonine N-methyltransferase [EC:2.1.1.99] [RN:R04013]
             K12697  deacetoxyvindoline 4-hydroxylase [EC:1.14.11.20] [RN:R05857]
             K12698  deacetylvindoline O-acetyltransferase [EC:2.3.1.107] [RN:R03230]
+            K27794  catharanthine synthase [EC:5.5.1.37] [RN:R13347]
+            K27796  peroxidase PRX1 [RN:R05858]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
 PATHWAY     map00901  Indole alkaloid biosynthesis
-            map01100  Metabolic pathways
-            map01110  Biosynthesis of secondary metabolites
-REACTION    R05855  C09244 -> C11643
+REACTION    R13342  C02151 -> C22936
+            R13348  C22936 -> C22937
+            R13349  C22937 -> C11691
+            R13343  C11691 -> C22933
+            R13344  C22933 -> C22934
+            R13345  C22934 -> C22935
+            R13376  C22935 -> C22960
+            R13346  C22960 -> C09244
+            R05855  C09244 -> C11643
             R05885  C11643 -> C11675
             R11810  C11675 -> C21678
             R11777  C21678 -> C04578
             R04013  C04578 -> C02673
             R05857  C02673 -> C01091
             R03230  C01091 -> C01626
-COMPOUND    C09244  Tabersonine
+            R13347  C22960 -> C09107
+            R05858  C01626 + C09107 -> C11641
+            R05859  C11641 -> C07201
+COMPOUND    C02151  (19E)-Geissoschizine
+            C22936  3,17-Didehydrostemmadenine
+            C22937  17-Dehydrostemmadenine
+            C11691  Stemmadenine
+            C22933  Stemmadenine acetate
+            C22934  Precondylocarpine acetate
+            C22935  Dihydroprecondylocarpine acetate
+            C22960  Dehydrosecodine
+            C09244  Tabersonine
             C11643  16-Hydroxytabersonine
             C11675  16-Methoxytabersonine
             C21678  (3R)-3-Hydroxy-16-methoxy-1,2-didehydro-2,3-dihydrotabersonine
@@ -27,6 +55,9 @@ COMPOUND    C09244  Tabersonine
             C02673  Desacetoxyvindoline
             C01091  Deacetylvindoline
             C01626  Vindoline
+            C09107  Catharanthine
+            C11641  3',4'-Anhydrovinblastine
+            C07201  Vinblastine
 REFERENCE   PMID:29442186
   AUTHORS   Ahmad B, Banerjee A, Tiwari H, Jana S, Bose S, Chakrabarti S
   TITLE     Structural and functional characterization of the Vindoline biosynthesis pathway enzymes of Catharanthus roseus.
@@ -37,4 +68,14 @@ REFERENCE   PMID:9290645
   TITLE     Molecular cloning and characterization of desacetoxyvindoline-4-hydroxylase, a 2-oxoglutarate dependent-dioxygenase involved in the biosynthesis of vindoline in Catharanthus roseus (L.) G. Don.
   JOURNAL   Plant Mol Biol 34:935-48 (1997)
             DOI:10.1023/A:1005894001516
+REFERENCE   PMID:29511102
+  AUTHORS   Qu Y, Easson MEAM, Simionescu R, Hajicek J, Thamm AMK, Salim V, De Luca V
+  TITLE     Solution of the multistep pathway for assembly of corynanthean, strychnos, iboga, and aspidosperma monoterpenoid indole alkaloids from 19E-geissoschizine.
+  JOURNAL   Proc Natl Acad Sci U S A 115:3180-3185 (2018)
+            DOI:10.1073/pnas.1719979115
+REFERENCE   PMID:36045295
+  AUTHORS   Zhang J, Hansen LG, Gudich O, Viehrig K, Lassen LMM, Schrubbers L, Adhikari KB, Rubaszka P, Carrasquer-Alvarez E, Chen L, D'Ambrosio V, Lehka B, Haidar AK, Nallapareddy S, Giannakou K, Laloux M, Arsovska D, Jorgensen MAK, Chan LJG, Kristensen M, Christensen HB, Sudarsan S, Stander EA, Baidoo E, Petzold CJ, Wulff T, O'Connor SE, Courdavault V, Jensen MK, Keasling JD.
+  TITLE     A microbial supply chain for production of the anti-cancer drug vinblastine.
+  JOURNAL   Nature 609:341-347 (2022)
+            DOI:10.1038/s41586-022-05157-3
 ///

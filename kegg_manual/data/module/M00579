@@ -6,7 +6,7 @@ ORTHOLOGY   K00625,K13788,K15024  phosphate acetyltransferase [EC:2.3.1.8] [RN:R
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
 PATHWAY     map00430  Taurine and hypotaurine metabolism
             map00620  Pyruvate metabolism
-            map00720  Carbon fixation pathways in prokaryotes
+            map00720  Other carbon fixation pathways
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

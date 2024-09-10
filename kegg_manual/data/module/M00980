@@ -1,0 +1,31 @@
+ENTRY       M00980            Pathway   Module
+NAME        Strychnine biosynthesis, geissoschizine => strychnine
+DEFINITION  K27780 K27781 K27782 K27783 K27784
+ORTHOLOGY   K27780  (19E)-geissoschizine oxidase [EC:1.14.19.80] [RN:R13342 R13329]
+            K27781  norfluorocurarine synthase [RN:R13330]
+            K27782  norfluorocurarine oxidase [RN:R13332]
+            K27783  Wieland-Gumlich aldehyde synthase [RN:R13333]
+            K27784  Wieland-Gumlich aldehyde malonyltransferase [RN:R13334]
+CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
+PATHWAY     map00901  Indole alkaloid biosynthesis
+REACTION    R13342  C02151 -> C22936
+            R13329  C22936 -> C22922
+            R13330  C22922 -> C22923
+            R13332  C22923 -> C22924
+            R13333  C22924 -> C22925
+            R13334  C22925 -> C22927
+            R13336  C22927 -> C06522
+COMPOUND    C02151  Geissoschizine
+            C22936  3,17-Didehydrostemmadenine
+            C22922  17-Dehydropreakuammicine
+            C22923  Norfluorocurarine
+            C22924  18-Hydroxynorfluorocurarine
+            C22925  Wieland-Gumlich aldehyde
+            C22927  Prestrychnine
+            C06522  Strychnine
+REFERENCE   PMID:35794473
+  AUTHORS   Hong B, Grzech D, Caputi L, Sonawane P, Lopez CER, Kamileen MO, Hernandez Lozada NJ, Grabe V, O'Connor SE
+  TITLE     Biosynthesis of strychnine.
+  JOURNAL   Nature 607:617-622 (2022)
+            DOI:10.1038/s41586-022-04950-4
+///

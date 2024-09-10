@@ -17,7 +17,7 @@ ORTHOLOGY   K01964,K15036  acetyl-CoA/propionyl-CoA carboxylase [EC:6.4.1.2 6.4.
             K15016  3-hydroxybutyryl-CoA dehydratase / 3-hydroxyacyl-CoA dehydrogenase [EC:4.2.1.17 1.1.1.35] [RN:R03026 R01975]
             K00626  acetyl-CoA C-acetyltransferase [EC:2.3.1.9] [RN:R00238]
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
-PATHWAY     map00720  Carbon fixation pathways in prokaryotes
+PATHWAY     map00720  Other carbon fixation pathways
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

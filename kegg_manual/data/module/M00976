@@ -1,0 +1,29 @@
+ENTRY       M00976            Pathway   Module
+NAME        C19-Steroid hormone biosynthesis, pregnenolone => testosterone => dihydrotestosterone
+DEFINITION  K00512 K00070 (K04119,K10207,K13368,K13369,K13370) (K12343,K12344,K12345)
+ORTHOLOGY   K00512  steroid 17alpha-monooxygenase / 17alpha-hydroxyprogesterone deacetylase [EC:1.14.14.19 1.14.14.32] [RN:R03783 R08517]
+            K00070  3beta-hydroxy-Delta5-steroid dehydrogenase / steroid Delta-isomerase [EC:1.1.1.145 5.3.3.1] [RN:R01837]
+            K04119  aldo-keto reductase family 1 member C3 [EC:1.1.1.51] [RN:R01836 R01838]
+            K10207  testosterone 17beta-dehydrogenase (NADP+) [EC:1.1.1.64] [RN:R01838]
+            K13368,K13369,K13370  17beta-estradiol 17-dehydrogenase / 3alpha(17beta)-hydroxysteroid dehydrogenase (NAD+) [EC:1.1.1.239] [RN:R01836]
+            K12343,K12344,K12345  3-oxo-5-alpha-steroid 4-dehydrogenase 1 [EC:1.3.1.22] [RN:R02497]
+CLASS       Pathway modules; Lipid metabolism; Sterol biosynthesis
+PATHWAY     map00140  Steroid hormone biosynthesis
+            map01100  Metabolic pathways
+REACTION    R03783  C01953 -> C05138
+            R08517  C05138 -> C01227
+            R01837  C01227 -> C00280
+            R01836,R01838  C00280 -> C00535
+            R02497  C00535 -> C03917
+COMPOUND    C01953  Pregnenolone
+            C05138  17alpha-Hydroxypregnenolone
+            C01227  Dehydroepiandrosterone
+            C00280  Androstenedione
+            C00535  Testosterone
+            C03917  Dihydrotestosterone
+REFERENCE   PMID:30943210
+  AUTHORS   Miller WL, Auchus RJ
+  TITLE     The "backdoor pathway" of androgen synthesis in human male sexual development.
+  JOURNAL   PLoS Biol 17:e3000198 (2019)
+            DOI:10.1371/journal.pbio.3000198
+///

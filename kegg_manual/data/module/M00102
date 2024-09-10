@@ -1,7 +1,9 @@
 ENTRY       M00102            Pathway   Module
-NAME        Ergocalciferol biosynthesis, squalene 2,3-epoxide => ergosterol/ergocalciferol
-DEFINITION  K01852 K05917 K00222 K07750 K07748 K09827 K00559 K09829 K00227 K09831 K00223
-ORTHOLOGY   K01852  lanosterol synthase [EC:5.4.99.7] [RN:R03199]
+NAME        Ergocalciferol biosynthesis, FPP => ergosterol/ergocalciferol
+DEFINITION  K00801 K00511 K01852 K05917 K00222 K07750 K07748 K09827 K00559 K09829 K00227 K09831 K00223
+ORTHOLOGY   K00801  farnesyl-diphosphate farnesyltransferase [EC:2.5.1.21] [RN:R00702 R02872]
+            K00511  squalene monooxygenase [EC:1.14.14.17] [RN:R02874]
+            K01852  lanosterol synthase [EC:5.4.99.7] [RN:R03199]
             K05917  sterol 14alpha-demethylase [EC:1.14.14.154] [RN:R05640]
             K00222  delta14-sterol reductase [EC:1.3.1.70] [RN:R05639]
             K07750  methylsterol monooxygenase [EC:1.14.18.9] [RN:R07509 R12403]
@@ -16,7 +18,10 @@ CLASS       Pathway modules; Lipid metabolism; Sterol biosynthesis
 PATHWAY     map00100  Steroid biosynthesis
             map01100  Metabolic pathways
             map01110  Biosynthesis of secondary metabolites
-REACTION    R03199  C01054 -> C01724	
+REACTION    R00702  C00448 -> C03428
+            R02872  C03428 -> C00751
+            R02874  C00751 -> C01054
+            R03199  C01054 -> C01724	
             R05640  C01724 -> C11455	
             R05639  C11455 -> C05108	
             R07509  C05108 -> C15808	
@@ -31,7 +36,10 @@ REACTION    R03199  C01054 -> C01724
             R07506  C15780 -> C05440	
             R05641  C05440 -> C01694	
             R03677  C01694 -> C05441
-COMPOUND    C01054  (S)-2,3-Epoxysqualene
+COMPOUND    C00448  trans,trans-Farnesyl diphosphate
+            C03428  Presqualene diphosphate
+            C00751  Squalene
+            C01054  (S)-2,3-Epoxysqualene
             C01724  Lanosterol
             C11455  4,4-Dimethyl-5alpha-cholesta-8,14,24-trien-3beta-ol
             C05108  14-Demethyllanosterol

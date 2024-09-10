@@ -5,7 +5,7 @@ ORTHOLOGY   K00029  malate dehydrogenase (oxaloacetate-decarboxylating)(NADP+) [
             K01006  pyruvate,orthophosphate dikinase [EC:2.7.9.1] [RN:R00206]
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
 PATHWAY     map00620  Pyruvate metabolism
-            map00710  Carbon fixation in photosynthetic organisms
+            map00710  Carbon fixation by Calvin cycle
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

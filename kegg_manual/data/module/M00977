@@ -1,0 +1,35 @@
+ENTRY       M00977            Pathway   Module
+NAME        C19-Steroid hormone biosynthesis (androgen backdoor pathway), pregnenolone => androsterone => dihydrotestosterone
+DEFINITION  K00512 K00070 K12343 (K13369,K00089,K00037) (K04119,K10207)
+ORTHOLOGY   K00512  steroid 17alpha-monooxygenase / 17alpha-hydroxyprogesterone deacetylase [EC:1.14.14.19 1.14.14.32] [RN:R03783 R13218]
+            K00070  3beta-hydroxy-Delta5-steroid dehydrogenase / steroid Delta-isomerase [EC:1.1.1.145 5.3.3.1] [RN:R03327]
+            K12343  3-oxo-5-alpha-steroid 4-dehydrogenase 1 [EC:1.3.1.22] [RN:R13215]
+            K13369  3alpha-hydroxysteroid dehydrogenase (NAD+) [EC:1.1.1.239] [RN:R13216 R04330]
+            K00089  3alpha-hydroxysteroid 3-dehydrogenase [EC:1.1.1.357] [RN:R13216 R13217 R04330 R08963]
+            K00037  3alpha-hydroxysteroid 3-dehydrogenase [EC:1.1.1.357] [RN:R13216 R13217]
+            K04119  aldo-keto reductase family 1 member C3 [EC:1.1.1.51] [RN:R13039 R13219]
+            K10207  testosterone 17beta-dehydrogenase (NADP+) [EC:1.1.1.64] [RN:R13219]
+CLASS       Pathway modules; Lipid metabolism; Sterol biosynthesis
+PATHWAY     map00140  Steroid hormone biosynthesis
+            map01100  Metabolic pathways
+REACTION    R03783  C01953 -> C05138
+            R03327  C05138 -> C01176
+            R13215  C01176 -> C22831
+            R13216,R13217  C22831 -> C22832
+            R13218  C22832 -> C00523
+            R13039,R13219  C00523 -> C03852
+            R04330,R08963  C03852 -> C03917
+COMPOUND    C01953  Pregnenolone
+            C05138  17alpha-Hydroxypregnenolone
+            C01176  17alpha-Hydroxyprogesterone
+            C22831  5alpha-Pregnan-17alpha-ol-3,20-dione
+            C22832  5alpha-Pregnane-3alpha,17alpha-diol-20-one
+            C00523  Androsterone
+            C03852  Androstan-3alpha,17beta-diol
+            C03917  Dihydrotestosterone
+REFERENCE   PMID:30943210
+  AUTHORS   Miller WL, Auchus RJ
+  TITLE     The "backdoor pathway" of androgen synthesis in human male sexual development.
+  JOURNAL   PLoS Biol 17:e3000198 (2019)
+            DOI:10.1371/journal.pbio.3000198
+///

@@ -1,8 +1,9 @@
 ENTRY       M00894            Pathway   Module
 NAME        Cannabidiol biosynthesis, malonyl-CoA => cannabidiol/dronabinol
-DEFINITION  K20503 K20508 -- K20502 K20501
+DEFINITION  K20503 K20508 K27602 K20502 K20501
 ORTHOLOGY   K20503  OLS; 3,5,7-trioxododecanoyl-CoA synthase [EC:2.3.1.206] [RN:R10171]
             K20508  OAC; olivetolic acid cyclase [EC:4.4.1.26] [RN:R10278]
+            K27602  PT4; geranyl-pyrophosphate---olivetolic acid geranyltransferase [EC:2.5.1.102] [RN:R10176]
             K20502  CBDAS; cannabidiolic acid synthase [EC:1.21.3.8] [RN:R10160]
             K20501  THCAS; tetrahydrocannabinolic acid synthase [EC:1.21.3.7] [RN:R12101]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds

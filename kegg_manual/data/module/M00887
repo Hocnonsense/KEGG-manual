@@ -1,0 +1,50 @@
+ENTRY       M00887            Pathway   Module
+NAME        Mycolic acid biosynthesis, meromycolic acid + alpha-carboxyacyl-CoA + trehalose => TMM => TDM/mAGP/GMM
+DEFINITION  K11263+K27093+K27094+K27095
+            K12428 K12437 K27306 K18851
+ORTHOLOGY   K11263+K27093+K27094+K27095  accA3+accD4+accD5+accE5; long-chain acyl-CoA carboxylase [EC:6.4.1.-] [RN:R13256]
+            K12428  fadD32; fatty acyl-AMP ligase FadD32 [EC:6.2.1.-] [RN:R13274]
+            K12437  pks13; polyketide synthase 13 [RN:R13275]
+            K27306  cmrA; mycolic acid reductase [RN:R13276]
+            K18851  fbp; trehalose O-mycolyltransferase / mycolyltransferase Ag85 [EC:2.3.1.122 2.3.1.-] [RN:R13277 R13278 R13280]
+CLASS       Pathway modules; Lipid metabolism; Fatty acid metabolism
+PATHWAY     map00074  Mycolic acid biosynthesis
+REACTION    R13256  C20876 -> C22857
+            R13274  C22873 -> C22874
+            R13275  C22874 + C22857 + C01083 -> C22875
+            R13276  C22875 -> C22876
+            R13277  C22876 -> C22877
+            R13278  C22876 -> C22879
+            R13280  C22876 + C00031 -> C22855
+COMPOUND    C20876  Very-long-chain acyl-CoA
+            C22857  Very-long-chain alpha-carboxyacyl-CoA
+            C22873  Meromycolic acid
+            C22874  Meromycoloyl-[acp Pks13]
+            C01083  alpha,alpha-Trehalose
+            C22875  Trehalose mycolic-beta-ketoester
+            C22876  Trehalose monomycolate
+            C22877  Trehalose dimycolate
+            C22879  mAGP
+            C00031  D-Glucose
+            C22855  Glucose monomycolate
+REFERENCE   PMID:15653820
+  AUTHORS   Takayama K, Wang C, Besra GS.
+  TITLE     Pathway to synthesis and processing of mycolic acids in Mycobacterium tuberculosis.
+  JOURNAL   Clin Microbiol Rev 18:81-101 (2005)
+            DOI:10.1128/CMR.18.1.81-101.2005
+REFERENCE   PMID:24374164
+  AUTHORS   Marrakchi H, Laneelle MA, Daffe M.
+  TITLE     Mycolic acids: structures, biosynthesis, and beyond.
+  JOURNAL   Chem Biol 21:67-85 (2014)
+            DOI:10.1016/j.chembiol.2013.11.011
+REFERENCE   PMID:28222482
+  AUTHORS   Bazet Lyonnet B, Diacovich L, Gago G, Spina L, Bardou F, Lemassu A, Quemard A, Gramajo H
+  TITLE     Functional reconstitution of the Mycobacterium tuberculosis long-chain acyl-CoA carboxylase from multiple acyl-CoA subunits.
+  JOURNAL   FEBS J 284:1110-1125 (2017)
+            DOI:10.1111/febs.14046
+REFERENCE   PMID:18703502
+  AUTHORS   Matsunaga I, Naka T, Talekar RS, McConnell MJ, Katoh K, Nakao H, Otsuka A, Behar SM, Yano I, Moody DB, Sugita M.
+  TITLE     Mycolyltransferase-mediated glycolipid exchange in Mycobacteria.
+  JOURNAL   J Biol Chem 283:28835-41 (2008)
+            DOI:10.1074/jbc.M805776200
+///

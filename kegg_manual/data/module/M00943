@@ -1,7 +1,7 @@
 ENTRY       M00943            Pathway   Module
 NAME        Reticuline biosynthesis, dopamine + 4HPAA => (S)-reticuline
 DEFINITION  K13382 K13383 K13384 K13385 K13386
-ORTHOLOGY   K13382  (S)-norcoclaurine synthase [EC:4.2.1.78] [RN:R04305]
+ORTHOLOGY   K13382  (S)-norcoclaurine synthase [EC:3.5.99.14] [RN:R04305]
             K13383  (RS)-norcoclaurine 6-O-methyltransferase [EC:2.1.1.128] [RN:R05123]
             K13384  (S)-coclaurine-N-methyltransferase [EC:2.1.1.140] [RN:R04692]
             K13385  N-methylcoclaurine 3'-monooxygenase [EC:1.14.14.102] [RN:R05732]

@@ -9,7 +9,7 @@ ORTHOLOGY   K00169,K00170,K00171,K00172  pyruvate ferredoxin oxidoreductase [EC:
             K01902,K01903  succinyl-CoA synthetase [EC:6.2.1.5] [RN:R00405]
             K00174,K00175,K00176,K00177  2-oxoglutarate ferredoxin oxidoreductase [EC:1.2.7.3] [RN:R01197]
 CLASS       Pathway modules; Energy metabolism; Carbon fixation
-PATHWAY     map00720  Carbon fixation pathways in prokaryotes
+PATHWAY     map00720  Other carbon fixation pathways
             map01200  Carbon metabolism
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments

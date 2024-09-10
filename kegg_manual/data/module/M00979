@@ -1,0 +1,36 @@
+ENTRY       M00979            Pathway   Module
+NAME        Ajmaline biosynthesis, geissoschizine => ajmaline
+DEFINITION  K27776 K08233 K12694 K22326 K27777 K27778 K21026 K27779
+ORTHOLOGY   K27776  polyneuridine aldehyde synthase [EC:1.14.19.81] [RN:R05829]
+            K08233  polyneuridine-aldehyde esterase [EC:3.1.1.78] [RN:R05825]
+            K12694  vinorine synthase [EC:2.3.1.160] [RN:R05876]
+            K22326  vinorine hydroxylase [EC:1.14.14.104] [RN:R05877]
+            K27777  vomilenine reductase [EC:1.5.1.32] [RN:R05878]
+            K27778  1,2-dihydrovomilenine reductase [EC:1.3.1.73] [RN:R05879]
+            K21026  acetylajmaline esterase [EC:3.1.1.80] [RN:R05880]
+            K27779  norajmaline N-methyltransferase [EC:2.1.1.392] [RN:R05881]
+CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
+PATHWAY     map00901  Indole alkaloid biosynthesis
+REACTION    R05829  C02151 -> C11632
+            R05825  C11632 -> C11633
+            R05876  C11633 -> C11807
+            R05877  C11807 -> C01761
+            R05878  C01761 -> C11808
+            R05879  C11808 -> C11809
+            R05880  C11809 -> C11810
+            R05881  C11810 -> C06542
+COMPOUND    C02151  Geissoschizine
+            C11632  Polyneuridine aldehyde
+            C11633  16-Epivellosimine
+            C11807  Vinorine
+            C01761  Vomilenine
+            C11808  1,2-Dihydrovomilenine
+            C11809  17-O-Acetylnorajmaline
+            C11810  Norajmaline
+            C06542  Ajmaline
+REFERENCE   PMID:38212296
+  AUTHORS   Guo J, Gao D, Lian J, Qu Y
+  TITLE     De novo biosynthesis of antiarrhythmic alkaloid ajmaline.
+  JOURNAL   Nat Commun 15:457 (2024)
+            DOI:10.1038/s41467-024-44797-z
+///
