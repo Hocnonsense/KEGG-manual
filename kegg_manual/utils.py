@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:22:22
  * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 23:13:39
+ * @LastEditTime: 2024-07-29 11:27:41
  * @FilePath: /KEGG/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
@@ -63,7 +63,7 @@ class FileMark:
     generates an entry.
     """
 
-    def __init__(self, filecontext, line: int, column: int):
+    def __init__(self, filecontext, line=-1, column=-1):
         self._filecontext = filecontext
         self._line = line
         self._column = column
@@ -82,10 +82,10 @@ class FileMark:
 
     def __str__(self):
         result = str(self._filecontext)
-        if self._line is not None:
-            result += ":{}".format(self._line)
-            if self._column is not None:
-                result += ":{}".format(self._column)
+        if self._line != -1:
+            result += f":{self._line}"
+            if self._column != -1:
+                result += f":{self._column}"
         return result
 
     def __repr__(self):
@@ -110,7 +110,8 @@ class ModelEntry(metaclass=abc.ABCMeta):
     Any additional properties for an entity exist in ``properties`` which is any dict-like object mapping from string keys to any value type. The ``name`` entry in the dictionary corresponds to the name. Entries can be mutable, where the properties can be modified, or immutable, where the properties cannot be modified or where modifications are ignored. The ID is always immutable.
     """
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def id(self):
         """Identifier of entry."""
 
@@ -123,7 +124,8 @@ class ModelEntry(metaclass=abc.ABCMeta):
         assert isinstance(name[0], str)
         return name[0]
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def properties(self) -> dict[str, list[str | tuple[str, list[str]]]]:
         """Properties of entry as a :class:`Mapping` subclass (e.g. dict).
 
@@ -133,8 +135,9 @@ class ModelEntry(metaclass=abc.ABCMeta):
         property, even if other properties are mutable.
         """
 
-    @abc.abstractproperty
-    def filemark(self):
+    @property
+    @abc.abstractmethod
+    def filemark(self) -> FileMark | None:
         """Position of entry in the source file (or None)."""
 
     def __repr__(self):
