@@ -16,12 +16,12 @@ from tests import Path, temp_output, test_files, test_temp
 
 
 def test_kbritedb_load_single():
-    name, brite = query.kbritedb.load_single("br:ko00002")
+    name, brite = query.kbritedb.load("br:ko00002")
     assert name == "ko00002"
 
 
 def test_kmoduledb_load_single():
-    raw_module = query.kmoduledb.load_single("M00357")
+    raw_module = query.kmoduledb.load("M00357")
     if "ENTRY" in raw_module:
         assert raw_module["ENTRY"] == ["M00357            Pathway   Module"]
     # may be problematic:
@@ -72,7 +72,7 @@ def test_ec_link_reacion():
 def test_kcompounddb_load_single(test_temp: Path):
     # Test that the download of compounds works
     cpd_id = "C00001"
-    cpd = query.kcompounddb.load_single(cpd_id)
+    cpd = query.kcompounddb.load(cpd_id)
     assert cpd.id == cpd_id
     assert cpd.name == "H2O"
     assert cpd.formula == "H2O"
@@ -91,7 +91,7 @@ def test_kcompounddb_load_single(test_temp: Path):
         print("30490", "15377", "computation", sep="\t", file=fo)
 
     rhea = utils.RheaDb(chebi_file)
-    cpd = query.CachedKCompound(db=cache.manual_config.database, rhea=rhea).load_single(
+    cpd = query.CachedKCompound(db=cache.manual_config.database, rhea=rhea).load(
         "C00001"
     )
     assert cpd.mol_weight is None
@@ -101,7 +101,7 @@ def test_kcompounddb_load_single(test_temp: Path):
 def test_generic_compoundID():
     # Test that the download of compounds works
     generic_cpd_ids = {"C02987": True, "C00001": False}
-    cpd_outs = [query.kcompounddb.load_single(i) for i in generic_cpd_ids]
+    cpd_outs = [query.kcompounddb.load(i) for i in generic_cpd_ids]
     generic = {cpd.id: cpd.is_generic() for cpd in cpd_outs}
     assert generic == generic_cpd_ids
 
@@ -163,7 +163,7 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
                 assert (str(km) != str(km_manual)) == (entry in manual_updated_modules)
                 assert str(km_manual) == raw_def_manual
                 assert (
-                    query.kmoduledb.load_single(entry)["DEFINITION"]
+                    query.kmoduledb.load(entry)["DEFINITION"]
                     == raw_module_manual["DEFINITION"]
                 )
 

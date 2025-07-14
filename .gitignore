@@ -8,3 +8,5 @@
 *.pyc
 .coverage
 build
+
+*.outdated.*

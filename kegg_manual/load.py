@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-14 14:17:35
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 15:30:20
+* @LastEditTime: 2025-07-14 20:13:11
 * @FilePath: /KEGG-manual/kegg_manual/load.py
 * @Description:
 """
@@ -21,9 +21,13 @@ except ImportError:
     tqdm = iter
 
 
-def brite_ko00001(db: str | Path | None = None):
+def brite_ko00001(db: str | Path | None = ""):
     """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
-    _, brite = query.CachedKBrite(db=db).load_single("br:ko00001")
+    if db == "":
+        kbritedb = query.kbritedb
+    else:
+        kbritedb = query.CachedKBrite(db=db, download_wait_s=0.3)
+    _, brite = kbritedb.load("br:ko00001")
     ko_levels: list[tuple[str, str, str, str, str]] = []
     levels_name: dict[str, str] = {}
     for modules1_name, modules1 in brite.items():
@@ -46,9 +50,13 @@ def brite_ko00001(db: str | Path | None = None):
     return ko_levels_, levels_name
 
 
-def brite_ko00002(db: str | Path | None = None):
+def brite_ko00002(db: str | Path | None = ""):
     """Database may be download from KEGG, including the file of module and description (ko00002.json)"""
-    _, brite = query.CachedKBrite(db=db).load_single("br:ko00002")
+    if db == "":
+        kbritedb = query.kbritedb
+    else:
+        kbritedb = query.CachedKBrite(db=db, download_wait_s=0.3)
+    _, brite = kbritedb.load("br:ko00002")
     module_levels = []
     modules = set()
     for modules1_name, modules1 in brite.items():
@@ -65,10 +73,13 @@ def brite_ko00002(db: str | Path | None = None):
     )
     module_levels_.index = module_levels_["entry"]  # type: ignore [reportAttributeAccessIssue]
 
-    kmoduledb = query.CachedKModule(db=db, download_wait_s=0.3)
+    if db == "":
+        kmoduledb = query.kmoduledb
+    else:
+        kmoduledb = query.CachedKModule(db=db, download_wait_s=0.3)
     modules_d: dict[str, kmodule.KModule] = {}
     for entry in tqdm(modules):
-        raw_module = kmoduledb.load_single(entry)
+        raw_module = kmoduledb.load(entry)
         raw_def: list[str] = raw_module["DEFINITION"]  # type: ignore [assignment]
         km = kmodule.KModule(
             " ".join(i.strip() for i in raw_def),
