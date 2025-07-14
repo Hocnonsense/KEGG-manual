@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2020-07-01 00:29:24
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-28 17:44:54
- * @FilePath: /KEGG/kegg_manual/kmodule.py
- * @Description:
+* @Date: 2020-07-01 00:29:24
+* @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2024-07-28 17:44:54
+* @FilePath: /KEGG/kegg_manual/kmodule.py
+* @Description:
 """
 
 from typing import Iterable, Literal, Optional, Sequence

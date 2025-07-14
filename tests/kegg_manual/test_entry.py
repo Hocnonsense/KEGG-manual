@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-14 21:56:31
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:48:10
- * @FilePath: /KEGG/tests/kegg_manual/test_entry.py
- * @Description:
+* @Date: 2024-02-14 21:56:31
+* @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2024-02-16 00:48:10
+* @FilePath: /KEGG/tests/kegg_manual/test_entry.py
+* @Description:
 """
 # """
 
