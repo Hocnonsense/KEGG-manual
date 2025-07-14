@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-13 10:58:21
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-11 11:50:37
- * @FilePath: /KEGG/kegg_manual/data/cache.py
- * @Description:
+* @Date: 2024-02-13 10:58:21
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 15:10:46
+* @FilePath: /KEGG-manual/kegg_manual/data/cache.py
+* @Description:
 """
 # """
 
@@ -141,7 +141,7 @@ class CachedModified:
         with rset_get_io(
             source,
             self.db if db == -1 else db,
-            self.download_wait_s if download_wait_s == -1 else download_wait_s,
+            int(self.download_wait_s) if download_wait_s == -1 else download_wait_s,
         ) as file:
             raw_module = self.load_single_from_io(file)
 
@@ -155,7 +155,7 @@ class CachedModified:
         return self.update_entry(source, raw_module)
 
     def load_single_from_io(self, file: TextIO):
-        return
+        raise NotImplementedError
 
     def check_source_valid(self, source: str):
         return True

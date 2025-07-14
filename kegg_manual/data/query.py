@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2021-06-14 18:41:24
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:40:17
- * @FilePath: /KEGG/kegg_manual/data/query.py
- * @Description:
+* @Date: 2021-06-14 18:41:24
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 15:16:41
+* @FilePath: /KEGG-manual/kegg_manual/data/query.py
+* @Description:
 """
 
 from dataclasses import dataclass
 import json
-from typing import TextIO, Union
+from typing import Any, TextIO, Union
 
 from Bio.KEGG import REST
 
@@ -30,7 +30,7 @@ class CachedKBrite(cache.CachedModified):
         super()._get_io(source)
         return REST.kegg_get(source, "json")
 
-    def load_single(self, source: str) -> tuple[str, dict[str, dict]]:
+    def load_single(self, source: str):
         return super().load_single(source)
 
     def load_single_from_io(self, file: TextIO):
@@ -175,9 +175,9 @@ class CachedKCompound(CachedKEntry):
     def load_single(self, source: str) -> entry.KCompound:  # type: ignore [override]
         return super().load_single(source)  # type: ignore [return-value]
 
-    def load_single_from_io(self, file: TextIO):
+    def load_single_from_io(self, file: TextIO):  # type: ignore [reportIncompatibleMethodOverride]
         e = next(entry.KCompound.yield_from_testio(file, rhea=self.rhea))
-        return entry.KCompound(e.properties, e.filemark)
+        return entry.KCompound(e.properties)  # type: ignore [reportArgumentType]
 
 
 kcompounddb = CachedKCompound(db=cache.db_kegg_manual_data)

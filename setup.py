@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-11 13:20:35
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-13 11:05:13
- * @FilePath: /KEGG/setup.py
- * @Description:
+* @Date: 2024-02-11 13:20:35
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 14:43:17
+* @FilePath: /KEGG-manual/setup.py
+* @Description:
 """
 # """
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     os.chdir(repo_path)
     setup(
         name="kegg_manual",
-        version="0.0.1",
+        version="0.0.2",
         author="hwrn.aou",
         author_email="hwrn.aou@sjtu.edu.cn",
         description="local handler of KEGG data",

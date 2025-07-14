@@ -3,10 +3,20 @@ name: Python Package using Conda
 on: [push]
 
 jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Codespell
+        uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_list: Crate,crate,fo,tre
+          skip: "./tests/file"
+
   build-linux:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
 
     steps:
       - uses: actions/checkout@v4

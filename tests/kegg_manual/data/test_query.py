@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-13 11:35:32
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-11 11:11:36
- * @FilePath: /KEGG/tests/kegg_manual/data/test_query.py
- * @Description:
+* @Date: 2024-02-13 11:35:32
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 15:07:43
+* @FilePath: /KEGG-manual/tests/kegg_manual/data/test_query.py
+* @Description:
 """
 # """
 
@@ -125,10 +125,10 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
             with open(entry_file) as fi:
                 raw_module = next(_entry.KEntry.yield_from_testio(fi)).properties
 
-            raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])
+            raw_def = " ".join(i.strip() for i in raw_module["DEFINITION"])  # type: ignore
             km = kmodule.KModule(
                 raw_def,
-                additional_info="".join(raw_module.get("NAME", [entry])),
+                additional_info="".join(raw_module.get("NAME", [entry])),  # type: ignore
             )
             entry_file_manual = (
                 entry_file.parent.parent
@@ -152,11 +152,11 @@ def test_cached_modules(test_temp: Path, update_maunal=False):
                     ).properties
 
                 raw_def_manual = " ".join(
-                    i.strip() for i in raw_module_manual["DEFINITION"]
+                    i.strip() for i in raw_module_manual["DEFINITION"]  # type: ignore
                 )
                 km_manual = kmodule.KModule(
                     raw_def_manual,
-                    additional_info="".join(raw_module_manual.get("NAME", [entry])),
+                    additional_info="".join(raw_module_manual.get("NAME", [entry])),  # type: ignore
                 )
                 print(entry, km, "\n", file=f1)
                 print(entry, raw_def, "\n", file=f2)

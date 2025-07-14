@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
  * @Date: 2024-02-14 21:22:22
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-29 11:27:41
- * @FilePath: /KEGG/kegg_manual/utils.py
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 14:50:21
+* @FilePath: /KEGG-manual/kegg_manual/utils.py
  * @Description:
     Utilities for keeping track of parsing context.
  * @OriginalLicense:
@@ -56,47 +56,6 @@ class ParseError(Exception):
         return pre + ind
 
 
-class FileMark:
-    """Marks a position in a file.
-
-    This is used when parsing input files, to keep track of the position that
-    generates an entry.
-    """
-
-    def __init__(self, filecontext, line=-1, column=-1):
-        self._filecontext = filecontext
-        self._line = line
-        self._column = column
-
-    @property
-    def filecontext(self):
-        return self._filecontext
-
-    @property
-    def line(self):
-        return self._line
-
-    @property
-    def column(self):
-        return self._column
-
-    def __str__(self):
-        result = str(self._filecontext)
-        if self._line != -1:
-            result += f":{self._line}"
-            if self._column != -1:
-                result += f":{self._column}"
-        return result
-
-    def __repr__(self):
-        return (
-            f"{self.__class__.__name__}"
-            f"({repr(self._filecontext)}, "
-            f" {repr(self._line)}, "
-            f" {repr(self._column)})"
-        )
-
-
 class ModelEntry(metaclass=abc.ABCMeta):
     """Abstract model entry.
 
@@ -112,7 +71,7 @@ class ModelEntry(metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def id(self):
+    def id(self) -> str:
         """Identifier of entry."""
 
     @property
@@ -134,11 +93,6 @@ class ModelEntry(metaclass=abc.ABCMeta):
         must never change the actual entry ID as obtained from the ``id``
         property, even if other properties are mutable.
         """
-
-    @property
-    @abc.abstractmethod
-    def filemark(self) -> FileMark | None:
-        """Position of entry in the source file (or None)."""
 
     def __repr__(self):
         return str("<{} id={!r}>").format(self.__class__.__name__, self.id)
@@ -454,7 +408,7 @@ class LineExpression(Variable):
     def __add__(self, other):
         """Add expressions, variables or numbers"""
         if isinstance(other, numbers.Number):
-            return self.__class__(self._variables, self._offset + other)
+            return self.__class__(self._variables, self._offset + other)  # type: ignore [reportOperatorIssue]
         if isinstance(other, LineExpression):
             _variables = Counter(self._variables)
             _variables.update(other._variables)
@@ -490,8 +444,8 @@ class LineExpression(Variable):
         """Divide by scalar"""
         if isinstance(other, numbers.Real):
             return self.__class__(
-                {var: value / other for var, value in self._variables.items()},
-                self._offset / other,
+                {var: value / other for var, value in self._variables.items()},  # type: ignore [reportArgumentType, misc]
+                self._offset / other,  # type: ignore [reportArgumentType]
             )
         return NotImplemented
 
@@ -500,8 +454,8 @@ class LineExpression(Variable):
     def __floordiv__(self, other):
         if isinstance(other, numbers.Real):
             return self.__class__(
-                {var: value // other for var, value in self._variables.items()},
-                self._offset // other,
+                {var: value // other for var, value in self._variables.items()},  # type: ignore [reportArgumentType, misc]
+                self._offset // other,  # type: ignore [reportArgumentType]
             )
         return NotImplemented
 
