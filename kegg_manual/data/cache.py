@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 10:58:21
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 21:39:29
+* @LastEditTime: 2025-07-14 21:41:01
 * @FilePath: /KEGG-manual/kegg_manual/data/cache.py
 * @Description:
 """
@@ -257,7 +257,10 @@ def get_cache_file(
             db_file not in changed_cached_files
         ), "file is update twice, please check it"
         if verbose:
-            warnings.warn(f"{source}: cached file {db_file} is updated, please check")
+            warnings.warn(
+                f"{source}: cached file {db_file} is updated, please check",
+                stacklevel=2,
+            )
         changed_cached_files[db_file] = source, rsync_io
     return cache_action
 
@@ -288,7 +291,7 @@ def atom_update_file(text: TextIO, to_file: Path, outdated_name: Path | str = ""
 
         if not to_file.parent.is_dir():
             to_file.parent.mkdir(parents=True, exist_ok=True)
-        if updated and outdated_name and Path(outdated_name).is_file():
+        if updated and outdated_name and to_file.exists():
             to_file.rename(outdated_name)
         shutil.move(tpmf_out, to_file)
     return updated
