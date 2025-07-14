@@ -77,4 +77,5 @@ COMPOUND    C03939  Acetyl-[acyl-carrier protein]
             C04633  (3R)-3-Hydroxypalmitoyl-[acyl-carrier protein]
             C05763  trans-Hexadec-2-enoyl-[acp]
             C05764  Hexadecanoyl-[acp]
+RMODULE     RM021  Fatty acid synthesis using malonyl-CoA
 ///

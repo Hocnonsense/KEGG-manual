@@ -5,8 +5,8 @@ ORTHOLOGY   K10011  UDP-4-amino-4-deoxy-L-arabinose formyltransferase / UDP-gluc
             K07806  UDP-4-amino-4-deoxy-L-arabinose-oxoglutarate aminotransferase [EC:2.6.1.87] [RN:R07659]
             K10012  undecaprenyl-phosphate 4-deoxy-4-formamido-L-arabinose transferase [EC:2.4.2.53] [RN:R07661]
             K13014  undecaprenyl phosphate-alpha-L-ara4FN deformylase [EC:3.5.-.-] [RN:R07662]
-CLASS       Pathway modules; Carbohydrate metabolism; Other carbohydrate metabolism
-PATHWAY     map00520  Amino sugar and nucleotide sugar metabolism
+CLASS       Pathway modules; Glycan metabolism; Nucleotide sugar biosynthesis
+PATHWAY     map00541  Biosynthesis of various nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R07658  C00167 -> C16155
             R07659  C16155 -> C16153

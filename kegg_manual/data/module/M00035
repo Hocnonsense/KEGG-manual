@@ -8,6 +8,7 @@ ORTHOLOGY   K00789  S-adenosylmethionine synthetase [EC:2.5.1.6] [RN:R00177]
             K01697,K10150  cystathionine beta-synthase [EC:4.2.1.22] [RN:R01290]
 CLASS       Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism
 PATHWAY     map00270  Cysteine and methionine metabolism
+            map00670  One carbon pool by folate
             map01100  Metabolic pathways
 REACTION    R00177  C00073 -> C00019
             R00367,R04858  C00019 -> C00021

@@ -6,6 +6,7 @@ ORTHOLOGY   K00640,K23304  serine O-acetyltransferase [EC:2.3.1.30] [RN:R00586]
 CLASS       Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism
 PATHWAY     map00270  Cysteine and methionine metabolism
             map00920  Sulfur metabolism
+            map01320  Sulfur cycle
             map01200  Carbon metabolism
             map01230  Biosynthesis of amino acids
             map01100  Metabolic pathways

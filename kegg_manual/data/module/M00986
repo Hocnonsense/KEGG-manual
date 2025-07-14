@@ -1,0 +1,31 @@
+ENTRY       M00986            Pathway   Module
+NAME        Sulfur reduction, sulfur => sulfide
+DEFINITION  K18367,(K17219+K17220+K17221)
+ORTHOLOGY   K18367  CoA-dependent NAD(P)H sulfur oxidoreductase [EC:1.8.1.18] [RN:R10419 R10438]
+            K17219  sreA; sulfur reductase molybdopterin subunit [RN:R03533]
+            K17220  sreB; sulfur reductase FeS subunit [RN:R03533]
+            K17221  sreC; sulfur reductase membrane anchor [RN:R03533]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map01320  Sulfur cycle
+            map01100  Metabolic pathways
+            map01120  Microbial metabolism in diverse environments
+REACTION    R10419,R10438,R03533  C00087 -> C00283
+COMPOUND    C00087  Sulfur
+            C00283  Hydrogen sulfide
+REFERENCE   PMID:17449625
+  AUTHORS   Schut GJ, Bridger SL, Adams MW
+  TITLE     Insights into the metabolism of elemental sulfur by the hyperthermophilic archaeon Pyrococcus furiosus: characterization of a coenzyme A- dependent NAD(P)H sulfur oxidoreductase.
+  JOURNAL   J Bacteriol 189:4431-41 (2007)
+            DOI:10.1128/JB.00031-07
+REFERENCE   PMID:12949162
+  AUTHORS   Laska S, Lottspeich F, Kletzin A
+  TITLE     Membrane-bound hydrogenase and sulfur reductase of the hyperthermophilic and acidophilic archaeon Acidianus ambivalens.
+  JOURNAL   Microbiology 149:2357-71 (2003)
+            DOI:10.1099/mic.0.26455-0
+REFERENCE   PMID:39420098
+  AUTHORS   Zhou Z, Tran PQ, Cowley ES, Trembath-Reichert E, Anantharaman K
+  TITLE     Diversity and ecology of microbial sulfur metabolism.
+  JOURNAL   Nat Rev Microbiol 10.1038/s41579-024-01104-3 (2024)
+            DOI:10.1038/s41579-024-01104-3
+///

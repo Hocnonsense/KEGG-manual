@@ -1,0 +1,23 @@
+ENTRY       M00984            Pathway   Module
+NAME        Sulfur oxidation, tetrathionate intermediate (S4I) pathway, thiosulfate => sulfur + sulfate + thiosulfate
+DEFINITION  (K16937+K16936,K05908,K19713) K27925
+ORTHOLOGY   K16937,K16936,K05908  doxDA; thiosulfate dehydrogenase (quinone) [EC:1.8.5.2] [RN:R07177]
+            K19713  tsdA; thiosulfate dehydrogenase [EC:1.8.2.2] [RN:R00029]
+            K27925  tetH; tetrathionate hydrolase [EC:3.12.1.-] [RN:R13400]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map01320  Sulfur cycle
+            map01100  Metabolic pathways
+            map01120  Microbial metabolism in diverse environments
+REACTION    R07177,R00029  C00320 -> C02084
+            R13400  C02084 -> C00087 + C00320 + C00059
+COMPOUND    C00320  Thiosulfate
+            C02084  Tetrathionate
+            C00087  Sulfur
+            C00059  Sulfate
+REFERENCE   PMID:39101034
+  AUTHORS   Twible LE, Whaley-Martin K, Chen LX, Colenbrander Nelson T, Arrey JLS, Jarolimek CV, King JJ, Ramilo L, Sonnenberg H, Banfield JF, Apte SC, Warren LA
+  TITLE     pH and thiosulfate dependent microbial sulfur oxidation strategies across diverse environments.
+  JOURNAL   Front Microbiol 15:1426584 (2024)
+            DOI:10.3389/fmicb.2024.1426584
+///

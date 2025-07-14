@@ -6,6 +6,7 @@ ORTHOLOGY   K01697,K10150  cystathionine beta-synthase [EC:4.2.1.22] [RN:R01290]
 CLASS       Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism
 PATHWAY     map00260  Glycine, serine and threonine metabolism
             map00270  Cysteine and methionine metabolism
+            map00670  One carbon pool by folate
             map01230  Biosynthesis of amino acids
             map01100  Metabolic pathways
 REACTION    R01290  C00065 + C00155 -> C02291

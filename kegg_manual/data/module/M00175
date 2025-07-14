@@ -9,6 +9,7 @@ ORTHOLOGY   K02588  nitrogenase iron protein [RN:R05185]
             K22899  vanadium nitrogenase iron protein [RN:R12084]
 CLASS       Pathway modules; Energy metabolism; Nitrogen metabolism
 PATHWAY     map00910  Nitrogen metabolism
+            map01310  Nitrogen cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R05185,R12084  C00697 -> C00014

@@ -1,0 +1,28 @@
+ENTRY       M00987            Pathway   Module
+NAME        Assimilatory sulfate reduction, plants, sulfate => H2S
+DEFINITION  K13811 K05907 K00392
+ORTHOLOGY   K13811  3'-phosphoadenosine 5'-phosphosulfate synthase [EC:2.7.7.4] [RN:R00529]
+            K05907  adenylyl-sulfate reductase (glutathione) [EC:1.8.4.9] [RN:R05717]
+            K00392  sulfite reductase (ferredoxin) [EC:1.8.7.1] [RN:R00859]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map01320  Sulfur cycle
+            map01100  Metabolic pathways
+REACTION    R00529  C00059 -> C00224
+            R05717  C00224 -> C00094
+            R00859  C00094 -> C00283
+COMPOUND    C00059  Sulfate
+            C00224  Adenylyl sulfate
+            C00094  Sulfite
+            C00283  Hydrogen sulfide
+REFERENCE   PMID:20460185
+  AUTHORS   Takahashi H
+  TITLE     Regulation of sulfate transport and assimilation in plants.
+  JOURNAL   Int Rev Cell Mol Biol 281:129-59 (2010)
+            DOI:10.1016/S1937-6448(10)81004-4
+REFERENCE   PMID:20424176
+  AUTHORS   Khan MS, Haas FH, Samami AA, Gholami AM, Bauer A, Fellenberg K, Reichelt M, Hansch R, Mendel RR, Meyer AJ, Wirtz M, Hell R
+  TITLE     Sulfite reductase defines a newly discovered bottleneck for assimilatory sulfate reduction and is essential for growth and development in Arabidopsis thaliana.
+  JOURNAL   Plant Cell 22:1216-31 (2010)
+            DOI:10.1105/tpc.110.074088
+///

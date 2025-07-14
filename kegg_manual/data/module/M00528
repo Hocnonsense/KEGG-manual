@@ -5,6 +5,7 @@ ORTHOLOGY   K10944+K10945+K10946  ammonia monooxygenase [EC:1.14.99.39] [RN:R001
             K10535  hydroxylamine oxidase [EC:1.7.2.6] [RN:R10164]
 CLASS       Pathway modules; Energy metabolism; Nitrogen metabolism
 PATHWAY     map00910  Nitrogen metabolism
+            map01310  Nitrogen cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R00148  C00014 -> C00192

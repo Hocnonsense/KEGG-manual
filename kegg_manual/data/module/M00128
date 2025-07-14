@@ -1,11 +1,12 @@
 ENTRY       M00128            Pathway   Module
-NAME        Ubiquinone biosynthesis, eukaryotes, 4-hydroxybenzoate + polyprenyl-PP => ubiquinol
-DEFINITION  K06125 K06126 K00591 -- -- K06127 K06134 K00591
+NAME        Ubiquinone biosynthesis, eukaryotes, 4-hydroxybenzoate + polyprenyl-PP => ubiquinone
+DEFINITION  K06125 K06126 K00591 K18586 K06126 K06127 K28034 K00591
 ORTHOLOGY   K06125  COQ2; 4-hydroxybenzoate polyprenyltransferase [EC:2.5.1.39] [RN:R05000]
-            K06126  COQ6; ubiquinone biosynthesis monooxygenase Coq6 [EC:1.14.13.-] [RN:R08770]
-            K00591  COQ3; polyprenyldihydroxybenzoate methyltransferase / 3-demethylubiquinol 3-O-methyltransferase [EC:2.1.1.114 2.1.1.64] [RN:R08771 R12657]
+            K06126  COQ6; 4-hydroxy-3-polyprenylbenzoate 5-hydroxylase / 2-methoxy-6-polyprenylphenol 4-hydroxylase [EC:1.14.15.45 1.14.15.46] [RN:R08770 R13426]
+            K00591  COQ3; polyprenyldihydroxybenzoate methyltransferase / 3-demethylubiquinol 3-O-methyltransferase [EC:2.1.1.114 2.1.1.64] [RN:R08771 R08781]
+            K18586  COQ4; 4-hydroxy-3-methoxy-5-polyprenylbenzoate decarboxylase [EC:4.1.1.130] [RN:R08772]
             K06127  COQ5; 2-methoxy-6-polyprenyl-1,4-benzoquinol methylase [EC:2.1.1.201] [RN:R09737]
-            K06134  COQ7; 3-demethoxyubiquinol 3-hydroxylase [EC:1.14.99.60] [RN:R12067]
+            K28034  COQ7; 3-demethoxyubiquinone 3-hydroxylase (NADH) [EC:1.14.13.253] [RN:R13408]
 CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
 PATHWAY     map00130  Ubiquinone and other terpenoid-quinone biosynthesis
             map01240  Biosynthesis of cofactors
@@ -14,10 +15,11 @@ REACTION    R05000  C00156 + C05847 -> C05848
             R08770  C05848 -> C17554
             R08771  C17554 -> C17559
             R08772  C17559 -> C17552
-            R12658  C17552 -> C19858
+            R13426  C17552 -> C19858
             R09737  C19858 -> C19859
-            R12067  C19859 -> C21860
-            R12657  C21860 -> C00390
+            R13456  C19859 -> C17561	
+            R13408  C17561 -> C17562
+            R08781  C17562 -> C00399
 COMPOUND    C00156  4-Hydroxybenzoate
             C05847  all-trans-Polyprenyl diphosphate
             C05848  4-Hydroxy-3-polyprenylbenzoate
@@ -25,9 +27,10 @@ COMPOUND    C00156  4-Hydroxybenzoate
             C17559  3-Methoxy-4-hydroxy-5-polyprenylbenzoate
             C17552  2-Polyprenyl-6-methoxyphenol
             C19858  2-Methoxy-6-all-trans-polyprenyl-1,4-benzoquinol
-            C19859  6-Methoxy-3-methyl-2-all-trans-polyprenyl-1,4-benzoquinol
-            C21860  3-Demethylubiquinol
-            C00390  Ubiquinol
+            C19859  5-Methoxy-2-methyl-3-(all-trans-polyprenyl)benzene-1,4-diol
+            C17561  2-Polyprenyl-3-methyl-6-methoxy-1,4-benzoquinone
+            C17562  2-Polyprenyl-3-methyl-5-hydroxy-6-methoxy-1,4-benzoquinone
+            C00399  Ubiquinone
 REFERENCE   PMID:26183239
   AUTHORS   Kawamukai M
   TITLE     Biosynthesis of coenzyme Q in eukaryotes.

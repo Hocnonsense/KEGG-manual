@@ -1,0 +1,32 @@
+ENTRY       M00991            Pathway   Module
+NAME        Dimethylsulfoniopropionate (DMSP) degradation, cleavage pathway, DMSP => acetyl-CoA
+DEFINITION  K28073 (K28060,K28061) K00140
+ORTHOLOGY   K28073  dddD; DMSP lyase [RN:R13452]
+            K28060  dddA; 3-hydroxypropionate dehydrogenase [RN:R13457]
+            K28061  dddB; 3-hydroxypropionate dehydrogenase [RN:R13457]
+            K00140  ddbC; malonate-semialdehyde dehydrogenase (acetylating) [EC:1.2.1.18] [RN:R00705 R00706]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map00640  Propanoate metabolism
+            map01320  Sulfur cycle
+            map01100  Metabolic pathways
+            map01120  Microbial metabolism in diverse environments
+REACTION    R13452  C04022 -> C00580 + C01013
+            R13457  C01013 -> C00222
+            R00705,R00706  C00222 -> C00024
+COMPOUND    C04022  S,S-Dimethyl-beta-propiothetin
+            C00580  Dimethyl sulfide
+            C01013  3-Hydroxypropanoate
+            C00222  3-Oxopropanoate
+            C00024  Acetyl-CoA
+REFERENCE   PMID:21986900
+  AUTHORS   Curson AR, Todd JD, Sullivan MJ, Johnston AW.
+  TITLE     Catabolism of dimethylsulphoniopropionate: microorganisms, enzymes and genes.
+  JOURNAL   Nat Rev Microbiol 9:849-59 (2011)
+            DOI:10.1038/nrmicro2653
+REFERENCE   PMID:35883169
+  AUTHORS   Liu J, Xue CX, Wang J, Crombie AT, Carrion O, Johnston AWB, Murrell JC, Liu J, Zheng Y, Zhang XH, Todd JD
+  TITLE     Oceanospirillales containing the DMSP lyase DddD are key utilisers of carbon from DMSP in coastal seawater.
+  JOURNAL   Microbiome 10:110 (2022)
+            DOI:10.1186/s40168-022-01304-0
+///

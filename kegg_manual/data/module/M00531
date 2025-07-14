@@ -8,6 +8,7 @@ ORTHOLOGY   K00367  assimilatory nitrate reductase [EC:1.7.7.2] [RN:R00791]
             K17877,K26139,K26138,K00361  assimilatory nitrite reductase [EC:1.7.1.4] [RN:R00787 R00789]
 CLASS       Pathway modules; Energy metabolism; Nitrogen metabolism
 PATHWAY     map00910  Nitrogen metabolism
+            map01310  Nitrogen cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R00791,R00794,R00796,R00798  C00244 -> C00088

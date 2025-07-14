@@ -1,0 +1,37 @@
+ENTRY       M00990            Pathway   Module
+NAME        Dimethylsulfoniopropionate (DMSP) degradation, demethylation pathway, DMSP => methanethiol
+DEFINITION  K17486 K20034 K20035 K20036
+ORTHOLOGY   K17486  dmdA; dimethylsulfoniopropionate demethylase [EC:2.1.1.269] [RN:R10333]
+            K20034  dmdB; 3-(methylthio)propionyl---CoA ligase [EC:6.2.1.44] [RN:R10820]
+            K20035  dmdC; 3-(methylsulfanyl)propanoyl-CoA dehydrogenase [EC:1.3.99.41] [RN:R11130]
+            K20036  dmdD; (methylthio)acryloyl-CoA hydratase [EC:4.2.1.155] [RN:R10936]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map01100  Metabolic pathways
+            map01120  Microbial metabolism in diverse environments
+REACTION    R10333  C04022 -> C08276
+            R10820  C08276 -> C20870
+            R11130  C20870 -> C20955
+            R10936  C20955 -> C00409 + C00084
+COMPOUND    C04022  S,S-Dimethyl-beta-propiothetin
+            C08276  3-(Methylthio)propanoate
+            C20870  3-(Methylthio)propanoyl-CoA
+            C20955  3-(Methylthio)acryloyl-CoA
+            C00409  Methanethiol
+            C00084  Acetaldehyde
+REFERENCE   PMID:21562561
+  AUTHORS   Reisch CR, Stoudemayer MJ, Varaljay VA, Amster IJ, Moran MA, Whitman WB
+  TITLE     Novel pathway for assimilation of dimethylsulphoniopropionate widespread in marine bacteria.
+  JOURNAL   Nature 473:208-11 (2011)
+            DOI:10.1038/nature10078
+REFERENCE   PMID:21986900
+  AUTHORS   Curson AR, Todd JD, Sullivan MJ, Johnston AW.
+  TITLE     Catabolism of dimethylsulphoniopropionate: microorganisms, enzymes and genes.
+  JOURNAL   Nat Rev Microbiol 9:849-59 (2011)
+            DOI:10.1038/nrmicro2653
+REFERENCE   PMID:37948335
+  AUTHORS   He X-Y, Liu N-H, Liu J-Q, Peng M, Teng Z-J, Gu T-J, Chen X-L, Chen Y, Wang P, Li C-Y, Todd JD, Zhang Y-Z, Zhang X-Y.
+  TITLE     SAR92 clade bacteria are potentially important DMSP degraders and sources of  climate-active gases in marine environments.
+  JOURNAL   mBio 14:e0146723 (2023)
+            DOI:10.1128/mbio.01467-23
+///

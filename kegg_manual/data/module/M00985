@@ -1,0 +1,24 @@
+ENTRY       M00985            Pathway   Module
+NAME        Sulfide oxidation, sulfide => sulfur
+DEFINITION  K17229+K17230
+ORTHOLOGY   K17229  fccB; sulfide dehydrogenase [flavocytochrome c] flavoprotein chain [EC:1.8.2.3] [RN:R09499]
+            K17230  fccA; cytochrome subunit of sulfide dehydrogenase [RN:R09499]
+CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
+PATHWAY     map00920  Sulfur metabolism
+            map01320  Sulfur cycle
+            map01100  Metabolic pathways
+            map01120  Microbial metabolism in diverse environments
+REACTION    R09499  C00283 -> C00087
+COMPOUND    C00283  Hydrogen sulfide
+            C00087  Sulfur
+REFERENCE   PMID:30837958
+  AUTHORS   Berben T, Overmars L, Sorokin DY, Muyzer G
+  TITLE     Diversity and Distribution of Sulfur Oxidation-Related Genes in Thioalkalivibrio, a Genus of Chemolithoautotrophic and Haloalkaliphilic Sulfur-Oxidizing Bacteria.
+  JOURNAL   Front Microbiol 10:160 (2019)
+            DOI:10.3389/fmicb.2019.00160
+REFERENCE   PMID:39420098
+  AUTHORS   Zhou Z, Tran PQ, Cowley ES, Trembath-Reichert E, Anantharaman K
+  TITLE     Diversity and ecology of microbial sulfur metabolism.
+  JOURNAL   Nat Rev Microbiol 10.1038/s41579-024-01104-3 (2024)
+            DOI:10.1038/s41579-024-01104-3
+///

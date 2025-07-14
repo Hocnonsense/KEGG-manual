@@ -2,7 +2,7 @@ ENTRY       M00936            Pathway   Module
 NAME        Melatonin biosynthesis, plants, tryptophan => serotonin => melatonin
 DEFINITION  K01593 K24541 K22450 (K22588,K13066)
 ORTHOLOGY   K01593  aromatic-L-amino-acid/L-tryptophan decarboxylase [EC:4.1.1.28 4.1.1.105] [RN:R00685]
-            K24541  tryptamine 5-hydroxylase [EC:1.14.-.-] [RN:R12659]
+            K24541  tryptamine 5-hydroxylase [EC:1.14.14.186] [RN:R12659]
             K22450  aralkylamine N-acetyltransferase [EC:2.3.1.87] [RN:R02911]
             K22588,K13066  acetylserotonin O-methyltransferase [EC:2.1.1.4] [RN:R03130]
 CLASS       Pathway modules; Amino acid metabolism; Aromatic amino acid metabolism
