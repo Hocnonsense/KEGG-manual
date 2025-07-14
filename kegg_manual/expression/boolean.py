@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
  * @Date: 2024-02-15 21:55:35
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 11:58:02
- * @FilePath: /KEGG/kegg_manual/expression/boolean.py
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:19:57
+* @FilePath: /KEGG-manual/kegg_manual/expression/boolean.py
  * @Description:
  Representations of boolean expressions and variables.
 
@@ -285,7 +285,7 @@ class Expression:
 def _parse_expression(s: str) -> _OperatorTerm:
     """Parse boolean expression containing and/or operators"""
 
-    # Converters for opeartor clauses
+    # Converters for operator clauses
 
     # Pairing of end group symbols with start group symbols
     group_pairs = {")": "(", "]": "["}

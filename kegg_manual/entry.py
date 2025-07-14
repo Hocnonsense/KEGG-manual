@@ -2,7 +2,7 @@
 """
  * @Date: 2024-02-14 21:16:17
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 14:58:16
+* @LastEditTime: 2025-07-14 21:24:49
 * @FilePath: /KEGG-manual/kegg_manual/entry.py
  * @Description:
     Representation of compound/reaction entries in models.
@@ -130,7 +130,7 @@ class KCompound(KEntry):
         """
         Sets the _charge, _chebi, and _chebi_all attributes
         'rhea_db' is initialized as a global in generate_model_api
-        if --rhea is supplied this funcion looks for rhea_db in the
+        if --rhea is supplied this function looks for rhea_db in the
         global namespace decide if rhea is used
         --- Logic for selecting the best chebi ID ---
         if not using rhea:
