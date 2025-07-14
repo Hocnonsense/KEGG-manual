@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-14 14:17:35
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-03-05 20:44:53
- * @FilePath: /KEGG/kegg_manual/load.py
- * @Description:
+* @Date: 2024-02-14 14:17:35
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 15:30:20
+* @FilePath: /KEGG-manual/kegg_manual/load.py
+* @Description:
 """
 # """
 
@@ -63,7 +63,7 @@ def brite_ko00002(db: str | Path | None = None):
     module_levels_ = pd.DataFrame(
         module_levels, columns=["A", "B", "C", "entry", "name"]
     )
-    module_levels_.index = module_levels_["entry"]
+    module_levels_.index = module_levels_["entry"]  # type: ignore [reportAttributeAccessIssue]
 
     kmoduledb = query.CachedKModule(db=db, download_wait_s=0.3)
     modules_d: dict[str, kmodule.KModule] = {}
@@ -72,7 +72,7 @@ def brite_ko00002(db: str | Path | None = None):
         raw_def: list[str] = raw_module["DEFINITION"]  # type: ignore [assignment]
         km = kmodule.KModule(
             " ".join(i.strip() for i in raw_def),
-            additional_info="".join(raw_module.get("NAME", [entry])),
+            additional_info="".join(raw_module.get("NAME", [entry])),  # type: ignore [reportCallIssue]
         )
         modules_d[entry] = km
 

@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 10:58:21
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 15:10:46
+* @LastEditTime: 2025-07-14 16:21:53
 * @FilePath: /KEGG-manual/kegg_manual/data/cache.py
 * @Description:
 """
@@ -21,41 +21,28 @@ from typing import Callable, Literal, TextIO
 import importlib_resources
 
 
-db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
-db_kegg_manual_data_config = Path(f"{db_kegg_manual_data}.yaml")
-db_kegg_manual_verbose = True
+_db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
 
 
-def data_config(config=db_kegg_manual_data_config):
-    """
-    read database config of KEGG database
+class ManualDataConfig:
+    def __init__(self, configfile: str | Path = f"{_db_kegg_manual_data}.yaml"):
+        self.configfile = Path(configfile)
+        if self.configfile.is_file():
+            import yaml
 
-    `dataconfig(<Path>):`
-        read given config file
-        missing values in config will be set by current settings
-    `dataconfig() -> (<key> = <value>):`
-        update settings:
-            db_kegg_manual_data: Path
-            db_kegg_manual_verbose: bool | Literal["true", "false"]
-    `dataconfig()() -> (<Path>):`
-        aply or write config to configfile
-    """
-    import yaml
+            with open(self.configfile) as fi:
+                self.config = yaml.safe_load(fi)
+        else:
+            self.config = {}
+        self.update(
+            **{
+                "db_kegg_manual_data": _db_kegg_manual_data,
+                "db_kegg_manual_verbose": True,
+            }
+            | self.config
+        )
 
-    global db_kegg_manual_data, db_kegg_manual_verbose
-
-    input_configfile = config
-    if Path(input_configfile).is_file():
-        with open(input_configfile) as fi:
-            raw_config = yaml.safe_load(fi)
-    else:
-        raw_config = {}
-    this_config = {
-        "db_kegg_manual_data": str(db_kegg_manual_data),
-        "db_kegg_manual_verbose": str(db_kegg_manual_verbose),
-    }
-
-    def _update(**kwargs):
+    def update(self, **kwargs):
         """
         params:
             db_kegg_manual_data: Path
@@ -63,37 +50,43 @@ def data_config(config=db_kegg_manual_data_config):
 
         settings will apply to this package
         """
-        nonlocal this_config
-        global db_kegg_manual_data, db_kegg_manual_verbose
-        this_config |= {
-            "db_kegg_manual_data": str(
-                kwargs.get("db_kegg_manual_data", this_config["db_kegg_manual_data"])
-            ),
-            "db_kegg_manual_verbose": str(
-                kwargs.get(
-                    "db_kegg_manual_verbose", this_config["db_kegg_manual_verbose"]
-                )
-            ).lower(),
-        }
-        db_kegg_manual_data = Path(this_config["db_kegg_manual_data"])
-        db_kegg_manual_verbose = this_config["db_kegg_manual_verbose"] == "true"
+        if "db_kegg_manual_data" in kwargs:
+            self.database = Path(kwargs["db_kegg_manual_data"])
+            self.config["db_kegg_manual_data"] = str(self.database)
+        if "db_kegg_manual_verbose" in kwargs:
+            self.config["db_kegg_manual_verbose"] = str(
+                kwargs["db_kegg_manual_verbose"]
+            ).lower()
+            self.verbose = kwargs["db_kegg_manual_verbose"] == "true"
+        return self
 
-        def _set(config=input_configfile):
-            global db_kegg_manual_data, db_kegg_manual_verbose
-            Path(config).parent.mkdir(parents=True, exist_ok=True)
-            with open(config, "w") as fo:
-                yaml.safe_dump(this_config, fo)
-            return config
+    def save(self, configfile: str | Path | None = None):
+        """
+        write config to file
+        """
+        import yaml
 
-        return _set
+        self.configfile.parent.mkdir(parents=True, exist_ok=True)
+        if configfile is not None:
+            self.configfile = Path(configfile)
+        self.configfile.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.configfile, "w") as fo:
+            yaml.safe_dump(self.config, fo)
+        return self.configfile
 
-    setattr(_update, "config", this_config)
-    _update(**raw_config)
+    def __call__(self, **kwargs):
+        self.update(**kwargs)
+        return self.save
 
-    return _update
+    def copy(self):
+        """
+        return a copy of this config
+        """
+        return ManualDataConfig(self.configfile).update(**self.config)
 
 
-data_config()()
+manual_config = ManualDataConfig()
+
 
 changed_cached_files: dict[Path, tuple[str, Callable[[str], TextIO]]] = {}
 
@@ -160,9 +153,7 @@ class CachedModified:
     def check_source_valid(self, source: str):
         return True
 
-    def update_entry(
-        self, source: str, raw_module: dict[str, list[str | tuple[str, list[str]]]]
-    ):
+    def update_entry(self, source: str, raw_module):
         return raw_module
 
 

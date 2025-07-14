@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-14 14:22:57
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-03-05 20:45:20
- * @FilePath: /KEGG/tests/kegg_manual/test_load.py
- * @Description:
+* @Date: 2024-02-14 14:22:57
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 16:21:09
+* @FilePath: /KEGG-manual/tests/kegg_manual/test_load.py
+* @Description:
 """
 # """
 
@@ -13,7 +13,7 @@ from kegg_manual.data import cache
 
 
 def test_brite_ko00002():
-    module_levels, modules = load.brite_ko00002(cache.db_kegg_manual_data)
+    module_levels, modules = load.brite_ko00002(cache.manual_config.database)
     ko_abd = {
         "K19746": 0.0,
         "K19744": 1.0,
@@ -39,7 +39,7 @@ def test_brite_ko00002():
 
 
 def test_brite_ko00002_entry():
-    module_levels, entry2ko = load.brite_ko00002_entry(cache.db_kegg_manual_data)
+    module_levels, entry2ko = load.brite_ko00002_entry(cache.manual_config.database)
 
 
 def test_brite_ko00002_gmodule():
@@ -67,6 +67,6 @@ def test_brite_ko00002_gmodule():
                 },
             }
         ),
-        cache.db_kegg_manual_data,
+        cache.manual_config.database,
     )
     assert gmodule.loc["M00948", "Genome1"] == 1

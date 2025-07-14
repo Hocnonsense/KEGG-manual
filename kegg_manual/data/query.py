@@ -2,7 +2,7 @@
 """
 * @Date: 2021-06-14 18:41:24
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 15:16:41
+* @LastEditTime: 2025-07-14 15:56:43
 * @FilePath: /KEGG-manual/kegg_manual/data/query.py
 * @Description:
 """
@@ -20,7 +20,6 @@ from .. import entry, utils
 
 @dataclass
 class CachedKBrite(cache.CachedModified):
-
     def __post_init__(self) -> None:
         if self.func_to_file is None:
             self.func_to_file = lambda x: x.replace("br:ko", "brite/ko") + ".json"
@@ -30,7 +29,7 @@ class CachedKBrite(cache.CachedModified):
         super()._get_io(source)
         return REST.kegg_get(source, "json")
 
-    def load_single(self, source: str):
+    def load_single(self, source: str) -> tuple[str, dict[str, Any]]:
         return super().load_single(source)
 
     def load_single_from_io(self, file: TextIO):
@@ -52,7 +51,7 @@ class CachedKBrite(cache.CachedModified):
         )
 
 
-kbritedb = CachedKBrite(db=cache.db_kegg_manual_data)
+kbritedb = CachedKBrite(db=cache.manual_config.database)
 
 
 @dataclass
@@ -88,7 +87,7 @@ class CachedKModule(CachedKEntry):
         return True
 
 
-kmoduledb = CachedKModule(db=cache.db_kegg_manual_data)
+kmoduledb = CachedKModule(db=cache.manual_config.database)
 
 
 @dataclass
@@ -124,7 +123,7 @@ class CachedKO(CachedKEntry):
         return rxn_dict
 
 
-kodb = CachedKO(db=cache.db_kegg_manual_data)
+kodb = CachedKO(db=cache.manual_config.database)
 
 
 @dataclass
@@ -155,7 +154,7 @@ class CachedKEC(CachedKEntry):
         return rxn_dict
 
 
-kecdb = CachedKEC(db=cache.db_kegg_manual_data)
+kecdb = CachedKEC(db=cache.manual_config.database)
 
 
 @dataclass
@@ -180,4 +179,4 @@ class CachedKCompound(CachedKEntry):
         return entry.KCompound(e.properties)  # type: ignore [reportArgumentType]
 
 
-kcompounddb = CachedKCompound(db=cache.db_kegg_manual_data)
+kcompounddb = CachedKCompound(db=cache.manual_config.database)

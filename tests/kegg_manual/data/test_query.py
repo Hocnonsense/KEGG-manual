@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 11:35:32
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 15:07:43
+* @LastEditTime: 2025-07-14 15:56:30
 * @FilePath: /KEGG-manual/tests/kegg_manual/data/test_query.py
 * @Description:
 """
@@ -91,7 +91,7 @@ def test_kcompounddb_load_single(test_temp: Path):
         print("30490", "15377", "computation", sep="\t", file=fo)
 
     rhea = utils.RheaDb(chebi_file)
-    cpd = query.CachedKCompound(db=cache.db_kegg_manual_data, rhea=rhea).load_single(
+    cpd = query.CachedKCompound(db=cache.manual_config.database, rhea=rhea).load_single(
         "C00001"
     )
     assert cpd.mol_weight is None
@@ -114,7 +114,7 @@ manual_updated_modules = [
 
 @temp_output
 def test_cached_modules(test_temp: Path, update_maunal=False):
-    db: Path = cache.db_kegg_manual_data
+    db: Path = cache.manual_config.database
 
     with open(test_temp / "a", "w") as f1, open(test_temp / "b", "w") as f2:
         for entry_file in sorted((db / "module").glob("M*")):
