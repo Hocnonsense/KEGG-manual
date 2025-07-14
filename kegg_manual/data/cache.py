@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 10:58:21
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 20:26:35
+* @LastEditTime: 2025-07-14 21:32:07
 * @FilePath: /KEGG-manual/kegg_manual/data/cache.py
 * @Description:
 """
@@ -58,7 +58,7 @@ class ManualDataConfig:
             self.config["db_kegg_manual_verbose"] = str(
                 kwargs["db_kegg_manual_verbose"]
             ).lower()
-            self.verbose = kwargs["db_kegg_manual_verbose"] == "true"
+            self.verbose = self.config["db_kegg_manual_verbose"] == "true"
         return self
 
     def save(self, configfile: str | Path | None = None):
@@ -67,7 +67,6 @@ class ManualDataConfig:
         """
         import yaml
 
-        self.configfile.parent.mkdir(parents=True, exist_ok=True)
         if configfile is not None:
             self.configfile = Path(configfile)
         self.configfile.parent.mkdir(parents=True, exist_ok=True)
@@ -98,10 +97,11 @@ def report_updated_on_exit(io_out=sys.stderr):
         if io_out is sys.stderr:
             warnings.warn(
                 "updated files:\n    "
-                + ("\n    ".join(str(i) for i in changed_cached_files))
+                + ("\n    ".join(str(i) for i in changed_cached_files)),
+                stacklevel=2,
             )
         else:
-            for k, (v1, v2) in changed_cached_files.items():
+            for k, (v1, _v2) in changed_cached_files.items():
                 print(k, v1, sep="\t", file=io_out)
 
 
@@ -131,7 +131,7 @@ class CachedModified:
 
     def rsync_io(self, source: str) -> TextIO:
         sleep(self.download_wait_s)
-        return ""  # type: ignore [return-value]
+        raise NotImplementedError
 
     def load_raw(
         self, source: str, db: str | Path | None | Literal[-1] = -1, keep_seconds=-1
@@ -220,7 +220,8 @@ def decide_file_action(db_file: Path, source: str, keep_seconds: float):
             cache_action = "use"
         elif file_modified_before(db_file, keep_seconds):
             warnings.warn(
-                f"{source}: cached file {db_file} is out of date, will update"
+                f"{source}: cached file {db_file} is out of date, will update",
+                stacklevel=2,
             )
             cache_action = "update"
         else:
@@ -284,7 +285,7 @@ def atom_update_file(text: TextIO, to_file: Path, outdated_name: Path | str = ""
 
         if not to_file.parent.is_dir():
             to_file.parent.mkdir(parents=True, exist_ok=True)
-        if updated and outdated_name:
+        if updated and outdated_name and Path(outdated_name).is_file():
             to_file.rename(outdated_name)
         shutil.move(tpmf_out, to_file)
     return updated

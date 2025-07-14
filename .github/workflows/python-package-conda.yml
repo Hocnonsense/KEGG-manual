@@ -1,6 +1,8 @@
 name: Python Package using Conda
 
-on: [push]
+on:
+  - push
+  - pull_request
 
 jobs:
   codespell:
@@ -12,7 +14,7 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@v2
         with:
-          ignore_words_list: Crate,crate,fo,tre,brite,Te,Nd,abd
+          ignore_words_list: fo,tre,brite,Te,Nd,abd
           skip: "./tests/file/*,./kegg_manual/data/brite/*,./kegg_manual/data/compound/*,./kegg_manual/data/ec/*,./kegg_manual/data/ko/*,./kegg_manual/data/manual/*,./kegg_manual/data/module/*,./kegg_manual/data/organism"
 
   build-linux:
