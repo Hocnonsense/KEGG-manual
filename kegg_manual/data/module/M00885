@@ -51,6 +51,7 @@ COMPOUND    C00024  Acetyl-CoA
             C22866  Ultra-long-chain mono-unsaturated 3-oxo-fatty acyl-[acyl-carrier protein]
             C22867  Ultra-long-chain mono-unsaturated (3R)-3-hydroxyacyl-[acyl-carrier protein]
             C22868  Ultra-long-chain mono-unsaturated trans-2-enoyl-[acyl-carrier protein]
+RMODULE     RM021  Fatty acid synthesis using malonyl-CoA
 REFERENCE   PMID:15653820
   AUTHORS   Takayama K, Wang C, Besra GS.
   TITLE     Pathway to synthesis and processing of mycolic acids in Mycobacterium tuberculosis.

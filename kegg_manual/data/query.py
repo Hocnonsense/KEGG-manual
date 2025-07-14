@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2021-06-14 18:41:24
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 00:40:17
- * @FilePath: /KEGG/kegg_manual/data/query.py
- * @Description:
+* @Date: 2021-06-14 18:41:24
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:39:39
+* @FilePath: /KEGG-manual/kegg_manual/data/query.py
+* @Description:
 """
 
 from dataclasses import dataclass
 import json
-from typing import TextIO, Union
+from typing import Any, TextIO, Union
 
 from Bio.KEGG import REST
 
@@ -20,24 +20,21 @@ from .. import entry, utils
 
 @dataclass
 class CachedKBrite(cache.CachedModified):
+    def func_to_file(self, source) -> str:
+        return source.replace("br:ko", "brite/ko") + ".json"
 
-    def __post_init__(self) -> None:
-        if self.func_to_file is None:
-            self.func_to_file = lambda x: x.replace("br:ko", "brite/ko") + ".json"
-        return super().__post_init__()
-
-    def _get_io(self, source: str) -> TextIO:
-        super()._get_io(source)
+    def rsync_io(self, source):
+        super().rsync_io(source)
         return REST.kegg_get(source, "json")
 
-    def load_single(self, source: str) -> tuple[str, dict[str, dict]]:
-        return super().load_single(source)
+    def load(self, source) -> tuple[str, dict[str, Any]]:
+        return super().load(source)
 
-    def load_single_from_io(self, file: TextIO):
-        brite_doc: dict[str, Union[str, list[dict]]] = json.loads(file.read())
+    def parse_io(self, io_in):
+        brite_doc: dict[str, Union[str, list[dict]]] = json.loads(io_in.read())
         return self.read_brite_json(brite_doc)
 
-    def check_source_valid(self, source: str):
+    def check_source_valid(self, source):
         assert source.startswith("br:ko"), "not a file nor a right br number"
         return True
 
@@ -52,53 +49,47 @@ class CachedKBrite(cache.CachedModified):
         )
 
 
-kbritedb = CachedKBrite(db=cache.db_kegg_manual_data)
+kbritedb = CachedKBrite(db=cache.manual_config.database)
 
 
 @dataclass
 class CachedKEntry(cache.CachedModified):
     def __post_init__(self) -> None:
         if self.func_to_file_modify is None:
-            self.func_to_file_modify = (
-                lambda x: x.parent.parent / "manual" / x.parent.name / x.name
-            )
+            self.func_to_file_modify = self.redirect_modify
         return super().__post_init__()
 
-    def _get_io(self, source: str) -> TextIO:
-        super()._get_io(source)
+    def rsync_io(self, source) -> TextIO:
+        self.sleep()
         return REST.kegg_get(source)
 
-    def load_single(self, source: str) -> dict[str, list[str | tuple[str, list[str]]]]:
-        return super().load_single(source)
+    def load(self, source) -> dict[str, list[str | tuple[str, list[str]]]]:
+        return super().load(source)
 
-    def load_single_from_io(self, file: TextIO):
-        return next(entry.KEntry.yield_from_testio(file)).properties
+    def parse_io(self, io_in):
+        return next(entry.KEntry.yield_from_testio(io_in)).properties
 
 
 @dataclass
 class CachedKModule(CachedKEntry):
-    def __post_init__(self) -> None:
-        if self.func_to_file is None:
-            self.func_to_file = lambda x: x.replace("M", "module/M")
-        return super().__post_init__()
+    def func_to_file(self, source):
+        return source.replace("M", "module/M")
 
-    def check_source_valid(self, source: str):
+    def check_source_valid(self, source):
         assert source.startswith("M"), "not a file nor a right module number"
         assert len(source) == 6, "only single module allowed"
         return True
 
 
-kmoduledb = CachedKModule(db=cache.db_kegg_manual_data)
+kmoduledb = CachedKModule(db=cache.manual_config.database)
 
 
 @dataclass
 class CachedKO(CachedKEntry):
-    def __post_init__(self) -> None:
-        if self.func_to_file is None:
-            self.func_to_file = lambda x: x.replace("K", "ko/K")
-        return super().__post_init__()
+    def func_to_file(self, source):
+        return source.replace("K", "ko/K")
 
-    def check_source_valid(self, source: str):
+    def check_source_valid(self, source):
         assert source.startswith("K"), "not a file nor a right ko number"
         assert len(source) == 6, "only single module allowed"
         return True
@@ -111,7 +102,7 @@ class CachedKO(CachedKEntry):
         """
         rxn_dict: dict[str, set] = {}
         for ko, genes in rxn_mapping.items():
-            reaction = self.load_single(ko)
+            reaction = self.load(ko)
             for i in reaction.get("DBLINKS", []):
                 if isinstance(i, str) and i.startswith("RN"):
                     for r in i.split()[1:]:
@@ -124,17 +115,15 @@ class CachedKO(CachedKEntry):
         return rxn_dict
 
 
-kodb = CachedKO(db=cache.db_kegg_manual_data)
+kodb = CachedKO(db=cache.manual_config.database)
 
 
 @dataclass
 class CachedKEC(CachedKEntry):
-    def __post_init__(self) -> None:
-        if self.func_to_file is None:
-            self.func_to_file = lambda x: f"ec/{x}"
-        return super().__post_init__()
+    def func_to_file(self, source):
+        return f"ec/{source}"
 
-    def check_source_valid(self, source: str):
+    def check_source_valid(self, source):
         assert source.count(".") == 3 or "-" in source
         return True
 
@@ -146,7 +135,7 @@ class CachedKEC(CachedKEntry):
         """
         rxn_dict: dict[str, set] = {}
         for ko, genes in rxn_mapping.items():
-            reaction = self.load_single(ko)
+            reaction = self.load(ko)
             for i in reaction.get("ALL_REAC", []):
                 if isinstance(i, str) and i.startswith("R"):
                     for r in i.split():
@@ -155,29 +144,27 @@ class CachedKEC(CachedKEntry):
         return rxn_dict
 
 
-kecdb = CachedKEC(db=cache.db_kegg_manual_data)
+kecdb = CachedKEC(db=cache.manual_config.database)
 
 
 @dataclass
 class CachedKCompound(CachedKEntry):
     rhea: utils.RheaDb | None = None
 
-    def __post_init__(self) -> None:
-        if self.func_to_file is None:
-            self.func_to_file = lambda x: x.replace("C", "compound/C")
-        return super().__post_init__()
+    def func_to_file(self, source):
+        return source.replace("C", "compound/C")
 
-    def check_source_valid(self, source: str):
+    def check_source_valid(self, source):
         assert source.startswith("C"), "not a file nor a right compound number"
         assert len(source) == 6, "only single module allowed"
         return True
 
-    def load_single(self, source: str) -> entry.KCompound:  # type: ignore [override]
-        return super().load_single(source)  # type: ignore [return-value]
+    def load(self, source) -> entry.KCompound:  # type: ignore [override]
+        return super().load(source)  # type: ignore [return-value]
 
-    def load_single_from_io(self, file: TextIO):
-        e = next(entry.KCompound.yield_from_testio(file, rhea=self.rhea))
-        return entry.KCompound(e.properties, e.filemark)
+    def parse_io(self, io_in):  # type: ignore [reportIncompatibleMethodOverride]
+        e = next(entry.KCompound.yield_from_testio(io_in, rhea=self.rhea))
+        return entry.KCompound(e.properties)  # type: ignore [reportArgumentType]
 
 
-kcompounddb = CachedKCompound(db=cache.db_kegg_manual_data)
+kcompounddb = CachedKCompound(db=cache.manual_config.database)

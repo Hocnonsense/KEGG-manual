@@ -1,0 +1,43 @@
+ENTRY       M00989            Pathway   Module
+NAME        Ubiquinone biosynthesis, O2-independent, prokaryotes, chorismate (+ polyprenyl-PP) => ubiquinol
+DEFINITION  (K03181,K18240) K03179 K03182+K03186 K24844+K24845+K24843 K00568 K03183
+ORTHOLOGY   K03181,K18240  ubiC, xanB2; chorismate lyase [EC:4.1.3.40] [RN:R01302]
+            K03179  ubiA; 4-hydroxybenzoate polyprenyltransferase [EC:2.5.1.39] [RN:R05000]
+            K03182  ubiD; 4-hydroxy-3-polyprenylbenzoate decarboxylase [EC:4.1.1.98] [RN:R04985]
+            K03186  ubiX; flavin prenyltransferase [EC:2.5.1.129] [RN:R04985]
+            K24844  ubiU; 2-(all-trans-polyprenyl)phenol 6-hydroxylase (prephenate) [EC:1.97.1.15] [RN:R13439 R13440 R13441]
+            K24845  ubiV; 2-(all-trans-polyprenyl)phenol 6-hydroxylase (prephenate) [EC:1.97.1.15] [RN:R13439 R13440 R13441]
+            K24843  ubiT; 2-(all-trans-polyprenyl)phenol 6-hydroxylase (prephenate) accessory factor [RN:R13439 R13440 R13441]
+            K00568  ubiG; 2-polyprenyl-6-hydroxyphenyl methylase / 3-demethylubiquinone-9 3-methyltransferase [EC:2.1.1.222 2.1.1.64] [RN:R08769 R12657]
+            K03183  ubiE; 2-methoxy-6-polyprenyl-1,4-benzoquinol methylase [EC:2.1.1.201] [RN:R09737]
+CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
+PATHWAY     map00130  Ubiquinone and other terpenoid-quinone biosynthesis
+            map01240  Biosynthesis of cofactors
+            map01100  Metabolic pathways
+            map01110  Biosynthesis of secondary metabolites
+REACTION    R01302  C00251 -> C00156
+            R05000  C00156 + C05847 -> C05848
+            R04985  C05848 -> C05807
+            R13439  C05807 -> C17551
+            R08769  C17551 -> C17552
+            R13440  C17552 -> C19858
+            R09737  C19858 -> C19859
+            R13441  C19859 -> C21860
+            R12657  C21860 -> C00390
+COMPOUND    C00251  Chorismate
+            C00156  4-Hydroxybenzoate
+            C05847  all-trans-Polyprenyl diphosphate
+            C05848  4-Hydroxy-3-polyprenylbenzoate
+            C05807  2-Polyprenylphenol
+            C17551  2-Polyprenyl-6-hydroxyphenol
+            C17552  2-Polyprenyl-6-methoxyphenol
+            C19858  2-Methoxy-6-all-trans-polyprenyl-1,4-benzoquinol
+            C19859  5-Methoxy-2-methyl-3-(all-trans-polyprenyl)benzene-1,4-diol
+            C21860  3-Demethylubiquinol
+            C00390  Ubiquinol
+REFERENCE   PMID:31289180
+  AUTHORS   Pelosi L, Vo CD, Abby SS, Loiseau L, Rascalou B, Hajj Chehade M, Faivre B, Gousse M, Chenal C, Touati N, Binet L, Cornu D, Fyfe CD, Fontecave M, Barras F, Lombard M, Pierrel F
+  TITLE     Ubiquinone Biosynthesis over the Entire O2 Range: Characterization of a Conserved O2-Independent Pathway.
+  JOURNAL   mBio 10:e01319-19 (2019)
+            DOI:10.1128/mBio.01319-19
+///

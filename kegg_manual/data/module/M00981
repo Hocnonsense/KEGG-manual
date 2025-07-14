@@ -7,6 +7,8 @@ ORTHOLOGY   K01593  L-tryptophan decarboxylase [EC:4.1.1.105] [RN:R00685]
             K23493  geissoschizine synthase [EC:1.3.1.36] [RN:R03860]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
 PATHWAY     map00901  Indole alkaloid biosynthesis
+            map01100  Metabolic pathways
+            map01110  Biosynthesis of secondary metabolites
 REACTION    R00685  C00078 -> C00398
             R03738  C00398 + C01852 -> C03470
             R03820  C03470 -> C03309

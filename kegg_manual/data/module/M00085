@@ -74,4 +74,5 @@ COMPOUND    C00040  Acyl-CoA
             C05258  (S)-3-Hydroxyhexadecanoyl-CoA
             C05272  trans-Hexadec-2-enoyl-CoA
             C00154  Palmitoyl-CoA
+RMODULE     RM020  Fatty acid synthesis using acetyl-CoA (reversal of RM018)
 ///

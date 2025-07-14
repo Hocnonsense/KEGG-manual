@@ -21,6 +21,8 @@ ORTHOLOGY   K27780  (19E)-geissoschizine oxidase [EC:1.14.19.80] [RN:R13342]
             K27796  peroxidase PRX1 [RN:R05858]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
 PATHWAY     map00901  Indole alkaloid biosynthesis
+            map01100  Metabolic pathways
+            map01110  Biosynthesis of secondary metabolites
 REACTION    R13342  C02151 -> C22936
             R13348  C22936 -> C22937
             R13349  C22937 -> C11691

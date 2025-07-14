@@ -32,6 +32,7 @@ COMPOUND    C01209  Malonyl-[acp]
             C20378  Enoylpimeloyl-[acp] methyl ester
             C19846  Pimelyl-[acp] methyl ester
             C19845  Pimelyl-[acp]
+RMODULE     RM021  Fatty acid synthesis using malonyl-CoA
 REFERENCE   PMID:21437340
   AUTHORS   Lin S, Cronan JE
   TITLE     Closing in on complete pathways of biotin biosynthesis.

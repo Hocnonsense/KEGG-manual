@@ -1,5 +1,5 @@
 ENTRY       M00595            Pathway   Module
-NAME        Thiosulfate oxidation by SOX complex, thiosulfate => sulfate
+NAME        Sulfur oxidation, SOX system, thiosulfate => sulfate
 DEFINITION  K17222+K17223+K17224-K17225-K22622+K17226+K17227
 ORTHOLOGY   K17222  soxA; sulfur-oxidizing protein SoxA
             K17223  soxX; sulfur-oxidizing protein SoxX
@@ -10,6 +10,7 @@ ORTHOLOGY   K17222  soxA; sulfur-oxidizing protein SoxA
             K17227  soxZ; sulfur-oxidizing protein SoxZ
 CLASS       Pathway modules; Energy metabolism; Sulfur metabolism
 PATHWAY     map00920  Sulfur metabolism
+            map01320  Sulfur cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R10151  C00320 -> C00059

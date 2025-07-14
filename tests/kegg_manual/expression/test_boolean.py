@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-16 00:03:38
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 17:55:28
- * @FilePath: /KEGG/tests/kegg_manual/expression/test_boolean.py
- * @Description:
+* @Date: 2024-02-16 00:03:38
+* @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2024-02-16 17:55:28
+* @FilePath: /KEGG/tests/kegg_manual/expression/test_boolean.py
+* @Description:
 """
 # """
 

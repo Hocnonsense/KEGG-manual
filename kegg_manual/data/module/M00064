@@ -1,13 +1,13 @@
 ENTRY       M00064            Pathway   Module
-NAME        ADP-L-glycero-D-manno-heptose biosynthesis
+NAME        ADP-L-glycero-D-manno-heptose biosynthesis, sedoheptulose-7P => ADP-LDmanHep
 DEFINITION  K03271 (K03272,K21344) K03273 (K03272,K21345) K03274
 ORTHOLOGY   K03271  D-sedoheptulose 7-phosphate isomerase [EC:5.3.1.28] [RN:R05645]
             K03272,K21344  D-beta-D-heptose 7-phosphate kinase [EC:2.7.1.167] [RN:R05646]
             K03273  D-glycero-D-manno-heptose 1,7-bisphosphate phosphatase [EC:3.1.3.82] [RN:R05647]
             K03272,K21345  D-beta-D-heptose 1-phosphate adenosyltransferase [EC:2.7.7.70] [RN:R05644]
             K03274  ADP-L-glycero-D-manno-heptose 6-epimerase [EC:5.1.3.20] [RN:R05176]
-CLASS       Pathway modules; Glycan metabolism; Lipopolysaccharide metabolism
-PATHWAY     map00540  Lipopolysaccharide biosynthesis
+CLASS       Pathway modules; Glycan metabolism; Nucleotide sugar biosynthesis
+PATHWAY     map00541  Biosynthesis of various nucleotide sugars
             map01250  Biosynthesis of nucleotide sugars
             map01100  Metabolic pathways
 REACTION    R05645  C05382 -> C07836

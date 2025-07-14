@@ -7,6 +7,7 @@ ORTHOLOGY   K00370,K00371,K00374  respiratory nitrate reductase 1 [EC:1.7.99.- 1
             K03385,K15876  respiratory nitrite reductase [EC:1.7.2.2] [RN:R05712]
 CLASS       Pathway modules; Energy metabolism; Nitrogen metabolism
 PATHWAY     map00910  Nitrogen metabolism
+            map01310  Nitrogen cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R00798,R09497,R03071  C00244 -> C00088

@@ -1,12 +1,23 @@
 name: Python Package using Conda
 
-on: [push]
+on:
+  - push
 
 jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Codespell
+        uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_list: fo,tre,brite,Te,Nd,abd
+          skip: "./tests/file/*,./kegg_manual/data/brite/*,./kegg_manual/data/compound/*,./kegg_manual/data/ec/*,./kegg_manual/data/ko/*,./kegg_manual/data/manual/*,./kegg_manual/data/module/*,./kegg_manual/data/organism"
+
   build-linux:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
 
     steps:
       - uses: actions/checkout@v4

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-16 11:59:29
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 22:04:21
- * @FilePath: /KEGG/tests/kegg_manual/test_utils.py
- * @Description:
+* @Date: 2024-02-16 11:59:29
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:10:00
+* @FilePath: /KEGG-manual/tests/kegg_manual/test_utils.py
+* @Description:
 """
 # """
 
-from kegg_manual.utils import Variable as V
 from kegg_manual.utils import LineExpression as E
 from kegg_manual.utils import ParseError
+from kegg_manual.utils import Variable as V
 
 
 def test_variable():

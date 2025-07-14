@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
  * @Date: 2024-02-15 21:53:25
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 23:17:49
- * @FilePath: /KEGG/kegg_manual/formula.py
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:20:13
+* @FilePath: /KEGG-manual/kegg_manual/formula.py
  * @Description:
  Parser and representation of chemical formulas.
 
@@ -307,7 +307,7 @@ class Formula(LineExpression):
         return self | other
 
     def __sub__(self, other):
-        """Substract other formula from this formula."""
+        """Subtract other formula from this formula."""
         if isinstance(other, Formula):
             return Formula(dict(self._variables - other._variables))
         elif isinstance(other, FormulaElement):

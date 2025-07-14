@@ -1,0 +1,29 @@
+ENTRY       M00983            Pathway   Module
+NAME        GPI-anchor remodeling
+DEFINITION  K05294 K23362 K23553 K23552
+ORTHOLOGY   K05294  PGAP1; GPI inositol-deacylase [EC:3.-.-.-] [RN:R13398]
+            K23362  PGAP5; ethanolamine phosphate phosphodiesterase [EC:3.1.-.-] [RN:R13399]
+            K23553  PGAP3; post-GPI attachment to proteins factor 3 [RN:R13394]
+            K23552  PGAP2; post-GPI attachment to proteins factor 2 [RN:R13396]
+CLASS       Pathway modules; Glycan metabolism; Glycan biosynthesis
+PATHWAY     map00563  Glycosylphosphatidylinositol (GPI)-anchor biosynthesis
+            map01100  Metabolic pathways
+REACTION    R13398  C22970 -> C22971
+            R13399  C22971 -> C22963
+            R13394  C22963 -> C22964
+            R13396  C22964 -> C22965
+COMPOUND    C22970
+            C22971
+            C22963
+            C22964
+            C22965
+REFERENCE   PMID:32156170
+  AUTHORS   Kinoshita T.
+  TITLE     Biosynthesis and biology of mammalian GPI-anchored proteins.
+  JOURNAL   Open Biol 10:190290 (2020)
+            DOI:10.1098/rsob.190290
+REFERENCE   PMID:24364251
+  AUTHORS   Fujita M
+  TITLE     [Biosynthesis and remodeling of GPI-anchored proteins].
+  JOURNAL   Seikagaku 85:985-95 (2013)
+///

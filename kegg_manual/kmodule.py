@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2020-07-01 00:29:24
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-28 17:44:54
- * @FilePath: /KEGG/kegg_manual/kmodule.py
- * @Description:
+* @Date: 2020-07-01 00:29:24
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:21:50
+* @FilePath: /KEGG-manual/kegg_manual/kmodule.py
+* @Description:
 """
 
 from typing import Iterable, Literal, Optional, Sequence
@@ -42,7 +42,7 @@ class KModule:
     def __init__(self, express="", additional_info=""):
         self.additional_info = additional_info
         self.steps: list[KModule]
-        self._ko, self.steps, self._is_chain = self.__calculate(express)
+        self._ko, self.steps, self._is_chain = self.__calculate(express)  # type: ignore [reportAttributeAccessIssue]
 
     @classmethod
     def __calculate(cls, express: str):
@@ -109,7 +109,7 @@ class KModule:
             elements = elements[0].steps
 
         logger.debug(f"|> 5. exp: {express}")
-        logger.debug(f"...   str: {cls.str2(('', elements, _is_chain), ' ')}")
+        logger.debug(f"...   str: {cls.str2(('', elements, _is_chain), ' ')}")  # type: ignore [reportArgumentType]
         return "", elements, _is_chain
 
     def list_ko(self) -> list[str]:
@@ -242,7 +242,7 @@ class KModule:
         count = 0.0
         if self._ko:
             return 1 if self._ko in ko_match else 0
-        # multipy elements
+        # multiply elements
         if self._is_chain:
             for element in self.steps:
                 count += element.completeness(ko_match)

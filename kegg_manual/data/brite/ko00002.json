@@ -103,21 +103,6 @@
 					"name":"M00565  Trehalose biosynthesis, D-glucose 1P => trehalose [PATH:map00500 map01100 map01110]"
 				},
 				{
-					"name":"M00549  Nucleotide sugar biosynthesis, glucose => UDP-glucose [PATH:map00520 map01250 map01100]"
-				},
-				{
-					"name":"M00554  Nucleotide sugar biosynthesis, galactose => UDP-galactose [PATH:map00520 map00052 map01250 map01100]"
-				},
-				{
-					"name":"M00892  UDP-N-acetyl-D-glucosamine biosynthesis, eukaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
-				},
-				{
-					"name":"M00909  UDP-N-acetyl-D-glucosamine biosynthesis, prokaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
-				},
-				{
-					"name":"M00761  Undecaprenylphosphate alpha-L-Ara4N biosynthesis, UDP-GlcA => undecaprenyl phosphate alpha-L-Ara4N [PATH:map00520 map01100]"
-				},
-				{
 					"name":"M00012  Glyoxylate cycle [PATH:map00630 map01200 map01100 map01110]"
 				},
 				{
@@ -134,6 +119,9 @@
 				},
 				{
 					"name":"M00741  Propanoyl-CoA metabolism, propanoyl-CoA => succinyl-CoA [PATH:map00280 map00630 map00640 map01200 map01100]"
+				},
+				{
+					"name":"M00982  Methylcitrate cycle [PATH:map00640 map00020 map01200 map01100 map01120]"
 				},
 				{
 					"name":"M00968  Pentose bisphosphate pathway (nucleoside degradation), archaea, nucleoside\/NMP => 3-PGA\/glycerone phosphate [PATH:map00030 map00230 map00240 map00630 map01100]"
@@ -246,25 +234,25 @@
 				"name":"Nitrogen metabolism",
 				"children":[
 				{
-					"name":"M00175  Nitrogen fixation, nitrogen => ammonia [PATH:map00910 map01100 map01120]"
+					"name":"M00175  Nitrogen fixation, nitrogen => ammonia [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00531  Assimilatory nitrate reduction, nitrate => ammonia [PATH:map00910 map01100 map01120]"
+					"name":"M00531  Assimilatory nitrate reduction, nitrate => ammonia [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00530  Dissimilatory nitrate reduction, nitrate => ammonia [PATH:map00910 map01100 map01120]"
+					"name":"M00530  Dissimilatory nitrate reduction, nitrate => ammonia [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00529  Denitrification, nitrate => nitrogen [PATH:map00910 map01100 map01120]"
+					"name":"M00529  Denitrification, nitrate => nitrogen [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00528  Nitrification, ammonia => nitrite [PATH:map00910 map01100 map01120]"
+					"name":"M00528  Nitrification, ammonia => nitrite [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00804  Complete nitrification, comammox, ammonia => nitrite => nitrate [PATH:map00910 map01100 map01120]"
+					"name":"M00804  Complete nitrification, comammox, ammonia => nitrite => nitrate [PATH:map00910 map01310 map01100 map01120]"
 				},
 				{
-					"name":"M00973  Anammox, nitrite + ammonia => nitrogen [PATH:map00910 map01100 map01120]"
+					"name":"M00973  Anammox, nitrite + ammonia => nitrogen [PATH:map00910 map01310 map01100 map01120]"
 				}
 				]
 			},
@@ -272,13 +260,37 @@
 				"name":"Sulfur metabolism",
 				"children":[
 				{
+					"name":"M00987  Assimilatory sulfate reduction, plants, sulfate => H2S [PATH:map00920 map01100]"
+				},
+				{
 					"name":"M00176  Assimilatory sulfate reduction, sulfate => H2S [PATH:map00920 map01100 map01120]"
 				},
 				{
 					"name":"M00596  Dissimilatory sulfate reduction, sulfate => H2S [PATH:map00920 map01100 map01120]"
 				},
 				{
-					"name":"M00595  Thiosulfate oxidation by SOX complex, thiosulfate => sulfate [PATH:map00920 map01100 map01120]"
+					"name":"M00595  Sulfur oxidation, SOX system, thiosulfate => sulfate [PATH:map00920 map01100 map01120]"
+				},
+				{
+					"name":"M00984  Sulfur oxidation, tetrathionate intermediate (S4I) pathway, thiosulfate => sulfur + sulfate + thiosulfate [PATH:map00920 map01100 map01120]"
+				},
+				{
+					"name":"M00986  Sulfur reduction, sulfur => sulfide [PATH:map00920 map01100 map01120]"
+				},
+				{
+					"name":"M00985  Sulfide oxidation, sulfide => sulfur [PATH:map00920 map01100 map01120]"
+				},
+				{
+					"name":"M00990  Dimethylsulfoniopropionate (DMSP) degradation, demethylation pathway, DMSP => methanethiol [PATH:map00920]"
+				},
+				{
+					"name":"M00991  Dimethylsulfoniopropionate (DMSP) degradation, cleavage pathway, DMSP => acetyl-CoA [PATH:map00920 map00640]"
+				},
+				{
+					"name":"M00992  Dimethylsulfoniopropionate (DMSP) degradation, cleavage pathway, DMSP => acrylate => acetyl-CoA [PATH:map00920 map00640]"
+				},
+				{
+					"name":"M00993  Dimethylsulfoniopropionate (DMSP) degradation, cleavage pathway, DMSP => propionyl-CoA [PATH:map00920 map00640]"
 				}
 				]
 			},
@@ -570,13 +582,13 @@
 					"name":"M00018  Threonine biosynthesis, aspartate => homoserine => threonine [PATH:map00260 map01230 map01100 map01110]"
 				},
 				{
-					"name":"M00621  Glycine cleavage system [PATH:map00260 map00630 map00785 map01200 map01100]"
+					"name":"M00621  Glycine cleavage system [PATH:map00260 map00630 map00670 map00785 map01200 map01100]"
 				},
 				{
-					"name":"M00555  Betaine biosynthesis, choline => betaine [PATH:map00260 map01100]"
+					"name":"M00555  Betaine biosynthesis, choline => betaine [PATH:map00260 map00670 map01100]"
 				},
 				{
-					"name":"M00974  Betaine metabolism, animals, betaine => glycine [PATH:map00260 map01100]"
+					"name":"M00974  Betaine metabolism, animals, betaine => glycine [PATH:map00260 map00670 map01100]"
 				},
 				{
 					"name":"M00975  Betaine degradation, bacteria, betaine => pyruvate [PATH:map00260 map01100]"
@@ -596,7 +608,7 @@
 					"name":"M00021  Cysteine biosynthesis, serine => cysteine [PATH:map00270 map00920 map01200 map01230 map01100 map01110]"
 				},
 				{
-					"name":"M00338  Cysteine biosynthesis, homocysteine + serine => cysteine [PATH:map00260 map00270 map01230 map01100]"
+					"name":"M00338  Cysteine biosynthesis, homocysteine + serine => cysteine [PATH:map00260 map00270 map00670 map01230 map01100]"
 				},
 				{
 					"name":"M00609  Cysteine biosynthesis, methionine => cysteine [PATH:map00270 map01230 map01100]"
@@ -608,7 +620,7 @@
 					"name":"M00034  Methionine salvage pathway [PATH:map00270 map01100]"
 				},
 				{
-					"name":"M00035  Methionine degradation [PATH:map00270 map01100]"
+					"name":"M00035  Methionine degradation [PATH:map00270 map00670 map01100]"
 				},
 				{
 					"name":"M00368  Ethylene biosynthesis, methionine => ethylene [PATH:map00270 map01100 map01110]"
@@ -812,6 +824,41 @@
 			"name":"Glycan metabolism",
 			"children":[
 			{
+				"name":"Nucleotide sugar biosynthesis",
+				"children":[
+				{
+					"name":"M00549  Nucleotide sugar biosynthesis, glucose => UDP-glucose [PATH:map00520 map01250 map01100]"
+				},
+				{
+					"name":"M00554  Nucleotide sugar biosynthesis, galactose => UDP-galactose [PATH:map00520 map00052 map01250 map01100]"
+				},
+				{
+					"name":"M00892  UDP-N-acetyl-D-glucosamine biosynthesis, eukaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
+				},
+				{
+					"name":"M00909  UDP-N-acetyl-D-glucosamine biosynthesis, prokaryotes, glucose => UDP-GlcNAc [PATH:map00520 map01250 map01100]"
+				},
+				{
+					"name":"M00923  UDP-L-FucNAm biosynthesis, UDP-GlcNAc => UDP-L-FucNAm [PATH:map00541 map01250 map01100]"
+				},
+				{
+					"name":"M00922  CMP-Neu5Ac biosynthesis, UDP-GlcNAc => CMP-Neu5Ac [PATH:map00541 map01250 map01100]"
+				},
+				{
+					"name":"M00063  CMP-3-deoxy-D-manno-octulosonate biosynthesis, ribulose-5P => CMP-KDO [PATH:map00541 map01250 map01100]"
+				},
+				{
+					"name":"M00064  ADP-L-glycero-D-manno-heptose biosynthesis, sedoheptulose-7P => ADP-LDmanHep [PATH:map00541 map01250 map01100]"
+				},
+				{
+					"name":"M00761  Undecaprenylphosphate alpha-L-Ara4N biosynthesis, UDP-GlcA => undecaprenyl phosphate alpha-L-Ara4N [PATH:map00541 map01100]"
+				},
+				{
+					"name":"M00793  dTDP-L-rhamnose biosynthesis, glucose-1P => dTDP-L-Rha [PATH:map00521 map00523 map00541 map01250 map01100 map01110]"
+				}
+				]
+			},
+			{
 				"name":"Glycan biosynthesis",
 				"children":[
 				{
@@ -837,6 +884,9 @@
 				},
 				{
 					"name":"M00065  GPI-anchor biosynthesis, core oligosaccharide [PATH:map00563 map01100]"
+				},
+				{
+					"name":"M00983  GPI-anchor remodeling [PATH:map00563 map01100]"
 				},
 				{
 					"name":"M00070  Glycosphingolipid biosynthesis, lacto-series, LacCer => Lc4Cer [PATH:map00601 map01100]"
@@ -889,18 +939,6 @@
 				},
 				{
 					"name":"M00867  KDO2-lipid A modification pathway [PATH:map00540 map01100]"
-				},
-				{
-					"name":"M00063  CMP-KDO biosynthesis [PATH:map00540 map01250 map01100]"
-				},
-				{
-					"name":"M00064  ADP-L-glycero-D-manno-heptose biosynthesis [PATH:map00540 map01250 map01100]"
-				},
-				{
-					"name":"M00922  CMP-Neu5Ac biosynthesis [PATH:map00541 map01250 map01100]"
-				},
-				{
-					"name":"M00923  UDP-L-FucNAm biosynthesis [PATH:map00541 map01250 map01100]"
 				}
 				]
 			},
@@ -1023,6 +1061,9 @@
 					"name":"M00880  Molybdenum cofactor biosynthesis, GTP => molybdenum cofactor [PATH:map00790 map01240 map01100]"
 				},
 				{
+					"name":"M00988  PreQ1 biosynthesis, GTP => 7-Aminomethyl-7-deazaguanine [PATH:map00790 map01100]"
+				},
+				{
 					"name":"M00140  C1-unit interconversion, prokaryotes [PATH:map00670 map01240 map01100]"
 				},
 				{
@@ -1059,7 +1100,10 @@
 					"name":"M00117  Ubiquinone biosynthesis, prokaryotes, chorismate (+ polyprenyl-PP) => ubiquinol [PATH:map00130 map01240 map01100 map01110]"
 				},
 				{
-					"name":"M00128  Ubiquinone biosynthesis, eukaryotes, 4-hydroxybenzoate + polyprenyl-PP => ubiquinol [PATH:map00130 map01240 map01100]"
+					"name":"M00989  Ubiquinone biosynthesis, O2-independent, prokaryotes, chorismate (+ polyprenyl-PP) => ubiquinol [PATH:map00130 map01240]"
+				},
+				{
+					"name":"M00128  Ubiquinone biosynthesis, eukaryotes, 4-hydroxybenzoate + polyprenyl-PP => ubiquinone [PATH:map00130 map01240 map01100]"
 				},
 				{
 					"name":"M00116  Menaquinone biosynthesis, chorismate (+ polyprenyl-PP) => menaquinol [PATH:map00130 map01240 map01100 map01110]"
@@ -1229,9 +1273,6 @@
 				"name":"Polyketide sugar unit biosynthesis",
 				"children":[
 				{
-					"name":"M00793  dTDP-L-rhamnose biosynthesis [PATH:map00521 map00523 map00541 map01250 map01100 map01110]"
-				},
-				{
 					"name":"M00794  dTDP-6-deoxy-D-allose biosynthesis [PATH:map00523 map01250 map01100 map01110]"
 				},
 				{
@@ -1305,16 +1346,16 @@
 					"name":"M00964  Fumigaclavine biosynthesis, chanoclavine-I aldehyde => fumigaclavine C [PATH:map00901 map01100 map01110]"
 				},
 				{
-					"name":"M00981  Geissoschizine biosynthesis, tryptophan => geissoschizine [PATH:map00901]"
+					"name":"M00981  Geissoschizine biosynthesis, tryptophan => geissoschizine [PATH:map00901 map01100 map01110]"
 				},
 				{
-					"name":"M00979  Ajmaline biosynthesis, geissoschizine => ajmaline [PATH:map00901]"
+					"name":"M00979  Ajmaline biosynthesis, geissoschizine => ajmaline [PATH:map00901 map01100 map01110]"
 				},
 				{
-					"name":"M00980  Strychnine biosynthesis, geissoschizine => strychnine [PATH:map00901]"
+					"name":"M00980  Strychnine biosynthesis, geissoschizine => strychnine [PATH:map00901 map01100 map01110]"
 				},
 				{
-					"name":"M00965  Vinblastine biosynthesis, geissoschizine => vinblastine [PATH:map00901]"
+					"name":"M00965  Vinblastine biosynthesis, geissoschizine => vinblastine [PATH:map00901 map01100 map01110]"
 				},
 				{
 					"name":"M00943  Reticuline biosynthesis, dopamine + 4HPAA => (S)-reticuline [PATH:map00950 map01100 map01110]"

@@ -1,0 +1,39 @@
+ENTRY       M00988            Pathway   Module
+NAME        PreQ1 biosynthesis, GTP => 7-Aminomethyl-7-deazaguanine
+DEFINITION  (K01495,K09007,K22391) K01737 K10026 K06920 (K06879,K09457)
+ORTHOLOGY   K01495,K09007,K22391  GTP cyclohydrolase [EC:3.5.4.16] [RN:R00428 R05046 R05048 R04639]
+            K01737  6-pyruvoyltetrahydropterin/6-carboxytetrahydropterin synthase [EC:4.1.2.50] [RN:R09959]
+            K10026  7-carboxy-7-deazaguanine synthase [EC:4.3.99.3] [RN:R10002]
+            K06920  7-cyano-7-deazaguanine synthase [EC:6.3.4.20] [RN:R09978]
+            K06879,K09457  7-cyano-7-deazaguanine reductase [EC:1.7.1.13] [RN:R07605]
+CLASS       Pathway modules; Metabolism of cofactors and vitamins; Cofactor and vitamin metabolism
+PATHWAY     map00790  Folate biosynthesis
+            map01100  Metabolic pathways
+REACTION    R00428  C00044 -> C05922
+            R05046  C05922 -> C05923
+            R05048  C05923 -> C06148
+            R04639  C06148 -> C04895
+            R09959  C04895 -> C20239
+            R10002  C20239 -> C20248
+            R09978  C20248 -> C15996
+            R07605  C15996 -> C16675
+COMPOUND    C00044  GTP
+            C05922  Formamidopyrimidine nucleoside triphosphate
+            C05923  2,5-Diaminopyrimidine nucleoside triphosphate
+            C06148  2,5-Diamino-6-(5'-triphosphoryl-3',4'-trihydroxy-2'-oxopentyl)-amino-4-oxopyrimidine
+            C04895  7,8-Dihydroneopterin 3'-triphosphate
+            C20239  6-Carboxy-5,6,7,8-tetrahydropterin
+            C20248  7-Carboxy-7-carbaguanine
+            C15996  7-Cyano-7-carbaguanine
+            C16675  7-Aminomethyl-7-carbaguanine
+REFERENCE   PMID:19354300
+  AUTHORS   McCarty RM, Somogyi A, Lin G, Jacobsen NE, Bandarian V
+  TITLE     The deazapurine biosynthetic pathway revealed: in vitro enzymatic synthesis of PreQ(0) from guanosine 5'-triphosphate in four steps.
+  JOURNAL   Biochemistry 48:3847-52 (2009)
+            DOI:10.1021/bi900400e
+REFERENCE   PMID:27937735
+  AUTHORS   Hutinet G, Swarjo MA, de Crecy-Lagard V
+  TITLE     Deazaguanine derivatives, examples of crosstalk between RNA and DNA modification pathways.
+  JOURNAL   RNA Biol 14:1175-1184 (2017)
+            DOI:10.1080/15476286.2016.1265200
+///

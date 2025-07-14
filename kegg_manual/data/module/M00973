@@ -6,6 +6,7 @@ ORTHOLOGY   K00368,K15864  nitrite reductase (NO-forming) [EC:1.7.2.1] [RN:R0078
             K20935  hydrazine dehydrogenase [EC:1.7.2.8] [RN:R07174]
 CLASS       Pathway modules; Energy metabolism; Nitrogen metabolism
 PATHWAY     map00910  Nitrogen metabolism
+            map01310  Nitrogen cycle
             map01100  Metabolic pathways
             map01120  Microbial metabolism in diverse environments
 REACTION    R00783,R00785  C00088 -> C00533

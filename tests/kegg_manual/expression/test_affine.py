@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
- * @Date: 2024-02-16 20:27:38
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-02-16 20:35:15
- * @FilePath: /KEGG/tests/kegg_manual/expression/test_affine.py
- * @Description:
+* @Date: 2024-02-16 20:27:38
+* @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2024-02-16 20:35:15
+* @FilePath: /KEGG/tests/kegg_manual/expression/test_affine.py
+* @Description:
 """
 # """
 

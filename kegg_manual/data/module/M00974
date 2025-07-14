@@ -7,6 +7,7 @@ ORTHOLOGY   K00544  betaine-homocysteine S-methyltransferase [EC:2.1.1.5] [RN:R0
             K00314  sarcosine dehydrogenase [EC:1.5.8.3] [RN:R00611]
 CLASS       Pathway modules; Amino acid metabolism; Serine and threonine metabolism
 PATHWAY     map00260  Glycine, serine and threonine metabolism
+            map00670  One carbon pool by folate
             map01100  Metabolic pathways
 REACTION    R02821  C00719 -> C01026
             R01565  C01026 -> C00213

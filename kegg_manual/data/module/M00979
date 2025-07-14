@@ -11,6 +11,8 @@ ORTHOLOGY   K27776  polyneuridine aldehyde synthase [EC:1.14.19.81] [RN:R05829]
             K27779  norajmaline N-methyltransferase [EC:2.1.1.392] [RN:R05881]
 CLASS       Pathway modules; Biosynthesis of other secondary metabolites; Biosynthesis of phytochemical compounds
 PATHWAY     map00901  Indole alkaloid biosynthesis
+            map01100  Metabolic pathways
+            map01110  Biosynthesis of secondary metabolites
 REACTION    R05829  C02151 -> C11632
             R05825  C11632 -> C11633
             R05876  C11633 -> C11807

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
  * @Date: 2024-02-14 21:16:17
- * @LastEditors: Hwrn hwrn.aou@sjtu.edu.cn
- * @LastEditTime: 2024-07-09 15:55:54
- * @FilePath: /KEGG/kegg_manual/entry.py
+* @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
+* @LastEditTime: 2025-07-14 21:24:49
+* @FilePath: /KEGG-manual/kegg_manual/entry.py
  * @Description:
     Representation of compound/reaction entries in models.
  * @OriginalLicense:
@@ -31,7 +31,7 @@ Copyright 2020-2020  Elysha Sameth <esameth1@my.uri.edu>
 
 
 import logging
-from typing import TextIO
+from typing import Callable, Literal, TextIO
 import re
 from . import utils, formula
 
@@ -49,11 +49,10 @@ def check_entry_key_indend(line: str, lineno: int | None = None):
 class KEntry(utils.ModelEntry):
     """Base class for KEGG entry with raw values from KEGG."""
 
-    def __init__(self, properties: dict, filemark=None):
+    def __init__(self, properties: dict):
         self._properties: dict[str, list[str | tuple[str, list[str]]]] = (
             utils.FozenDict(properties)  # type: ignore [assignment]
         )
-        self._filemark = filemark
         entry = self._properties.get("ENTRY", [""])[0]
         assert isinstance(entry, str)
         self._id = entry.split("  ", 1)[0]
@@ -66,10 +65,6 @@ class KEntry(utils.ModelEntry):
     def properties(self):
         return self._properties
 
-    @property
-    def filemark(self):
-        return self._filemark
-
     @classmethod
     def yield_from_testio(cls, f: TextIO, context=None, **kwargs):
         """Iterate over entries in KEGG file."""
@@ -81,8 +76,7 @@ class KEntry(utils.ModelEntry):
         for lineno, line in enumerate(f):
             if line.strip() == "///":
                 # End of entry
-                mark = utils.FileMark(context, entry_line, 0)
-                yield cls(properties, filemark=mark, **kwargs)
+                yield cls(properties, **kwargs)
                 properties = {}
                 section_id = ""
                 entry_line = None  # type: ignore [assignment]
@@ -112,15 +106,14 @@ class KEntry(utils.ModelEntry):
 class KCompound(KEntry):
     """Representation of entry in KEGG compound file"""
 
-    chebi_entry = None
+    chebi_entry: None | Literal[False] | Callable = None
 
     def __init__(
         self,
         properties: dict[str, list[str]],
-        filemark=None,
         rhea: utils.RheaDb | None = None,
     ):
-        super().__init__(properties, filemark)
+        super().__init__(properties)
 
         if "ENTRY" not in self.properties:
             raise KeyError("Missing compound identifier")
@@ -137,7 +130,7 @@ class KCompound(KEntry):
         """
         Sets the _charge, _chebi, and _chebi_all attributes
         'rhea_db' is initialized as a global in generate_model_api
-        if --rhea is supplied this funcion looks for rhea_db in the
+        if --rhea is supplied this function looks for rhea_db in the
         global namespace decide if rhea is used
         --- Logic for selecting the best chebi ID ---
         if not using rhea:
@@ -221,18 +214,21 @@ class KCompound(KEntry):
     @property
     def names(self):
         for line in self.properties.get("NAME", []):
+            assert isinstance(line, str)
             for name in line.rstrip(";").split(";"):
                 yield name.strip()
 
     @property
     def reactions(self):
         for line in self.properties.get("REACTION", []):
+            assert isinstance(line, str)
             for rxnid in line.split():
                 yield rxnid
 
     @property
     def enzymes(self):
         for line in self.properties.get("ENZYME", []):
+            assert isinstance(line, str)
             for enzyme in line.split():
                 yield enzyme
 
@@ -244,11 +240,14 @@ class KCompound(KEntry):
     def mol_weight(self):
         if "MOLWEIGHT" not in self.properties:
             return None
-        return float(self.properties["MOLWEIGHT"][0])
+        mw = self.properties["MOLWEIGHT"][0]
+        assert isinstance(mw, str)
+        return float(mw)
 
     @property
     def dblinks(self):
         for line in self.properties.get("DBLINKS", []):
+            assert isinstance(line, str)
             database, entry = line.split(":", 1)
             yield database.strip(), entry.strip()
 
@@ -273,7 +272,7 @@ class KCompound(KEntry):
         if not comment:
             return None
         try:
-            return "\n".join(comment)
+            return "\n".join(comment)  # type: ignore [reportCallIssue]
         except TypeError:
             return comment
 

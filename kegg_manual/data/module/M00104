@@ -1,6 +1,6 @@
 ENTRY       M00104            Pathway   Module
 NAME        Bile acid biosynthesis, cholesterol => cholate/chenodeoxycholate
-DEFINITION  K00489 K12408 K07431 K00251 K00037 K00488 K08748 K01796 K10214 K12405 K08764 K11992
+DEFINITION  K00489 K12408 K07431 K00251 K00037 K00488 K08748 K01796 K10214 K12405 K08764 (K11992,K00659)
 ORTHOLOGY   K00489  cholesterol 7alpha-monooxygenase [EC:1.14.14.23] [RN:R01463]
             K12408  cholest-5-ene-3beta,7alpha-diol 3beta-dehydrogenase [EC:1.1.1.181] [RN:R04263]
             K07431  sterol 12-alpha-hydroxylase [EC:1.14.14.139] [RN:R04826]
@@ -12,7 +12,7 @@ ORTHOLOGY   K00489  cholesterol 7alpha-monooxygenase [EC:1.14.14.23] [RN:R01463]
             K10214  3alpha,7alpha,12alpha-trihydroxy-5beta-cholestanoyl-CoA 24-hydroxylase [EC:1.17.99.3] [RN:R08735 R08740]
             K12405  (3R)-hydroxyacyl-CoA dehydrogenase / 3a,7a,12a-trihydroxy-5b-cholest-24-enoyl-CoA hydratase [EC:1.1.1.- 4.2.1.107] [RN:R04813 R04812 R04809 R04810]
             K08764  sterol carrier protein 2 [EC:2.3.1.176] [RN:R03719 R04811]
-            K11992  acyl-CoA thioesterase 8 [EC:3.1.2.27] [RN:R07296 R03974]
+            K11992,K00659  acyl-CoA thioesterase 8 [EC:3.1.2.27] [RN:R07296 R03974]
 CLASS       Pathway modules; Lipid metabolism; Sterol biosynthesis
 PATHWAY     map00120  Primary bile acid biosynthesis
             map01100  Metabolic pathways
