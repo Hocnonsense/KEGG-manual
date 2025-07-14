@@ -2,7 +2,7 @@
 """
 * @Date: 2021-06-14 18:41:24
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 20:03:15
+* @LastEditTime: 2025-07-14 21:39:39
 * @FilePath: /KEGG-manual/kegg_manual/data/query.py
 * @Description:
 """
@@ -60,7 +60,7 @@ class CachedKEntry(cache.CachedModified):
         return super().__post_init__()
 
     def rsync_io(self, source) -> TextIO:
-        super().rsync_io(source)
+        self.sleep()
         return REST.kegg_get(source)
 
     def load(self, source) -> dict[str, list[str | tuple[str, list[str]]]]:

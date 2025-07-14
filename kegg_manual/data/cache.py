@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 10:58:21
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 21:32:07
+* @LastEditTime: 2025-07-14 21:39:29
 * @FilePath: /KEGG-manual/kegg_manual/data/cache.py
 * @Description:
 """
@@ -129,8 +129,11 @@ class CachedModified:
     def __post_init__(self) -> None:
         pass
 
-    def rsync_io(self, source: str) -> TextIO:
+    def sleep(self):
         sleep(self.download_wait_s)
+
+    def rsync_io(self, source: str) -> TextIO:
+        self.sleep()
         raise NotImplementedError
 
     def load_raw(
