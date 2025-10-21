@@ -2,7 +2,7 @@
 """
 * @Date: 2021-06-14 18:41:24
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 21:39:39
+* @LastEditTime: 2025-10-21 21:55:13
 * @FilePath: /KEGG-manual/kegg_manual/data/query.py
 * @Description:
 """
@@ -24,7 +24,7 @@ class CachedKBrite(cache.CachedModified):
         return source.replace("br:ko", "brite/ko") + ".json"
 
     def rsync_io(self, source):
-        super().rsync_io(source)
+        self.sleep()
         return REST.kegg_get(source, "json")
 
     def load(self, source) -> tuple[str, dict[str, Any]]:
