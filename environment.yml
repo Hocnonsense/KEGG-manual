@@ -7,4 +7,3 @@ dependencies:
   - pyyaml
   - pandas
   - biopython
-  - importlib_resources

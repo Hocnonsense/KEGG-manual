@@ -2,7 +2,7 @@
 """
 * @Date: 2024-02-13 10:58:21
 * @LastEditors: hwrn hwrn.aou@sjtu.edu.cn
-* @LastEditTime: 2025-07-14 21:41:01
+* @LastEditTime: 2025-12-07 10:08:03
 * @FilePath: /KEGG-manual/kegg_manual/data/cache.py
 * @Description:
 """
@@ -19,10 +19,10 @@ from tempfile import NamedTemporaryFile
 from time import sleep
 from typing import Callable, Literal, TextIO
 
-import importlib_resources
+from importlib.resources import files
 
 
-_db_kegg_manual_data = importlib_resources.files("kegg_manual.data")
+_db_kegg_manual_data = files("kegg_manual.data")
 
 
 class ManualDataConfig:

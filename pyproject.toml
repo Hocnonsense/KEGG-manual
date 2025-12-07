@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kegg_manual"
+version = "0.0.2"
+authors = [{ name = "hwrn.aou", email = "hwrn.aou@sjtu.edu.cn" }]
+description = "local handler of KEGG data"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+"kegg_manual" = ["data/**/*"]

@@ -1,8 +1,7 @@
 !*
 *.png
 
-!setup.py
-!MANIFEST.in
+!pyproject.toml
 *.egg-info
 
 *.pyc
